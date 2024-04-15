@@ -18,7 +18,27 @@
 
 package com.github.cozygames.api;
 
-public class CozyGamesAPI {
+import org.jetbrains.annotations.NotNull;
 
-    public static String test = "test";
+/**
+ * The Cozy Games API.
+ * <p>
+ * The API allows other plugins on the server to interact
+ * with the mini-game system.
+ * <p>
+ * This interface represents the base of the API package.
+ * All functions are accessed via this interface.
+ * <p>
+ * To obtain an instance of the CozyGamesAPI interface, use the {@code getInstance()} method.
+ * This ensures that only one instance of the API is created per server instance, maintaining
+ * consistency and preventing duplication of resources.
+ * <p>
+ *
+ * <p>For ease of use, and for platforms without a Service Manager, an instance
+ * can also be obtained from the static singleton accessor in
+ * {@link LuckPermsProvider}.</p>
+ */
+public interface CozyGamesAPI {
+
+    @NotNull String getServerName();
 }

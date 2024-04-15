@@ -16,19 +16,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit;
+package com.github.cozygames.api;
 
-import com.github.cozyplugins.cozylibrary.CozyPlugin;
+import org.jetbrains.annotations.NotNull;
 
-public final class CozyGamesAPI_Bukkit extends CozyPlugin {
+/**
+ * Provides static access to the {@link CozyGamesAPI} class.
+ *
+ * <p>Ideally, the ServiceManager for the platform should be used to obtain an
+ * instance, however, this provider can be used if this is not viable.</p>
+ */
+public class CozyGamesAPIProvider {
 
-    @Override
-    public boolean enableCommandDirectory() {
-        return true;
+    private static CozyGamesAPI instance;
+
+    public static @NotNull CozyGamesAPI get() {
+        return instance;
     }
 
-    @Override
-    public void onCozyEnable() {
-
+    public static void register(CozyGamesAPI instance) {
+        CozyGamesAPIProvider.instance = instance;
     }
 }

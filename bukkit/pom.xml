@@ -32,6 +32,10 @@
     <version>0.0.0</version>
     <name>bukkit</name>
 
+    <build>
+        <finalName>CozyGamesAPI-Bukkit-${project.version}</finalName>
+    </build>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -62,6 +66,12 @@
             <groupId>com.github.cozygames</groupId>
             <artifactId>api</artifactId>
             <version>0.0.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.github.smuddgge</groupId>
+                    <artifactId>SquishyDatabase</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Minecraft -->
@@ -77,21 +87,6 @@
             <groupId>com.github.Cozy-Plugins</groupId>
             <artifactId>CozyLibrary</artifactId>
             <version>1.10.0</version>
-        </dependency>
-
-        <!-- Database Library -->
-        <dependency>
-            <groupId>com.github.smuddgge</groupId>
-            <artifactId>SquishyDatabase</artifactId>
-            <version>3.3.0</version>
-        </dependency>
-
-        <!-- Tests Library -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.13.2</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

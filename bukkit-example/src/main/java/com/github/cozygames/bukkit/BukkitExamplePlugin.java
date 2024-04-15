@@ -20,7 +20,7 @@ package com.github.cozygames.bukkit;
 
 import com.github.cozyplugins.cozylibrary.CozyPlugin;
 
-public final class CozyGamesAPI_Bukkit extends CozyPlugin {
+public final class BukkitExamplePlugin extends CozyPlugin {
 
     @Override
     public boolean enableCommandDirectory() {
