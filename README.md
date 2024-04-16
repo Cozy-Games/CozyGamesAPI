@@ -1,5 +1,5 @@
 ```yaml
 name: CozyGamesAPI
-description: The api used to interface with the cozy game system.
+description: The API used to interface with the cozy game system.
 status: In Development
 ```
