@@ -18,6 +18,7 @@
 
 package com.github.cozygames.api;
 
+import com.github.cozygames.api.server.Server;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -29,16 +30,25 @@ import org.jetbrains.annotations.NotNull;
  * This interface represents the base of the API package.
  * All functions are accessed via this interface.
  * <p>
- * To obtain an instance of the CozyGamesAPI interface, use the {@code getInstance()} method.
- * This ensures that only one instance of the API is created per server instance, maintaining
- * consistency and preventing duplication of resources.
+ * <h1>Implementation</h1>
  * <p>
+ * If you're on a platform that has a service provider:
+ * <pre>{@code
+ * RegisteredServiceProvider<CozyGamesAPI> provider = Bukkit
+ *         .getServicesManager()
+ *         .getRegistration(CozyGamesAPI.class);
  *
- * <p>For ease of use, and for platforms without a Service Manager, an instance
- * can also be obtained from the static singleton accessor in
- * {@link LuckPermsProvider}.</p>
+ * if (provider != null) {
+ *     CozyGamesAPI api = provider.getProvider();
+ * }
+ * }</pre>
+ * <p>
+ * Otherwise, you can obtain a static instance from the {@link CozyGamesAPIProvider}.
+ * <pre>{@code
+ * CozyGamesAPI api = CozyGamesAPIProvider.get();
+ * }</pre>
  */
 public interface CozyGamesAPI {
 
-    @NotNull String getServerName();
+    @NotNull Server getServer();
 }

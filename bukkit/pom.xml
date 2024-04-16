@@ -29,7 +29,7 @@
     </parent>
 
     <artifactId>bukkit</artifactId>
-    <version>0.0.0</version>
+    <version>${parent.version}</version>
     <name>bukkit</name>
 
     <build>

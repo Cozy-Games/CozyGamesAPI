@@ -18,16 +18,17 @@
 
 package com.github.cozygames.bukkit;
 
-import com.github.cozygames.api.CozyGamesAPI;
-import com.github.cozygames.api.CozyGamesAPIProvider;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
+import com.github.cozyplugins.cozylibrary.CozyPlugin;
 
-public final class BukkitExamplePlugin extends JavaPlugin {
+public abstract class CozyGamesPlugin extends CozyPlugin {
 
     @Override
-    public void onEnable() {
-        CozyGamesAPI api = CozyGamesAPIProvider.get();
+    public boolean enableCommandDirectory() {
+        return false;
+    }
+
+    @Override
+    public void onCozyEnable() {
+
     }
 }

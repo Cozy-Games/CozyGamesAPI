@@ -16,18 +16,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit;
+package com.github.cozygames.api.server;
 
-import com.github.cozygames.api.CozyGamesAPI;
-import com.github.cozygames.api.CozyGamesAPIProvider;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
-public final class BukkitExamplePlugin extends JavaPlugin {
+public interface Server {
 
-    @Override
-    public void onEnable() {
-        CozyGamesAPI api = CozyGamesAPIProvider.get();
-    }
+    @NotNull String getName();
+
+    @NotNull String getVersion();
 }

@@ -29,7 +29,7 @@
     </parent>
 
     <artifactId>api</artifactId>
-    <version>0.0.0</version>
+    <version>${parent.version}</version>
     <name>api</name>
 
     <properties>
