@@ -20,7 +20,9 @@ package com.github.cozygames.bukkit;
 
 import com.github.cozyplugins.cozylibrary.CozyPlugin;
 
-public final class CozyGamesAPI_Bukkit extends CozyPlugin {
+public final class CozyGamesBukkitLoader extends CozyPlugin {
+
+    private CozyGamesBukkitPlugin plugin;
 
     @Override
     public boolean enableCommandDirectory() {
@@ -29,6 +31,8 @@ public final class CozyGamesAPI_Bukkit extends CozyPlugin {
 
     @Override
     public void onCozyEnable() {
+        this.plugin = new CozyGamesBukkitPlugin(this);
 
+        // Create a new instance of the api.
     }
 }

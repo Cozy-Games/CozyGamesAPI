@@ -16,19 +16,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit;
+package com.github.cozygames.api.plugin;
 
-import com.github.cozyplugins.cozylibrary.CozyPlugin;
+import org.jetbrains.annotations.NotNull;
 
-public abstract class CozyGamesPlugin extends CozyPlugin {
+import java.io.File;
 
-    @Override
-    public boolean enableCommandDirectory() {
-        return false;
-    }
+/**
+ * Represents the instance of the cozy games api plugin.
+ */
+public interface CozyGamesPlugin {
 
-    @Override
-    public void onCozyEnable() {
-
-    }
+    /**
+     * The instance of the cozy games api plugin folder.
+     * <p>
+     * This folder is used to store all the plugin's configuration.
+     * <p>
+     * The data folder will be used to create and get the instance
+     * of the connection configuration.
+     *
+     * @return The instance of the cozy games api plugin folder.
+     */
+    @NotNull
+    File getDataFolder();
 }

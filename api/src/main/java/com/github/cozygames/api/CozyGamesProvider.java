@@ -23,30 +23,30 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Provides static access to the {@link CozyGamesAPI} class.
+ * Provides static access to the {@link CozyGames} class.
  * <p>
  * It's advisable to utilize the service manager provided
  * by your platform if available.
- * Obtaining that instance is documented here {@link CozyGamesAPI}.
+ * Obtaining that instance is documented here {@link CozyGames}.
  * <p>
  * If your platform does not offer a service manager you
  * can obtain an instance of the API by calling the
- * {@link CozyGamesAPIProvider#get()} method.
+ * {@link CozyGamesProvider#get()} method.
  * <pre>{@code
- * CozyGamesAPI api = CozyGamesAPIProvider.get();
+ * CozyGames api = CozyGamesProvider.get();
  * }</pre>
  * <p>
- * When the corresponding platform's api plugin has loaded it will
- * {@link CozyGamesAPIProvider#register(CozyGamesAPI)} the instance
- * of the api in this class.
+ * When the corresponding platform's api plugin has loaded, it will
+ * register the instance of the api in this class with
+ * {@link CozyGamesProvider#register(CozyGames)}.
  */
-public class CozyGamesAPIProvider {
+public class CozyGamesProvider {
 
-    private static @Nullable CozyGamesAPI instance;
+    private static @Nullable CozyGames instance;
 
     /**
      * Represents the exception thrown when the
-     * {@link CozyGamesAPIProvider#get()} method was
+     * {@link CozyGamesProvider#get()} method was
      * called but the instance of the api is still null.
      */
     public static final class APINotLoadedException extends IllegalStateException {
@@ -65,7 +65,7 @@ public class CozyGamesAPIProvider {
     }
 
     /**
-     * Used to get the instance of the {@link CozyGamesAPI}
+     * Used to get the instance of the {@link CozyGames}
      * that was registered when the corresponding platform's
      * api loaded.
      *
@@ -73,7 +73,7 @@ public class CozyGamesAPIProvider {
      * @throws APINotLoadedException When the platform has not yet
      *                               provided the instance of the api.
      */
-    public static @NotNull CozyGamesAPI get() {
+    public static @NotNull CozyGames get() {
 
         // Check if the instance of the api
         // has not been provided.
@@ -93,8 +93,8 @@ public class CozyGamesAPIProvider {
      * @param instance The instance of the api.
      */
     @ApiStatus.Internal
-    public static void register(@NotNull CozyGamesAPI instance) {
-        CozyGamesAPIProvider.instance = instance;
+    public static void register(@NotNull CozyGames instance) {
+        CozyGamesProvider.instance = instance;
     }
 
     /**
@@ -104,6 +104,6 @@ public class CozyGamesAPIProvider {
      */
     @ApiStatus.Internal
     public static void unregister() {
-        CozyGamesAPIProvider.instance = null;
+        CozyGamesProvider.instance = null;
     }
 }

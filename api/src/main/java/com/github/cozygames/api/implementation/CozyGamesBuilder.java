@@ -16,16 +16,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit;
+package com.github.cozygames.api.implementation;
 
 import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.CozyGamesProvider;
-import org.bukkit.plugin.java.JavaPlugin;
+import com.github.cozygames.api.plugin.CozyGamesPlugin;
+import org.jetbrains.annotations.NotNull;
 
-public final class BukkitExamplePlugin extends JavaPlugin {
+public class CozyGamesBuilder {
 
-    @Override
-    public void onEnable() {
-        CozyGames api = CozyGamesProvider.get();
+    private final @NotNull CozyGamesPlugin plugin;
+
+    public CozyGamesBuilder(@NotNull CozyGamesPlugin plugin) {
+        this.plugin = plugin;
+    }
+
+    public @NotNull CozyGamesPlugin getPlugin() {
+        return this.plugin;
+    }
+
+    public CozyGames build() {
+        return new CozyGamesImpl(plugin);
     }
 }
