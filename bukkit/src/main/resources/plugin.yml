@@ -1,0 +1,4 @@
+name: CozyGamesAPI-Bukkit
+version: '${project.version}'
+main: com.github.cozygames.bukkit.CozyGamesBukkitLoader
+api-version: '1.20'

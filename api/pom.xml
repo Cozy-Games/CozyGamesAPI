@@ -60,11 +60,25 @@
             </exclusions>
         </dependency>
 
+        <!-- Configuration Library -->
+        <dependency>
+            <groupId>com.github.smuddgge</groupId>
+            <artifactId>SquishyConfiguration</artifactId>
+            <version>2.0.1</version>
+        </dependency>
+
+        <!-- Event Distributor API -->
+        <dependency>
+            <groupId>com.github.Kerbity</groupId>
+            <artifactId>Kerb</artifactId>
+            <version>1.9.0</version>
+        </dependency>
+
         <!-- Tests Library -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
 
