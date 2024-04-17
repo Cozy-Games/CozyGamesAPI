@@ -51,11 +51,15 @@
         <dependency>
             <groupId>com.github.smuddgge</groupId>
             <artifactId>SquishyDatabase</artifactId>
-            <version>3.3.0</version>
+            <version>3.4.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.jetbrains</groupId>
                     <artifactId>annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.github.smuddgge</groupId>
+                    <artifactId>SquishyConfiguration</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

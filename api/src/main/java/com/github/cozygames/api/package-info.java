@@ -16,30 +16,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.plugin;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
-
 /**
- * Represents the instance of the cozy games api plugin.
+ * The api package.
  * <p>
- * This is used to get important infomation about the
- * plugin used to assist the api.
+ * Contains all the interfaces and implementation to
+ * interface with the cozy game's system.
+ * <p>
+ * Obtaining and instance of the api can be observed
+ * in the base api {@link com.github.cozygames.api.CozyGames}.
  */
-public interface CozyGamesPlugin {
-
-    /**
-     * The instance of the cozy games api plugin folder.
-     * <p>
-     * This folder is used to store all the plugin's configuration.
-     * <p>
-     * The data folder will be used to create and get the instance
-     * of the connection configuration.
-     *
-     * @return The instance of the cozy games api plugin folder.
-     */
-    @NotNull
-    File getDataFolder();
-}
+package com.github.cozygames.api;

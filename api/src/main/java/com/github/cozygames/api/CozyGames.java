@@ -21,6 +21,7 @@ package com.github.cozygames.api;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.kerbity.kerb.client.KerbClient;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
+import com.github.smuddgge.squishydatabase.interfaces.Database;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -52,6 +53,22 @@ import org.jetbrains.annotations.NotNull;
 public interface CozyGames {
 
     /**
+     * The name of the server the plugin is located on.
+     * <p>
+     * Found in the plugin's configuration file, this
+     * name should match the name used in the {@link KerbClient#getName()}.
+     * <p>
+     * This may not match the actual servers name, but instead used
+     * as the name for identifying servers in {@link KerbClient}
+     * events and in the database.
+     * <p>
+     *
+     * @return The name of the server.
+     */
+    @NotNull
+    String getServerName();
+
+    /**
      * Used to get the instance of the cozy game api plugin.
      * <p>
      * Where this isn't always an extension of the plugin class.
@@ -75,18 +92,13 @@ public interface CozyGames {
     Configuration getConnectionConfig();
 
     /**
-     * The name of the server the plugin is located on.
+     * Used to get the instance of the cozy game's database.
      * <p>
-     * Found in the plugin's configuration file, this
-     * name should match the name used in the {@link KerbClient#getName()}.
-     * <p>
-     * This may not match the actual servers name, but instead used
-     * as the name for identifying servers in {@link KerbClient}
-     * events and in the database.
-     * <p>
+     * The database is used to store global infomation about
+     * the game's system.
      *
-     * @return The name of the server.
+     * @return The instance of the database.
      */
     @NotNull
-    String getServerName();
+    Database getDatabase();
 }

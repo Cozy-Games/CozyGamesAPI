@@ -20,21 +20,52 @@ package com.github.cozygames.api.implementation;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents the api builder.
+ * <p>
+ * Used to help build an instance of the api.
+ * <p>
+ * To create an instance of the api, you can use
+ * this builder within this maven project.
+ * <pre>{@code
+ * CozyGames cozyGames = new CozyGamesBuilder(plugin).build();
+ * }</pre>
+ */
 public class CozyGamesBuilder {
 
     private final @NotNull CozyGamesPlugin plugin;
 
+    /**
+     * Used to create a new cozy games api builder.
+     *
+     * @param plugin The instance of the cozy games
+     *               api plugin.
+     */
+    @ApiStatus.Internal
     public CozyGamesBuilder(@NotNull CozyGamesPlugin plugin) {
         this.plugin = plugin;
     }
 
+    /**
+     * Used to get the instance of the cozy
+     * games api plugin.
+     *
+     * @return The instance of the plugin.
+     */
     public @NotNull CozyGamesPlugin getPlugin() {
         return this.plugin;
     }
 
-    public CozyGames build() {
+    /**
+     * Used to build the instance of the cozy
+     * games api implementation.
+     *
+     * @return The new instance of the cozy games api.
+     */
+    public @NotNull CozyGames build() {
         return new CozyGamesImpl(plugin);
     }
 }
