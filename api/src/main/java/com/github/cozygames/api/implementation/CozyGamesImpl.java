@@ -20,6 +20,9 @@ package com.github.cozygames.api.implementation;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
+import com.github.cozygames.api.database.table.MemberTable;
+import com.github.cozygames.api.member.Member;
+import com.github.cozygames.api.member.MemberNotFoundException;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.smuddgge.squishyconfiguration.implementation.YamlConfiguration;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
@@ -27,6 +30,9 @@ import com.github.smuddgge.squishydatabase.DatabaseBuilder;
 import com.github.smuddgge.squishydatabase.interfaces.Database;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Represents a simple implementation of the cozy games api.
@@ -101,5 +107,59 @@ public class CozyGamesImpl implements CozyGames {
     @Override
     public @NotNull Database getDatabase() {
         return this.database;
+    }
+
+    @Override
+    public @NotNull Member getMember(@NotNull UUID playerUuid) {
+
+        // The optional player's name.
+        final String playerName = this.getPlugin()
+                .getPlayerName(playerUuid)
+                .orElse(null);
+
+        // Check if the players name was found.
+        if (playerName != null) {
+            return new Member(playerUuid, playerName);
+        }
+
+        // Attempt to get the members record.
+        Member member = this.database
+                .getTable(MemberTable.class)
+                .getMember(playerUuid)
+                .orElse(null);
+
+        // Check if the member is null.
+        if (member == null) {
+            throw new MemberNotFoundException("Could not find player's uuid.");
+        }
+
+        return member;
+    }
+
+    @Override
+    public @NotNull Member getMember(@NotNull String playerName) {
+
+        // The optional player's name.
+        final UUID playerUuid = this.getPlugin()
+                .getPlayerUuid(playerName)
+                .orElse(null);
+
+        // Check if the players name was found.
+        if (playerUuid != null) {
+            return new Member(playerUuid, playerName);
+        }
+
+        // Attempt to get the members record.
+        Member member = this.database
+                .getTable(MemberTable.class)
+                .getMember(playerName)
+                .orElse(null);
+
+        // Check if the member is null.
+        if (member == null) {
+            throw new MemberNotFoundException("Could not find player's name.");
+        }
+
+        return member;
     }
 }

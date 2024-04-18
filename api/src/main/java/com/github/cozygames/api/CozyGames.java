@@ -18,11 +18,15 @@
 
 package com.github.cozygames.api;
 
+import com.github.cozygames.api.member.Member;
+import com.github.cozygames.api.member.MemberNotFoundException;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.kerbity.kerb.client.KerbClient;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.interfaces.Database;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.UUID;
 
 /**
  * The CozyGames API.
@@ -101,4 +105,34 @@ public interface CozyGames {
      */
     @NotNull
     Database getDatabase();
+
+    /**
+     * Used to get the instance of a member
+     * given the player's uuid.
+     * <p>
+     * A member is a player adapter for the
+     * cozy game's system.
+     *
+     * @param playerUuid The player's uuid.
+     * @return The instance of the member.
+     * @throws MemberNotFoundException Thrown when the member could not be
+     *                                 found based on their player uuid.
+     */
+    @NotNull
+    Member getMember(@NotNull UUID playerUuid);
+
+    /**
+     * Used to get the instance of a member
+     * given the player's name.
+     * <p>
+     * A member is a player adapter for the
+     * cozy game's system.
+     *
+     * @param playerName The player's name.
+     * @return The instance of the member.
+     * @throws MemberNotFoundException Thrown when the member could not be
+     *                                 found based on their player name.
+     */
+    @NotNull
+    Member getMember(@NotNull String playerName);
 }

@@ -21,6 +21,8 @@ package com.github.cozygames.api.plugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Represents the instance of the cozy games api plugin.
@@ -42,4 +44,28 @@ public interface CozyGamesPlugin {
      */
     @NotNull
     File getDataFolder();
+
+    /**
+     * Used to get the instance of a players name
+     * using the plugin's api.
+     *
+     * @param playerUuid The player's uuid.
+     * @return The optional player's name.
+     * This can be null if the plugin's api is unable
+     * to get the player infomation.
+     */
+    @NotNull
+    Optional<String> getPlayerName(@NotNull UUID playerUuid);
+
+    /**
+     * Used to get the instance of a players uuid
+     * using the plugin's api.
+     *
+     * @param playerName The player's name.
+     * @return The optional player's uuid.
+     * This can be null if the plugin's api is unable
+     * to get the player infomation.
+     */
+    @NotNull
+    Optional<UUID> getPlayerUuid(@NotNull String playerName);
 }

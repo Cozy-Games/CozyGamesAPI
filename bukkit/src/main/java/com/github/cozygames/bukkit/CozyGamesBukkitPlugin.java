@@ -19,9 +19,14 @@
 package com.github.cozygames.bukkit;
 
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.Optional;
+import java.util.UUID;
 
 public class CozyGamesBukkitPlugin implements CozyGamesPlugin {
 
@@ -34,5 +39,30 @@ public class CozyGamesBukkitPlugin implements CozyGamesPlugin {
     @Override
     public @NotNull File getDataFolder() {
         return this.loader.getDataFolder();
+    }
+
+    @Override
+    public @NotNull Optional<String> getPlayerName(@NotNull UUID playerUuid) {
+        return Optional.ofNullable(Bukkit.getOfflinePlayer(playerUuid).getName());
+    }
+
+    @Override
+    public @NotNull Optional<UUID> getPlayerUuid(@NotNull String playerName) {
+
+        // Fist check if they are online as getting and
+        // offline player by name is depreciated.
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (player.getName().equalsIgnoreCase(playerName)) {
+                return Optional.of(player.getUniqueId());
+            }
+        }
+
+        // Otherwise, try getting the offline player.
+        try {
+            final OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(playerName);
+            return Optional.of(offlinePlayer.getUniqueId());
+        } catch (IllegalArgumentException exception) {
+            return Optional.empty();
+        }
     }
 }
