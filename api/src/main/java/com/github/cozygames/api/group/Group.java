@@ -20,7 +20,6 @@ package com.github.cozygames.api.group;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
-import com.github.cozygames.api.database.record.GroupRecord;
 import com.github.cozygames.api.database.table.GroupTable;
 import com.github.cozygames.api.indicator.Savable;
 import com.github.cozygames.api.member.Member;
@@ -37,6 +36,9 @@ import java.util.UUID;
 /**
  * Represents a group of players waiting
  * to play a game.
+ * <p>
+ * This is exclusively stored in the database.
+ * The database can be obtained with {@link CozyGames#getDatabase()}.
  */
 public class Group implements ConfigurationConvertable<Group>, Savable<Group> {
 

@@ -18,6 +18,7 @@
 
 package com.github.cozygames.api.member;
 
+import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
 import com.github.cozygames.api.database.table.MemberTable;
 import com.github.cozygames.api.indicator.Savable;
@@ -25,20 +26,43 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
+/**
+ * Represents a player on the server
+ * registered with the cozy game's system.
+ * <p>
+ * Each member should be stored in the database.
+ * The database can be obtained with {@link CozyGames#getDatabase()}.
+ */
 public class Member implements Savable<Member> {
 
     private final @NotNull UUID uuid;
     private final @NotNull String name;
 
+    /**
+     * Used to create a new instance of a member.
+     *
+     * @param uuid The player's unique uuid.
+     * @param name The player's unique name.
+     */
     public Member(@NotNull UUID uuid, @NotNull String name) {
         this.uuid = uuid;
         this.name = name;
     }
 
+    /**
+     * Used to get the member's unique uuid.
+     *
+     * @return The member's uuid.
+     */
     public @NotNull UUID getUuid() {
         return this.uuid;
     }
 
+    /**
+     * Used to get the member's unique name.
+     *
+     * @return The member's name.
+     */
     public @NotNull String getName() {
         return this.name;
     }

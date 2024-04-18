@@ -23,6 +23,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class Arena implements Savable<Arena> {
 
+    private final @NotNull String identifier;
+
+    public Arena(@NotNull String identifier) {
+        this.identifier = identifier;
+    }
+
     @Override
     public @NotNull Arena save() {
         return null;
