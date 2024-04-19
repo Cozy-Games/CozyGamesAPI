@@ -40,7 +40,6 @@ public abstract class Arena implements Savable<Arena> {
     private @Nullable GroupSize groupSize;
     private @Nullable String mapName;
     private @Nullable ConfigurationSection mapItemConfiguration;
-    private @Nullable String groupIdentifier;
 
     /**
      * Used to create a new instance of an arena.
@@ -87,10 +86,6 @@ public abstract class Arena implements Savable<Arena> {
         return Optional.ofNullable(this.mapItemConfiguration);
     }
 
-    public @NotNull Optional<String> getGroupIdentifier() {
-        return Optional.ofNullable(this.groupIdentifier);
-    }
-
     public @NotNull Arena setGroupSize(@NotNull GroupSize groupSize) {
         this.groupSize = groupSize;
         return this;
@@ -103,11 +98,6 @@ public abstract class Arena implements Savable<Arena> {
 
     public @NotNull Arena setMapItemConfiguration(@NotNull ConfigurationSection mapItemConfiguration) {
         this.mapItemConfiguration = mapItemConfiguration;
-        return this;
-    }
-
-    public @NotNull Arena setGroupIdentifier(@NotNull String groupIdentifier) {
-        this.groupIdentifier = groupIdentifier;
         return this;
     }
 }

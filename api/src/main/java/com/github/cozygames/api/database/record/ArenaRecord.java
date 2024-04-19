@@ -48,7 +48,6 @@ public class ArenaRecord extends Record implements RecordConvertable<Arena> {
      * These variables may be changed in the database.
      */
     public String groupSizeClass;
-    public String groupIdentifier;
 
     @Override
     public @NotNull Arena convert() {
