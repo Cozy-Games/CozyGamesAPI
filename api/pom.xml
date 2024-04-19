@@ -76,6 +76,12 @@
             <groupId>com.github.Kerbity</groupId>
             <artifactId>Kerb</artifactId>
             <version>1.9.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.github.MineManiaUK</groupId>
+                    <artifactId>DeveloperTools</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <!-- Tests Library -->
