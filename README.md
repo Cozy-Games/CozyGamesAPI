@@ -22,3 +22,15 @@ That server will now let players play that mini-game.
 Once an arena is set up and a player starts a game, 
 it will generate a new world and create the arena.
 ```
+
+# Developers
+
+**Class Breakdown**
+```yaml
+CozyGames: The base api class.
+CozyGamesProvide: A way of obtaining the api class.
+
+Map: For each mini-game map. (Relative position)
+Arena: A loaded map. (Actual locations)
+Session: A running game in an arena.
+```
