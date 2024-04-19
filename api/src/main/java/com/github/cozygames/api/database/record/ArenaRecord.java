@@ -18,7 +18,7 @@
 
 package com.github.cozygames.api.database.record;
 
-import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.indicator.RecordConvertable;
 import com.github.smuddgge.squishydatabase.record.Record;
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +29,7 @@ import org.jetbrains.annotations.NotNull;
  * Represents the exact data that will be stored
  * in each arena record in the database.
  */
-public class ArenaRecord extends Record implements RecordConvertable<Arena> {
+public class ArenaRecord extends Record implements RecordConvertable<Map> {
 
     /**
      * Final variables.
@@ -50,7 +50,7 @@ public class ArenaRecord extends Record implements RecordConvertable<Arena> {
     public String groupSizeClass;
 
     @Override
-    public @NotNull Arena convert() {
+    public @NotNull Map convert() {
         return null;
     }
 }
