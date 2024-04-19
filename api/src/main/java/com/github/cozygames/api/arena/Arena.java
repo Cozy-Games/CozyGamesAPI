@@ -18,19 +18,96 @@
 
 package com.github.cozygames.api.arena;
 
+import com.github.cozygames.api.group.GroupSize;
 import com.github.cozygames.api.indicator.Savable;
+import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-public class Arena implements Savable<Arena> {
+import java.util.Optional;
 
-    private final @NotNull String identifier;
+/**
+ * Represents the base arena class.
+ * <p>
+ * Represents a mini-game arena that can be created.
+ */
+public abstract class Arena implements Savable<Arena> {
 
-    public Arena(@NotNull String identifier) {
+    private @NotNull String identifier;
+    private @NotNull String serverName;
+    private @NotNull String gameIdentifier;
+
+    private @Nullable GroupSize groupSize;
+    private @Nullable String mapName;
+    private @Nullable ConfigurationSection mapItemConfiguration;
+    private @Nullable String groupIdentifier;
+
+    /**
+     * Used to create a new instance of an arena.
+     *
+     * @param identifier     The arena's identifier.
+     * @param serverName     The server the arena can be initialized on.
+     * @param gameIdentifier The game identifier.
+     */
+    public Arena(@NotNull String identifier,
+                 @NotNull String serverName,
+                 @NotNull String gameIdentifier) {
+
         this.identifier = identifier;
+        this.serverName = serverName;
+        this.gameIdentifier = gameIdentifier;
     }
 
-    @Override
-    public @NotNull Arena save() {
-        return null;
+    /**
+     * The arena type's unique identifier.
+     *
+     * @return
+     */
+    public @NotNull String getIdentifier() {
+        return this.identifier;
+    }
+
+    public @NotNull String getServerName() {
+        return this.serverName;
+    }
+
+    public @NotNull String getGameIdentifier() {
+        return this.gameIdentifier;
+    }
+
+    public @NotNull Optional<GroupSize> getGroupSize() {
+        return Optional.ofNullable(this.groupSize);
+    }
+
+    public @NotNull Optional<String> getMapName() {
+        return Optional.ofNullable(this.mapName);
+    }
+
+    public @NotNull Optional<ConfigurationSection> getMapItemConfiguration() {
+        return Optional.ofNullable(this.mapItemConfiguration);
+    }
+
+    public @NotNull Optional<String> getGroupIdentifier() {
+        return Optional.ofNullable(this.groupIdentifier);
+    }
+
+    public @NotNull Arena setGroupSize(@NotNull GroupSize groupSize) {
+        this.groupSize = groupSize;
+        return this;
+    }
+
+    public @NotNull Arena setMapName(@NotNull String mapName) {
+        this.mapName = mapName;
+        return this;
+    }
+
+    public @NotNull Arena setMapItemConfiguration(@NotNull ConfigurationSection mapItemConfiguration) {
+        this.mapItemConfiguration = mapItemConfiguration;
+        return this;
+    }
+
+    public @NotNull Arena setGroupIdentifier(@NotNull String groupIdentifier) {
+        this.groupIdentifier = groupIdentifier;
+        return this;
     }
 }

@@ -24,6 +24,7 @@ import com.github.cozygames.api.database.table.MemberTable;
 import com.github.cozygames.api.indicator.Savable;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -65,6 +66,42 @@ public class Member implements Savable<Member> {
      */
     public @NotNull String getName() {
         return this.name;
+    }
+
+    /**
+     * Used to attempt getting the instance of
+     * this member as a player.
+     *
+     * @param clazz The instance of the class.
+     * @param <P>   The player class.
+     * @return The optional instance of the player class.
+     * @throws IllegalArgumentException Thrown when the class requested doesnt match
+     *                                  what the player adapter provided by the plugin.
+     */
+    @SuppressWarnings("all")
+    public <P> @NotNull Optional<P> getPlayer(@NotNull Class<P> clazz) {
+
+        // Attempt to get the instance of the player.
+        Optional<?> optional = CozyGamesProvider.get()
+                .getPlugin()
+                .getPlayerAdapter()
+                .getPlayer(this);
+
+        // Check if the player was not found.
+        if (optional.isEmpty()) return Optional.empty();
+        final Object player = optional.get();
+
+        // Check if they are not the same class type.
+        if (!clazz.getName().equals(player.getClass().getName())) {
+            throw new IllegalArgumentException(
+                    "The provided player adapter converted the member into a "
+                            + player.getClass().getName()
+                            + ", yet the class requested was "
+                            + clazz.getName() + "."
+            );
+        }
+
+        return Optional.of((P) player);
     }
 
     @Override

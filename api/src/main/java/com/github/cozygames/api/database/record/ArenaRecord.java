@@ -39,7 +39,6 @@ public class ArenaRecord extends Record implements RecordConvertable<Arena> {
     public String identifier;
     public String serverName;
     public String gameIdentifier;
-    public String playerSizeClass;
     public String mapName;
     public String mapItemClass;
 
@@ -48,6 +47,7 @@ public class ArenaRecord extends Record implements RecordConvertable<Arena> {
      * <p>
      * These variables may be changed in the database.
      */
+    public String groupSizeClass;
     public String groupIdentifier;
 
     @Override

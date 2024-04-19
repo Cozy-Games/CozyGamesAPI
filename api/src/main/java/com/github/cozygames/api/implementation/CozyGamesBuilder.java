@@ -34,6 +34,7 @@ import org.jetbrains.annotations.NotNull;
  * CozyGames cozyGames = new CozyGamesBuilder(plugin).build();
  * }</pre>
  */
+@ApiStatus.Internal
 public class CozyGamesBuilder {
 
     private final @NotNull CozyGamesPlugin plugin;

@@ -50,6 +50,7 @@ import java.util.UUID;
  * CozyGames cozyGames = new CozyGamesBuilder(plugin).build();
  * }</pre>
  */
+@ApiStatus.Internal
 public class CozyGamesImpl implements CozyGames {
 
     private final @NotNull CozyGamesPlugin plugin;

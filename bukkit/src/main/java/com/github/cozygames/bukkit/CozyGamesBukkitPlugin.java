@@ -18,7 +18,9 @@
 
 package com.github.cozygames.bukkit;
 
+import com.github.cozygames.api.member.PlayerAdapter;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
+import com.github.cozygames.bukkit.adapter.BukkitPlayerAdapter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -64,5 +66,10 @@ public class CozyGamesBukkitPlugin implements CozyGamesPlugin {
         } catch (IllegalArgumentException exception) {
             return Optional.empty();
         }
+    }
+
+    @Override
+    public @NotNull PlayerAdapter<?> getPlayerAdapter() {
+        return new BukkitPlayerAdapter();
     }
 }

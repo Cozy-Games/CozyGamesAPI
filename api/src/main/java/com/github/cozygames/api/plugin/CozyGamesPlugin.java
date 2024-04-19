@@ -18,6 +18,7 @@
 
 package com.github.cozygames.api.plugin;
 
+import com.github.cozygames.api.member.PlayerAdapter;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -68,4 +69,13 @@ public interface CozyGamesPlugin {
      */
     @NotNull
     Optional<UUID> getPlayerUuid(@NotNull String playerName);
+
+    /**
+     * The player adapter is used to convert an instance of a
+     * member to the platform specific player class.
+     *
+     * @return The instance of the player adapter.
+     */
+    @NotNull
+    PlayerAdapter<?> getPlayerAdapter();
 }

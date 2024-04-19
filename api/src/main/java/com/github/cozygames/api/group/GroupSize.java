@@ -18,36 +18,5 @@
 
 package com.github.cozygames.api.group;
 
-import org.jetbrains.annotations.NotNull;
-
-/**
- * The type of group.
- * <p>
- * This is hard coded into the class so the
- * record can convert it back into the correct class.
- */
-public enum GroupType {
-    BASIC(Group.class);
-
-    private final @NotNull Class<? extends Group> clazz;
-
-    /**
-     * Used to create a group type.
-     *
-     * @param clazz The type of class the group type
-     *              will be hard coded in.
-     */
-    GroupType(@NotNull Class<? extends Group> clazz) {
-        this.clazz = clazz;
-    }
-
-    /**
-     * Used to get the instance of the class this
-     * group type is hard coded in.
-     *
-     * @return The class type.
-     */
-    public @NotNull Class<? extends Group> getGroupClass() {
-        return this.clazz;
-    }
+public class GroupSize {
 }

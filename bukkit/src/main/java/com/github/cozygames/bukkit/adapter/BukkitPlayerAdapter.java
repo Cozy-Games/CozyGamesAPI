@@ -16,38 +16,27 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.group;
+package com.github.cozygames.bukkit.adapter;
 
+import com.github.cozygames.api.member.Member;
+import com.github.cozygames.api.member.PlayerAdapter;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
+
 /**
- * The type of group.
+ * Represents the bukkit player adapter.
  * <p>
- * This is hard coded into the class so the
- * record can convert it back into the correct class.
+ * Used to convert a member instance into
+ * a bukkit player instance.
  */
-public enum GroupType {
-    BASIC(Group.class);
+public class BukkitPlayerAdapter implements PlayerAdapter<Player> {
 
-    private final @NotNull Class<? extends Group> clazz;
-
-    /**
-     * Used to create a group type.
-     *
-     * @param clazz The type of class the group type
-     *              will be hard coded in.
-     */
-    GroupType(@NotNull Class<? extends Group> clazz) {
-        this.clazz = clazz;
-    }
-
-    /**
-     * Used to get the instance of the class this
-     * group type is hard coded in.
-     *
-     * @return The class type.
-     */
-    public @NotNull Class<? extends Group> getGroupClass() {
-        return this.clazz;
+    @Override
+    public Optional<Player> getPlayer(@NotNull Member member) {
+        final Player player = Bukkit.getPlayer(member.getUuid());
+        return Optional.ofNullable(player);
     }
 }

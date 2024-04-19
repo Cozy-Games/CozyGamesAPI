@@ -16,38 +16,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.group;
+package com.github.cozygames.api.member;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
+
 /**
- * The type of group.
+ * Used to obtain the instance of the
+ * platform's player class.
  * <p>
- * This is hard coded into the class so the
- * record can convert it back into the correct class.
+ * This implementation should be provided
+ * in the cozy game's plugin.
+ *
+ * @param <P> The platform's player class.
  */
-public enum GroupType {
-    BASIC(Group.class);
-
-    private final @NotNull Class<? extends Group> clazz;
+public interface PlayerAdapter<P> {
 
     /**
-     * Used to create a group type.
+     * Used to get the instance of the platform's player class.
      *
-     * @param clazz The type of class the group type
-     *              will be hard coded in.
+     * @param member The instance of the member to convert.
+     * @return The player instance.
      */
-    GroupType(@NotNull Class<? extends Group> clazz) {
-        this.clazz = clazz;
-    }
-
-    /**
-     * Used to get the instance of the class this
-     * group type is hard coded in.
-     *
-     * @return The class type.
-     */
-    public @NotNull Class<? extends Group> getGroupClass() {
-        return this.clazz;
-    }
+    Optional<P> getPlayer(@NotNull Member member);
 }
