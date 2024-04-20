@@ -30,7 +30,7 @@ import java.util.LinkedHashMap;
  * Represents a position in minecraft without
  * a specific world.
  */
-public class Position implements ConfigurationConvertable<Position>, Replicable<Position> {
+public class Position extends Vector implements ConfigurationConvertable<Position>, Replicable<Position> {
 
     private double x;
     private double y;
@@ -49,9 +49,7 @@ public class Position implements ConfigurationConvertable<Position>, Replicable<
      * @param pitch The rotation in the vertical plane.
      */
     public Position(double x, double y, double z, float yaw, float pitch) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        super(x, y, z);
         this.yaw = yaw;
         this.pitch = pitch;
     }
@@ -67,9 +65,7 @@ public class Position implements ConfigurationConvertable<Position>, Replicable<
      * @param z The z coordinate.
      */
     public Position(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        super(x, y, z);
         this.yaw = 0;
         this.pitch = 0;
     }
@@ -82,10 +78,9 @@ public class Position implements ConfigurationConvertable<Position>, Replicable<
      * @param position The instance of the position to clone.
      */
     public Position(@NotNull Position position) {
+        super(position.duplicate().x, position.duplicate().y, position.duplicate().z);
+
         Position clone = position.duplicate();
-        this.x = clone.x;
-        this.y = clone.y;
-        this.z = clone.z;
         this.yaw = clone.yaw;
         this.pitch = clone.pitch;
     }
@@ -98,6 +93,7 @@ public class Position implements ConfigurationConvertable<Position>, Replicable<
      * @param section The instance of the configuration section.
      */
     public Position(@NotNull ConfigurationSection section) {
+        super(0, 0, 0);
         this.convert(section);
     }
 
@@ -129,16 +125,9 @@ public class Position implements ConfigurationConvertable<Position>, Replicable<
         T convert(@NotNull Position position, @NotNull String worldName);
     }
 
-    public double getX() {
-        return this.x;
-    }
-
-    public double getY() {
-        return this.y;
-    }
-
-    public double getZ() {
-        return this.z;
+    @Override
+    public String toString() {
+        return "{Position: {x: " + this.x + ", y: " + this.y + ", z: " + this.z + ", yaw: " + this.yaw + ", pitch: " + this.pitch + "}";
     }
 
     public float getYaw() {
@@ -147,21 +136,6 @@ public class Position implements ConfigurationConvertable<Position>, Replicable<
 
     public float getPitch() {
         return this.pitch;
-    }
-
-    public @NotNull Position setX(double x) {
-        this.x = x;
-        return this;
-    }
-
-    public @NotNull Position setY(double y) {
-        this.y = y;
-        return this;
-    }
-
-    public @NotNull Position setZ(double z) {
-        this.z = z;
-        return this;
     }
 
     public @NotNull Position setYaw(float yaw) {
