@@ -30,6 +30,9 @@ it will generate a new world and create the arena.
 CozyGames: The base api class.
 CozyGamesProvide: A way of obtaining the api class.
 
+CozyGameAPIPlugin: Used in the api plugin's.
+CozyGamePlugin: Used in mini-game plugin's.
+
 Map: For each mini-game map. (Relative position)
 Arena: A loaded map. (Actual locations)
 Session: A running game in an arena.
