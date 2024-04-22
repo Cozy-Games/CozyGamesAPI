@@ -23,7 +23,7 @@ import com.github.cozygames.api.CozyGamesProvider;
 import com.github.cozygames.api.database.table.MemberTable;
 import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.MemberNotFoundException;
-import com.github.cozygames.api.plugin.CozyGamesPlugin;
+import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
 import com.github.smuddgge.squishyconfiguration.implementation.YamlConfiguration;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.DatabaseBuilder;
@@ -31,7 +31,6 @@ import com.github.smuddgge.squishydatabase.interfaces.Database;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -53,7 +52,7 @@ import java.util.UUID;
 @ApiStatus.Internal
 public class CozyGamesImpl implements CozyGames {
 
-    private final @NotNull CozyGamesPlugin plugin;
+    private final @NotNull CozyGamesAPIPlugin plugin;
 
     private final @NotNull Configuration connectionConfig;
     private final @NotNull Database database;
@@ -65,7 +64,7 @@ public class CozyGamesImpl implements CozyGames {
      * @param plugin The instance of the cozy games api plugin.
      */
     @ApiStatus.Internal
-    public CozyGamesImpl(@NotNull CozyGamesPlugin plugin) {
+    public CozyGamesImpl(@NotNull CozyGamesAPIPlugin plugin) {
         this.plugin = plugin;
 
         // Create connection configuration instance.
@@ -96,7 +95,7 @@ public class CozyGamesImpl implements CozyGames {
     }
 
     @Override
-    public @NotNull CozyGamesPlugin getPlugin() {
+    public @NotNull CozyGamesAPIPlugin getPlugin() {
         return this.plugin;
     }
 
