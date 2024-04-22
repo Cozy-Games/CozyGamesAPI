@@ -26,7 +26,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Represents the instance of the cozy games api plugin.
+ * Represents a instance of the cozy games api plugin.
  * <p>
  * This is used to get important infomation about the
  * plugin used to assist the api.
