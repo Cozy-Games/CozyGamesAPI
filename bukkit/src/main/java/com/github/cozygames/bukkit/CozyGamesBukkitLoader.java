@@ -18,11 +18,17 @@
 
 package com.github.cozygames.bukkit;
 
+import com.github.cozygames.api.CozyGames;
+import com.github.cozygames.api.CozyGamesProvider;
+import com.github.cozygames.api.implementation.CozyGamesBuilder;
 import com.github.cozyplugins.cozylibrary.CozyPlugin;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.ServicePriority;
 
+/**
+ * Represents the bukkit plugin api loader.
+ */
 public final class CozyGamesBukkitLoader extends CozyPlugin {
-
-    private CozyGamesBukkitPlugin plugin;
 
     @Override
     public boolean enableCommandDirectory() {
@@ -31,8 +37,21 @@ public final class CozyGamesBukkitLoader extends CozyPlugin {
 
     @Override
     public void onCozyEnable() {
-        this.plugin = new CozyGamesBukkitPlugin(this);
+        CozyGamesBukkitPlugin plugin = new CozyGamesBukkitPlugin(this);
 
         // Create a new instance of the api.
+        CozyGames api = new CozyGamesBuilder(plugin)
+                .build();
+
+        // Register the instance in the bukkit service manager.
+        Bukkit.getServicesManager().register(
+                CozyGames.class,
+                api,
+                this,
+                ServicePriority.Normal
+        );
+
+        // Also register the instance in the provider.
+        CozyGamesProvider.register(api);
     }
 }

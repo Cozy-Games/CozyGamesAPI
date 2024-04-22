@@ -20,7 +20,7 @@ package com.github.cozygames.api;
 
 import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.MemberNotFoundException;
-import com.github.cozygames.api.plugin.CozyGamesPlugin;
+import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
 import com.github.kerbity.kerb.client.KerbClient;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.interfaces.Database;
@@ -82,7 +82,7 @@ public interface CozyGames {
      * @return The api plugin.
      */
     @NotNull
-    CozyGamesPlugin getPlugin();
+    CozyGamesAPIPlugin getPlugin();
 
     /**
      * Used to get the instance of the connection configuration file.

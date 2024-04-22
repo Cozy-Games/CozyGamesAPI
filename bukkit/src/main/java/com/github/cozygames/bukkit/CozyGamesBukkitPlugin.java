@@ -19,21 +19,31 @@
 package com.github.cozygames.bukkit;
 
 import com.github.cozygames.api.member.PlayerAdapter;
-import com.github.cozygames.api.plugin.CozyGamesPlugin;
+import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
 import com.github.cozygames.bukkit.adapter.BukkitPlayerAdapter;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.util.Optional;
 import java.util.UUID;
 
-public class CozyGamesBukkitPlugin implements CozyGamesPlugin {
+/**
+ * The bukkit plugin api implementation.
+ */
+public class CozyGamesBukkitPlugin implements CozyGamesAPIPlugin {
 
     private final @NotNull CozyGamesBukkitLoader loader;
 
+    /**
+     * Used to create a new bukkit api implementation.
+     *
+     * @param loader The instance of the java plugin.
+     */
+    @ApiStatus.Internal
     public CozyGamesBukkitPlugin(@NotNull CozyGamesBukkitLoader loader) {
         this.loader = loader;
     }

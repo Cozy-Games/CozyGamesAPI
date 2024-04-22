@@ -19,7 +19,7 @@
 package com.github.cozygames.api.implementation;
 
 import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.plugin.CozyGamesPlugin;
+import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,7 +37,7 @@ import org.jetbrains.annotations.NotNull;
 @ApiStatus.Internal
 public class CozyGamesBuilder {
 
-    private final @NotNull CozyGamesPlugin plugin;
+    private final @NotNull CozyGamesAPIPlugin plugin;
 
     /**
      * Used to create a new cozy games api builder.
@@ -46,7 +46,7 @@ public class CozyGamesBuilder {
      *               api plugin.
      */
     @ApiStatus.Internal
-    public CozyGamesBuilder(@NotNull CozyGamesPlugin plugin) {
+    public CozyGamesBuilder(@NotNull CozyGamesAPIPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -56,7 +56,7 @@ public class CozyGamesBuilder {
      *
      * @return The instance of the plugin.
      */
-    public @NotNull CozyGamesPlugin getPlugin() {
+    public @NotNull CozyGamesAPIPlugin getPlugin() {
         return this.plugin;
     }
 
