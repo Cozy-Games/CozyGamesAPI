@@ -20,3 +20,6 @@ buildNumber.properties
 
 # IntelliJ
 .idea/*
+
+# Mac
+.DS_Store
