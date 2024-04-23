@@ -18,5 +18,19 @@
 
 package com.github.cozygames.api.schematic;
 
-public class Schematic {
+import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertable;
+import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
+import org.jetbrains.annotations.NotNull;
+
+public class Schematic implements ConfigurationConvertable<Schematic> {
+
+    @Override
+    public @NotNull ConfigurationSection convert() {
+        return null;
+    }
+
+    @Override
+    public @NotNull Schematic convert(@NotNull ConfigurationSection configurationSection) {
+        return null;
+    }
 }

@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.position;
+package com.github.cozygames.api.location;
 
 import org.jetbrains.annotations.NotNull;
 

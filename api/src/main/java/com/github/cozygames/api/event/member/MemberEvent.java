@@ -16,22 +16,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.database.table;
+package com.github.cozygames.api.event.member;
 
-import com.github.cozygames.api.database.record.ArenaRecord;
-import com.github.smuddgge.squishydatabase.interfaces.TableAdapter;
+import com.github.cozygames.api.member.Member;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents the arena table.
+ * Represents a member event.
  * <p>
- * Used to read and write {@link ArenaRecord}'s
- * to the database.
+ * Each member event should implement this interface.
+ * <p>
+ * This will allow connections to the kerb client to
+ * listen to any member event.
  */
-public class ArenaTable extends TableAdapter<ArenaRecord> {
+public interface MemberEvent {
 
-    @Override
-    public @NotNull String getName() {
-        return "arenas";
-    }
+    /**
+     * Used to get the instance of the member.
+     *
+     * @return The instance of the member.
+     */
+    @NotNull
+    Member getMember();
 }

@@ -18,14 +18,18 @@
 
 package com.github.cozygames.api.map;
 
+import com.github.cozygames.api.CozyGames;
+import com.github.cozygames.api.database.table.MapTable;
 import com.github.cozygames.api.indicator.Savable;
 import com.github.cozygames.api.item.Item;
 import com.github.cozygames.api.schematic.Schematic;
 import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertable;
 import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
+import com.github.smuddgge.squishyconfiguration.memory.MemoryConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.LinkedHashMap;
 import java.util.Optional;
 
 /**
@@ -65,7 +69,20 @@ public abstract class Map<T extends Map<T>> implements Savable<T>, Configuration
         this.gameIdentifier = gameIdentifier;
     }
 
-    public abstract @NotNull T create();
+    /**
+     * Used to get the instance of the cozy games api.
+     * <p>
+     * This should be used within the map class so the
+     * service manager on some platforms can be used.
+     *
+     * @return The cozy games api instance.
+     */
+    public abstract @NotNull CozyGames getAPI();
+
+
+    public abstract @NotNull T createSession(@NotNull String groupIdentifier);
+
+    public abstract void saveToLocalConfiguration();
 
     /**
      * The map's unique identifier.
@@ -190,16 +207,40 @@ public abstract class Map<T extends Map<T>> implements Savable<T>, Configuration
 
     @Override
     public @NotNull ConfigurationSection convert() {
-        return null;
+        ConfigurationSection section = new MemoryConfigurationSection(new LinkedHashMap<>());
+
+        section.set("name", this.name);
+        section.set("serverName", this.serverName);
+        section.set("gameIdentifier", this.gameIdentifier);
+
+        if (this.schematic != null) section.set("schematic", this.schematic.convert().getMap());
+        if (this.capacity != null) section.set("capacity", this.capacity.convert().getMap());
+        if (this.item != null) section.set("item", this.item.convert().getMap());
+
+        return section;
     }
 
     @Override
-    public @NotNull T convert(@NotNull ConfigurationSection configurationSection) {
+    public @NotNull T convert(@NotNull ConfigurationSection section) {
+
+        if (section.getKeys().contains("schematic")) this.schematic = new Schematic().convert(section.getSection("schematic"));
+        if (section.getKeys().contains("capacity")) this.capacity = new MemberCapacity().convert(section.getSection("capacity"));
+        if (section.getKeys().contains("item")) this.item = new Item().convert(section.getSection("item"));
+
         return (T) this;
     }
 
     @Override
     public @NotNull T save() {
+
+        // Save to the database.
+        this.getAPI().getDatabase()
+                .getTable(MapTable.class)
+                .insertMap(this);
+
+        // Save to the plugin's local configuration
+        // if it exists.
+        this.saveToLocalConfiguration();
         return (T) this;
     }
 }

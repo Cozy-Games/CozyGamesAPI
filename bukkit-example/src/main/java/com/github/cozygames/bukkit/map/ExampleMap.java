@@ -18,7 +18,9 @@
 
 package com.github.cozygames.bukkit.map;
 
+import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.map.Map;
+import com.github.cozygames.bukkit.BukkitExamplePlugin;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -40,7 +42,19 @@ public class ExampleMap extends Map<ExampleMap> {
     }
 
     @Override
-    public @NotNull ExampleMap create() {
+    public @NotNull CozyGames getAPI() {
+        return BukkitExamplePlugin.getInstance().getAPI();
+    }
+
+    @Override
+    public @NotNull ExampleMap createSession(@NotNull String groupIdentifier) {
         return this;
+    }
+
+    @Override
+    public void saveToLocalConfiguration() {
+        BukkitExamplePlugin.getInstance()
+                .getMapConfiguration()
+                .insertType(this.getName(), this);
     }
 }

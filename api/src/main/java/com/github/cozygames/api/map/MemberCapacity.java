@@ -18,6 +18,8 @@
 
 package com.github.cozygames.api.map;
 
+import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertable;
+import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ import java.util.List;
  * If the amount of members is not listed in this class
  * they should not be able to play the map.
  */
-public class MemberCapacity {
+public class MemberCapacity implements ConfigurationConvertable<MemberCapacity> {
 
     private final @NotNull List<Integer> possibleCapacityList;
 
@@ -114,5 +116,15 @@ public class MemberCapacity {
      */
     public boolean isPossible(int memberAmount) {
         return this.possibleCapacityList.contains(memberAmount);
+    }
+
+    @Override
+    public @NotNull ConfigurationSection convert() {
+        return null;
+    }
+
+    @Override
+    public @NotNull MemberCapacity convert(@NotNull ConfigurationSection configurationSection) {
+        return null;
     }
 }

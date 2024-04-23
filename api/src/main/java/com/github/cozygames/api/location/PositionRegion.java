@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.position;
+package com.github.cozygames.api.location;
 
 import com.github.cozygames.api.indicator.Replicable;
 import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertable;

@@ -18,5 +18,18 @@
 
 package com.github.cozygames.api.item;
 
-public class Item {
+import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertable;
+import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
+import org.jetbrains.annotations.NotNull;
+
+public class Item implements ConfigurationConvertable<Item> {
+    @Override
+    public @NotNull ConfigurationSection convert() {
+        return null;
+    }
+
+    @Override
+    public @NotNull Item convert(@NotNull ConfigurationSection configurationSection) {
+        return null;
+    }
 }

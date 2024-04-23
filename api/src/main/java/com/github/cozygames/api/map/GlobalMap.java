@@ -16,41 +16,39 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.database.record;
+package com.github.cozygames.api.map;
 
-import com.github.cozygames.api.map.Map;
-import com.github.cozygames.api.indicator.RecordConvertable;
-import com.github.smuddgge.squishydatabase.record.Record;
+import com.github.cozygames.api.CozyGames;
+import com.github.cozygames.api.CozyGamesProvider;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Represents the arena record.
- * <p>
- * Represents the exact data that will be stored
- * in each arena record in the database.
- */
-public class ArenaRecord extends Record implements RecordConvertable<Map> {
+public class GlobalMap extends Map<GlobalMap> {
 
     /**
-     * Final variables.
+     * Used to create a new instance of a map.
      * <p>
-     * These variables will not change once created.
+     * A map can be used to create a new arena.
+     *
+     * @param name           The map's name.
+     * @param serverName     The server the arena can be initialized on.
+     * @param gameIdentifier The game identifier.
      */
-    public String identifier;
-    public String serverName;
-    public String gameIdentifier;
-    public String mapName;
-    public String mapItemClass;
-
-    /**
-     * Changeable variables.
-     * <p>
-     * These variables may be changed in the database.
-     */
-    public String groupSizeClass;
+    public GlobalMap(@NotNull String name, @NotNull String serverName, @NotNull String gameIdentifier) {
+        super(name, serverName, gameIdentifier);
+    }
 
     @Override
-    public @NotNull Map convert() {
+    public @NotNull CozyGames getAPI() {
+        return CozyGamesProvider.get();
+    }
+
+    @Override
+    public @NotNull GlobalMap createSession(@NotNull String groupIdentifier) {
         return null;
+    }
+
+    @Override
+    public void saveToLocalConfiguration() {
+
     }
 }

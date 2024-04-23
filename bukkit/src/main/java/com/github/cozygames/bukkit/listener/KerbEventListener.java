@@ -16,27 +16,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.configuration;
+package com.github.cozygames.bukkit.listener;
 
-import com.github.cozygames.api.map.Map;
-import com.github.cozygames.api.plugin.CozyGamesPlugin;
-import com.github.smuddgge.squishyconfiguration.directory.ConfigurationDirectory;
+import com.github.cozygames.api.CozyGames;
+import com.github.cozygames.api.event.member.MemberTeleportEvent;
+import org.bukkit.Bukkit;
 import org.jetbrains.annotations.NotNull;
 
-public class MapConfigurationListener<L, M extends Map<M>> implements ConfigurationDirectory.Listener {
+public class KerbEventListener {
 
-    private final @NotNull CozyGamesPlugin<L, M> plugin;
+    public @NotNull MemberTeleportEvent onMemberTeleportEvent(@NotNull MemberTeleportEvent event) {
+        final CozyGames api = Bukkit.getServicesManager().getRegistration(CozyGames.class).getProvider();
+        if (!event.getLocation().getServerName().equalsIgnoreCase(api.getServerName())) return event;
 
-    public MapConfigurationListener(@NotNull CozyGamesPlugin<L, M> plugin) {
-        this.plugin = plugin;
-    }
-
-    @Override
-    public void onReload(@NotNull ConfigurationDirectory directory) {
-
-        // Loop though all the stored maps.
-        for (M map : this.plugin.getMapConfiguration().getAllTypes()) {
-
-        }
+        return event;
     }
 }

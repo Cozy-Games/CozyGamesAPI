@@ -86,7 +86,13 @@
         <dependency>
             <groupId>com.github.Cozy-Plugins</groupId>
             <artifactId>CozyLibrary</artifactId>
-            <version>1.10.0</version>
+            <version>2.5.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.github.Smuddgge</groupId>
+                    <artifactId>SquishyConfiguration</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>

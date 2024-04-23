@@ -20,10 +20,22 @@ package com.github.cozygames.bukkit;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
+import com.github.cozygames.api.event.member.MemberTeleportEvent;
 import com.github.cozygames.api.implementation.CozyGamesBuilder;
+import com.github.cozygames.bukkit.listener.KerbEventListener;
+import com.github.cozygames.bukkit.teleport.TeleportManager;
 import com.github.cozyplugins.cozylibrary.CozyPlugin;
+import com.github.kerbity.kerb.client.listener.EventListener;
+import com.github.kerbity.kerb.packet.event.Event;
+import com.github.kerbity.kerb.packet.event.Priority;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents the bukkit plugin api loader.
@@ -52,5 +64,14 @@ public final class CozyGamesAPIBukkitLoader extends CozyPlugin {
 
         // Also register the instance in the provider.
         CozyGamesProvider.register(api);
+
+        // Register spigot events.
+        this.getServer().getPluginManager().registerEvents(plugin.getTeleportManager(), this);
+
+        // Register local kerb listeners.
+        api.getKerbClient().registerListener(
+                Priority.MEDIUM,
+                (EventListener<MemberTeleportEvent>) event -> new KerbEventListener().onMemberTeleportEvent(event)
+        );
     }
 }

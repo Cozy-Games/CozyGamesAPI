@@ -21,6 +21,7 @@ package com.github.cozygames.bukkit;
 import com.github.cozygames.api.member.PlayerAdapter;
 import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
 import com.github.cozygames.bukkit.adapter.BukkitPlayerAdapter;
+import com.github.cozygames.bukkit.teleport.TeleportManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -37,6 +38,7 @@ import java.util.UUID;
 public class CozyGamesAPIBukkitPlugin implements CozyGamesAPIPlugin {
 
     private final @NotNull CozyGamesAPIBukkitLoader loader;
+    private final @NotNull TeleportManager teleportManager;
 
     /**
      * Used to create a new bukkit api implementation.
@@ -46,6 +48,7 @@ public class CozyGamesAPIBukkitPlugin implements CozyGamesAPIPlugin {
     @ApiStatus.Internal
     public CozyGamesAPIBukkitPlugin(@NotNull CozyGamesAPIBukkitLoader loader) {
         this.loader = loader;
+        this.teleportManager = new TeleportManager();
     }
 
     @Override
@@ -81,5 +84,14 @@ public class CozyGamesAPIBukkitPlugin implements CozyGamesAPIPlugin {
     @Override
     public @NotNull PlayerAdapter<?> getPlayerAdapter() {
         return new BukkitPlayerAdapter();
+    }
+
+    /**
+     * Used to get the instance of the teleport manager.
+     *
+     * @return The instance of the teleport manager.
+     */
+    public @NotNull TeleportManager getTeleportManager() {
+        return this.teleportManager;
     }
 }

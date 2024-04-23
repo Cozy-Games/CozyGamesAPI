@@ -22,6 +22,8 @@ import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.MemberNotFoundException;
 import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
 import com.github.kerbity.kerb.client.KerbClient;
+import com.github.kerbity.kerb.packet.event.Event;
+import com.github.kerbity.kerb.result.CompletableResultSet;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.interfaces.Database;
 import org.jetbrains.annotations.NotNull;
@@ -105,6 +107,29 @@ public interface CozyGames {
      */
     @NotNull
     Database getDatabase();
+
+    /**
+     * Used to get the instance of the kerb client connection.
+     * <p>
+     * The kerb client is used to send events between
+     * the cozy game api connections.
+     *
+     * @return The kerb client.
+     */
+    @NotNull
+    KerbClient getKerbClient();
+
+    /**
+     * Used to call an event though the kerb client.
+     * <p>
+     * Calls method {@link KerbClient#callEvent(Event)}.
+     *
+     * @param event The instance of the kerb event.
+     * @param <E>   The event class.
+     * @return The completable result set of the event.
+     */
+    @NotNull
+    <E extends Event> CompletableResultSet<E> callEvent(E event);
 
     /**
      * Used to get the instance of a member

@@ -21,7 +21,10 @@ package com.github.cozygames.api.member;
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
 import com.github.cozygames.api.database.table.MemberTable;
+import com.github.cozygames.api.event.member.MemberTeleportEvent;
 import com.github.cozygames.api.indicator.Savable;
+import com.github.cozygames.api.location.ServerLocation;
+import com.github.kerbity.kerb.result.CompletableResultSet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -102,6 +105,27 @@ public class Member implements Savable<Member> {
         }
 
         return Optional.of((P) player);
+    }
+
+    /**
+     * Used to teleport the member to a specific location
+     * in a server in a world.
+     *
+     * @param location The location to teleport the player to.
+     * @return The completable boolean. True if the member was teleported.
+     */
+    public @NotNull CompletableResultSet<Boolean> teleport(@NotNull ServerLocation location) {
+        CompletableResultSet<Boolean> result = new CompletableResultSet<>(1);
+
+        // Check if the event contains a true value, they have the permission.
+        new Thread(() -> result.addResult(
+                CozyGamesProvider.get()
+                        .callEvent(new MemberTeleportEvent(this, location))
+                        .waitForComplete()
+                        .containsSettable(true)
+        )).start();
+
+        return result;
     }
 
     @Override

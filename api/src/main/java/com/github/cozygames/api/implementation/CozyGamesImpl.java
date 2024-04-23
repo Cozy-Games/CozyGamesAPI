@@ -24,6 +24,9 @@ import com.github.cozygames.api.database.table.MemberTable;
 import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.MemberNotFoundException;
 import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
+import com.github.kerbity.kerb.client.KerbClient;
+import com.github.kerbity.kerb.packet.event.Event;
+import com.github.kerbity.kerb.result.CompletableResultSet;
 import com.github.smuddgge.squishyconfiguration.implementation.YamlConfiguration;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.DatabaseBuilder;
@@ -31,6 +34,8 @@ import com.github.smuddgge.squishydatabase.interfaces.Database;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.time.Duration;
 import java.util.UUID;
 
 /**
@@ -56,6 +61,7 @@ public class CozyGamesImpl implements CozyGames {
 
     private final @NotNull Configuration connectionConfig;
     private final @NotNull Database database;
+    private final @NotNull KerbClient kerb;
 
     /**
      * Used to create a new instance of the
@@ -77,6 +83,24 @@ public class CozyGamesImpl implements CozyGames {
                 this.connectionConfig.getSection("database"),
                 this.plugin.getDataFolder().getAbsolutePath()
         ).build();
+
+        // Create kerb connection.
+        this.kerb = new KerbClient(
+                this.connectionConfig.getString("server_name"),
+                this.connectionConfig.getInteger("kerb.server_port"),
+                this.connectionConfig.getString("kerb.server_address"),
+                new File(this.connectionConfig.getString("kerb.client_certificate_path")),
+                new File(this.connectionConfig.getString("kerb.server_certificate_path")),
+                this.connectionConfig.getString("kerb.password"),
+                Duration.ofMillis(this.connectionConfig.getInteger("kerb.max_wait_time_millis")),
+                this.connectionConfig.getBoolean("kerb.auto_reconnect"),
+                Duration.ofMillis(this.connectionConfig.getInteger("kerb.reconnect_cooldown_millis")),
+                this.connectionConfig.getInteger("kerb.max_reconnection_attempts")
+        );
+
+        // Attempt to connect to the kerb server.
+        // If unable to check and attempt to reconnect.
+        if (!this.kerb.connect()) this.kerb.checkAndAttemptToReconnect();
 
         // Register this instance in the singleton provider.
         CozyGamesProvider.register(this);
@@ -107,6 +131,15 @@ public class CozyGamesImpl implements CozyGames {
     @Override
     public @NotNull Database getDatabase() {
         return this.database;
+    }
+
+    @Override
+    public @NotNull KerbClient getKerbClient() {
+        return this.kerb;
+    }
+
+    public @NotNull <E extends Event> CompletableResultSet<E> callEvent(E event) {
+        return this.kerb.callEvent(event);
     }
 
     @Override

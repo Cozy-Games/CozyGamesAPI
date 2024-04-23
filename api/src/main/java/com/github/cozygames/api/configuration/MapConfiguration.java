@@ -23,6 +23,8 @@ import com.github.cozygames.api.map.MapFactory;
 import com.github.smuddgge.squishyconfiguration.directory.SingleTypeConfigurationDirectory;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Optional;
+
 /**
  * Represents the map configuration directory.
  * <p>
@@ -50,5 +52,20 @@ public class MapConfiguration<M extends Map<M>> extends SingleTypeConfigurationD
     @Override
     public @NotNull M createEmpty(@NotNull String identifier) {
         return mapFactory.create(identifier);
+    }
+
+    @Override
+    public @NotNull Optional<M> getType(@NotNull String name) {
+        return super.getType(name);
+    }
+
+    @Override
+    public @NotNull SingleTypeConfigurationDirectory<M> insertType(@NotNull String name, @NotNull M type) {
+        return super.insertType(name, type);
+    }
+
+    @Override
+    public @NotNull SingleTypeConfigurationDirectory<M> removeType(@NotNull String name) {
+        return super.removeType(name);
     }
 }
