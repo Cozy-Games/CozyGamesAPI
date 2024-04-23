@@ -34,9 +34,9 @@ import java.util.UUID;
 /**
  * The bukkit plugin api implementation.
  */
-public class CozyGamesBukkitPlugin implements CozyGamesAPIPlugin {
+public class CozyGamesAPIBukkitPlugin implements CozyGamesAPIPlugin {
 
-    private final @NotNull CozyGamesBukkitLoader loader;
+    private final @NotNull CozyGamesAPIBukkitLoader loader;
 
     /**
      * Used to create a new bukkit api implementation.
@@ -44,7 +44,7 @@ public class CozyGamesBukkitPlugin implements CozyGamesAPIPlugin {
      * @param loader The instance of the java plugin.
      */
     @ApiStatus.Internal
-    public CozyGamesBukkitPlugin(@NotNull CozyGamesBukkitLoader loader) {
+    public CozyGamesAPIBukkitPlugin(@NotNull CozyGamesAPIBukkitLoader loader) {
         this.loader = loader;
     }
 

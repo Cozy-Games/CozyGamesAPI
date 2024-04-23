@@ -18,14 +18,65 @@
 
 package com.github.cozygames.bukkit;
 
-import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.CozyGamesProvider;
-import org.bukkit.plugin.java.JavaPlugin;
+import com.github.cozygames.api.map.MapFactory;
+import com.github.cozygames.bukkit.map.ExampleMap;
+import com.github.cozygames.bukkit.map.ExampleMapFactory;
+import com.github.cozygames.bukkit.plugin.CozyGamesBukkitPlugin;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
 
-public final class BukkitExamplePlugin extends JavaPlugin {
+/**
+ * Represents the instance of the
+ * bukkit example plugin.
+ * <p>
+ * This should be used to get all the base
+ * functions within this plugin.
+ */
+public final class BukkitExamplePlugin extends CozyGamesBukkitPlugin<BukkitExampleLoader, ExampleMap> {
+
+    private static BukkitExamplePlugin instance;
+
+    /**
+     * Used to create a new instance of the bukkit example plugin.
+     * <p>
+     * This should be only initialised within this plugin.
+     *
+     * @param loader The instance of the loader.
+     */
+    @ApiStatus.Internal
+    public BukkitExamplePlugin(@NotNull BukkitExampleLoader loader) {
+        super(loader);
+
+        // Set up the singleton instance.
+        BukkitExamplePlugin.instance = this;
+    }
+
+    @Override
+    public @NotNull String getGameIdentifier() {
+        return "BukkitExample";
+    }
+
+    @Override
+    public @NotNull MapFactory<ExampleMap> getMapFactory() {
+        return new ExampleMapFactory();
+    }
 
     @Override
     public void onEnable() {
-        CozyGames api = CozyGamesProvider.get();
+
+    }
+
+    @Override
+    public void onDisable() {
+
+    }
+
+    /**
+     * Used to get the instance of this plugin.
+     *
+     * @return The plugin instance.
+     */
+    public static @NotNull BukkitExamplePlugin getInstance() {
+        return BukkitExamplePlugin.instance;
     }
 }

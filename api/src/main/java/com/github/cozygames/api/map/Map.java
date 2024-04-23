@@ -21,6 +21,8 @@ package com.github.cozygames.api.map;
 import com.github.cozygames.api.indicator.Savable;
 import com.github.cozygames.api.item.Item;
 import com.github.cozygames.api.schematic.Schematic;
+import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertable;
+import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,8 +34,10 @@ import java.util.Optional;
  * Represents a mini-game map that can be created.
  * <p>
  * Can be used to create a new arena.
+ *
+ * @param <T> The top map class.
  */
-public abstract class Map implements Savable<Map> {
+public abstract class Map<T extends Map<T>> implements Savable<T>, ConfigurationConvertable<T> {
 
     private final @NotNull String name;
     private final @NotNull String serverName;
@@ -61,7 +65,7 @@ public abstract class Map implements Savable<Map> {
         this.gameIdentifier = gameIdentifier;
     }
 
-    public abstract @NotNull Map create();
+    public abstract @NotNull T create();
 
     /**
      * The map's unique identifier.
@@ -152,9 +156,9 @@ public abstract class Map implements Savable<Map> {
      * @param schematic The instance of the schematic.
      * @return This instance.
      */
-    public @NotNull Map setSchematic(@Nullable Schematic schematic) {
+    public @NotNull T setSchematic(@Nullable Schematic schematic) {
         this.schematic = schematic;
-        return this;
+        return (T) this;
     }
 
     /**
@@ -166,9 +170,9 @@ public abstract class Map implements Savable<Map> {
      * @param capacity The member capacity.
      * @return This instance.
      */
-    public @NotNull Map setCapacity(@Nullable MemberCapacity capacity) {
+    public @NotNull T setCapacity(@Nullable MemberCapacity capacity) {
         this.capacity = capacity;
-        return this;
+        return (T) this;
     }
 
     /**
@@ -179,13 +183,23 @@ public abstract class Map implements Savable<Map> {
      * @param item The instance of the item.
      * @return The instance of the map.
      */
-    public @NotNull Map setItem(@Nullable Item item) {
+    public @NotNull T setItem(@Nullable Item item) {
         this.item = item;
-        return this;
+        return (T) this;
     }
 
     @Override
-    public @NotNull Map save() {
+    public @NotNull ConfigurationSection convert() {
         return null;
+    }
+
+    @Override
+    public @NotNull T convert(@NotNull ConfigurationSection configurationSection) {
+        return (T) this;
+    }
+
+    @Override
+    public @NotNull T save() {
+        return (T) this;
     }
 }

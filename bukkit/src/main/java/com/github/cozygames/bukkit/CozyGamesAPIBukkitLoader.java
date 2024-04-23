@@ -28,7 +28,7 @@ import org.bukkit.plugin.ServicePriority;
 /**
  * Represents the bukkit plugin api loader.
  */
-public final class CozyGamesBukkitLoader extends CozyPlugin {
+public final class CozyGamesAPIBukkitLoader extends CozyPlugin {
 
     @Override
     public boolean enableCommandDirectory() {
@@ -37,11 +37,10 @@ public final class CozyGamesBukkitLoader extends CozyPlugin {
 
     @Override
     public void onCozyEnable() {
-        CozyGamesBukkitPlugin plugin = new CozyGamesBukkitPlugin(this);
+        CozyGamesAPIBukkitPlugin plugin = new CozyGamesAPIBukkitPlugin(this);
 
         // Create a new instance of the api.
-        CozyGames api = new CozyGamesBuilder(plugin)
-                .build();
+        CozyGames api = new CozyGamesBuilder(plugin).build();
 
         // Register the instance in the bukkit service manager.
         Bukkit.getServicesManager().register(

@@ -16,7 +16,23 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.configuration;
+package com.github.cozygames.bukkit.map;
 
-public class ArenaConfiguration {
+import com.github.cozygames.api.map.MapFactory;
+import com.github.cozygames.bukkit.BukkitExamplePlugin;
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * Represents the {@link ExampleMap} factory.
+ */
+public class ExampleMapFactory implements MapFactory<ExampleMap> {
+
+    @Override
+    public @NotNull ExampleMap create(@NotNull String name) {
+        return new ExampleMap(
+                name,
+                BukkitExamplePlugin.getInstance().getAPI().getServerName(),
+                BukkitExamplePlugin.getInstance().getGameIdentifier()
+        );
+    }
 }
