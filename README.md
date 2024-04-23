@@ -37,3 +37,6 @@ Map: For each mini-game map. (Relative position)
 Arena: A loaded map. (Actual locations)
 Session: A running game in an arena.
 ```
+
+**State Diagram**
+<img src="images/state_diagram.png">
