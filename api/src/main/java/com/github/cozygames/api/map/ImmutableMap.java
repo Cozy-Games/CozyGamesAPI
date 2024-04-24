@@ -28,9 +28,9 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * This will be implemented by the {@link Map} class.
  *
- * @param <T> The top immutable map class.
+ * @param <M> The top immutable map class.
  */
-public abstract class ImmutableMap<T extends ImmutableMap<T>> {
+public abstract class ImmutableMap<M extends ImmutableMap<M>> {
 
     private final @NotNull String name;
     private final @NotNull String serverName;
@@ -75,7 +75,7 @@ public abstract class ImmutableMap<T extends ImmutableMap<T>> {
      * @param groupIdentifier The group's identifier.
      * @return This instance.
      */
-    public abstract @NotNull Arena<T> createArena(@NotNull String groupIdentifier);
+    public abstract @NotNull Arena<?, M> createArena(@NotNull String groupIdentifier);
 
     /**
      * The map's unique identifier.

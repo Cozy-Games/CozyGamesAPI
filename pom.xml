@@ -13,6 +13,7 @@
         <module>api</module>
         <module>bukkit</module>
         <module>bukkit-example</module>
+        <module>bukkit-game-example</module>
         <module>velocity</module>
     </modules>
 

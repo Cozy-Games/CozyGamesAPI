@@ -20,8 +20,10 @@ package com.github.cozygames.bukkit.plugin;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
+import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
+import com.github.cozygames.api.session.Session;
 import com.github.cozygames.bukkit.command.CommandManager;
 import com.github.cozyplugins.cozylibrary.CozyPlugin;
 import com.github.cozyplugins.cozylibrary.placeholder.PlaceholderManager;
@@ -38,7 +40,11 @@ import java.util.Optional;
  *
  * @param <L> The instance of the plugin loader class.
  */
-public abstract class CozyGamesBukkitPlugin<L extends JavaPlugin, M extends Map<M>> extends CozyGamesPlugin<L, M> {
+public abstract class CozyGamesBukkitPlugin<
+        S extends Session<A, M>,
+        A extends Arena<A, M>,
+        M extends Map<M>,
+        L extends JavaPlugin> extends CozyGamesPlugin<S, A, M, L> {
 
     private CozyGames apiPointer;
     private CozyPlugin<L> cozyPlugin;
@@ -106,7 +112,7 @@ public abstract class CozyGamesBukkitPlugin<L extends JavaPlugin, M extends Map<
     public abstract void onLoadPlaceholders(@NotNull PlaceholderManager<L> placeholderManager);
 
     @Override
-    public @NotNull CozyGamesPlugin<L, M> enable() {
+    public @NotNull CozyGamesPlugin<S, A, M, L> enable() {
 
         // Attempt to get the instance of the cozy games api.
         final RegisteredServiceProvider<CozyGames> gamesProvider = Bukkit.getServicesManager().getRegistration(CozyGames.class);
@@ -128,7 +134,7 @@ public abstract class CozyGamesBukkitPlugin<L extends JavaPlugin, M extends Map<
     }
 
     @Override
-    public @NotNull CozyGamesPlugin<L, M> disable() {
+    public @NotNull CozyGamesPlugin<S, A, M, L> disable() {
 
         // Disable cozy plugin.
         this.cozyPlugin.disable();

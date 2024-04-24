@@ -71,6 +71,16 @@ public class Position extends Vector implements ConfigurationConvertable<Positio
     }
 
     /**
+     * Used to create a new position instance
+     * using a vector.
+     *
+     * @param vector The instance of the vector.
+     */
+    public Position(@NotNull Vector vector) {
+        super(vector.getX(), vector.getY(), vector.getZ());
+    }
+
+    /**
      * Used to create a clone of a position.
      * <p>
      * This uses the {@link Position#duplicate()} method.

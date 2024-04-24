@@ -1,4 +1,8 @@
-name: CozyGamesBukkitExample
+name: bukkit-example
 version: '${project.version}'
-main: com.github.cozygames.bukkit.BukkitExampleLoader
+main: com.github.cozyplugins.bukkitexample.BukkitExamplePlugin
 api-version: '1.20'
+
+# Depend on the bukkit cozy games api plugin to
+# ensure the api is loaded before using it.
+depend: [ CozyGamesAPI-Bukkit ]

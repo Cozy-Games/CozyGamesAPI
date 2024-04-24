@@ -19,9 +19,11 @@
 package com.github.cozygames.bukkit;
 
 import com.github.cozygames.api.map.MapFactory;
+import com.github.cozygames.bukkit.arena.ExampleArena;
 import com.github.cozygames.bukkit.command.CommandManager;
 import com.github.cozygames.bukkit.map.ExampleMap;
 import com.github.cozygames.bukkit.plugin.CozyGamesBukkitPlugin;
+import com.github.cozygames.bukkit.session.ExampleSession;
 import com.github.cozyplugins.cozylibrary.placeholder.PlaceholderManager;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +35,11 @@ import org.jetbrains.annotations.NotNull;
  * This should be used to get all the base
  * functions within this plugin.
  */
-public final class BukkitExamplePlugin extends CozyGamesBukkitPlugin<BukkitExampleLoader, ExampleMap> {
+public final class BukkitExamplePlugin extends CozyGamesBukkitPlugin<
+        ExampleSession,
+        ExampleArena,
+        ExampleMap,
+        BukkitExampleLoader> {
 
     private static BukkitExamplePlugin instance;
 

@@ -19,9 +19,12 @@
 package com.github.cozygames.api.plugin;
 
 import com.github.cozygames.api.CozyGames;
+import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.configuration.MapConfiguration;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.map.MapFactory;
+import com.github.cozygames.api.session.Session;
+import com.github.cozygames.api.session.SessionManager;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -33,11 +36,16 @@ import org.jetbrains.annotations.NotNull;
  * @param <L> The plugin loader.
  * @param <M> The map type.
  */
-public abstract class CozyGamesPlugin<L, M extends Map<M>> {
+public abstract class CozyGamesPlugin<
+        S extends Session<A, M>,
+        A extends Arena<A, M>,
+        M extends Map<M>,
+        L> {
 
     private final @NotNull L loader;
 
     private MapConfiguration<M> mapConfiguration;
+    private SessionManager<S, A, M> sessionManager;
 
     /**
      * Used to create a cozy games plugin instance.
@@ -102,11 +110,14 @@ public abstract class CozyGamesPlugin<L, M extends Map<M>> {
      *
      * @return This instance.
      */
-    public @NotNull CozyGamesPlugin<L, M> enable() {
+    public @NotNull CozyGamesPlugin<S, A, M, L> enable() {
 
         // Set up the map configuration directory.
         this.mapConfiguration = new MapConfiguration<>(this.getLoader().getClass(), this.getMapFactory());
         this.mapConfiguration.reload();
+
+        // Set up the session manager.
+        this.sessionManager = new SessionManager<>();
 
         // Call the on enable method to indicate this
         // class has finished setting up.
@@ -120,10 +131,13 @@ public abstract class CozyGamesPlugin<L, M extends Map<M>> {
      *
      * @return This instance.
      */
-    public @NotNull CozyGamesPlugin<L, M> disable() {
+    public @NotNull CozyGamesPlugin<S, A, M, L> disable() {
 
         // Call the on disable method before disabling.
         this.onDisable();
+
+        this.sessionManager.stopAllSessions();
+        this.sessionManager.removeAllSessions();
 
         return this;
     }
