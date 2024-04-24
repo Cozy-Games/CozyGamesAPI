@@ -22,6 +22,7 @@ import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.database.table.MapTable;
 import com.github.cozygames.api.indicator.Savable;
 import com.github.cozygames.api.item.Item;
+import com.github.cozygames.api.location.Position;
 import com.github.cozygames.api.schematic.Schematic;
 import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertable;
 import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
@@ -51,6 +52,8 @@ public abstract class Map<T extends Map<T>> implements Savable<T>, Configuration
     private @Nullable MemberCapacity capacity;
     private @Nullable Item item;
 
+    private @Nullable Position spawnPoint;
+
     /**
      * Used to create a new instance of a map.
      * <p>
@@ -79,9 +82,24 @@ public abstract class Map<T extends Map<T>> implements Savable<T>, Configuration
      */
     public abstract @NotNull CozyGames getAPI();
 
-
+    /**
+     * The base method used to activate the map.
+     * <p>
+     * This will create a session for the group of players and begin a game.
+     * <p>
+     * This will ignore if it should create a new game. Checking if a game
+     * should begin should be checked before calling this method.
+     *
+     * @param groupIdentifier The group's identifier.
+     * @return This instance.
+     */
     public abstract @NotNull T createSession(@NotNull String groupIdentifier);
 
+    /**
+     * Used to save the map to the location configuration.
+     * <p>
+     * This method is called in the {@link Map#save()} method.
+     */
     public abstract void saveToLocalConfiguration();
 
     /**
@@ -223,8 +241,10 @@ public abstract class Map<T extends Map<T>> implements Savable<T>, Configuration
     @Override
     public @NotNull T convert(@NotNull ConfigurationSection section) {
 
-        if (section.getKeys().contains("schematic")) this.schematic = new Schematic().convert(section.getSection("schematic"));
-        if (section.getKeys().contains("capacity")) this.capacity = new MemberCapacity().convert(section.getSection("capacity"));
+        if (section.getKeys().contains("schematic"))
+            this.schematic = new Schematic().convert(section.getSection("schematic"));
+        if (section.getKeys().contains("capacity"))
+            this.capacity = new MemberCapacity().convert(section.getSection("capacity"));
         if (section.getKeys().contains("item")) this.item = new Item().convert(section.getSection("item"));
 
         return (T) this;
