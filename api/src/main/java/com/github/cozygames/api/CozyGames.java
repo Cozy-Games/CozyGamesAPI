@@ -18,6 +18,7 @@
 
 package com.github.cozygames.api;
 
+import com.github.cozygames.api.map.MapManager;
 import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.MemberNotFoundException;
 import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
@@ -130,6 +131,17 @@ public interface CozyGames {
      */
     @NotNull
     <E extends Event> CompletableResultSet<E> callEvent(E event);
+
+    /**
+     * Used to get the instance of the map manager.
+     * <p>
+     * The map manager is used to register, unregister
+     * and get instances of maps.
+     *
+     * @return The map manager.
+     */
+    @NotNull
+    MapManager getMapManager();
 
     /**
      * Used to get the instance of a member

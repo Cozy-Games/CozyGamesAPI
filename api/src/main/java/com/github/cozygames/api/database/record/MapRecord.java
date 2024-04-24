@@ -22,7 +22,7 @@ import com.github.cozygames.api.item.Item;
 import com.github.cozygames.api.map.GlobalMap;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.indicator.RecordConvertable;
-import com.github.cozygames.api.map.MemberCapacity;
+import com.github.cozygames.api.member.MemberCapacity;
 import com.github.cozygames.api.schematic.Schematic;
 import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
 import com.github.smuddgge.squishyconfiguration.memory.MemoryConfigurationSection;
@@ -32,7 +32,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 
 /**
  * Represents the arena record.
@@ -40,7 +39,7 @@ import java.util.LinkedHashMap;
  * Represents the exact data that will be stored
  * in each arena record in the database.
  */
-public class MapRecord extends Record implements RecordConvertable<Map> {
+public class MapRecord extends Record implements RecordConvertable<GlobalMap> {
 
     /**
      * Final variables.
@@ -61,7 +60,7 @@ public class MapRecord extends Record implements RecordConvertable<Map> {
     public String itemClass;
 
     @Override
-    public @NotNull Map<?> convert() {
+    public @NotNull GlobalMap convert() {
         GlobalMap map = new GlobalMap(this.name, this.serverName, this.gameIdentifier);
 
         if (schematicClass != null) map.setSchematic(new Schematic().convert(this.asConfigurationSection(schematicClass)));

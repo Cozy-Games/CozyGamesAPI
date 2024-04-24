@@ -16,39 +16,21 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.map;
+package com.github.cozygames.api.event.map;
 
-import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
+import com.github.cozygames.api.database.table.MapTable;
+import com.github.cozygames.api.map.GlobalMap;
 import org.jetbrains.annotations.NotNull;
 
-public class GlobalMap extends Map<GlobalMap> {
+public interface MapEvent {
 
     /**
-     * Used to create a new instance of a map.
-     * <p>
-     * A map can be used to create a new arena.
+     * Used to get the maps identifier which can
+     * be used for retrieving the map.
      *
-     * @param name           The map's name.
-     * @param serverName     The server the arena can be initialized on.
-     * @param gameIdentifier The game identifier.
+     * @return The map identifier.
      */
-    public GlobalMap(@NotNull String name, @NotNull String serverName, @NotNull String gameIdentifier) {
-        super(name, serverName, gameIdentifier);
-    }
-
-    @Override
-    public @NotNull CozyGames getAPI() {
-        return CozyGamesProvider.get();
-    }
-
-    @Override
-    public @NotNull GlobalMap createArena(@NotNull String groupIdentifier) {
-        return null;
-    }
-
-    @Override
-    public void saveToLocalConfiguration() {
-
-    }
+    @NotNull
+    String getMapIdentifier();
 }

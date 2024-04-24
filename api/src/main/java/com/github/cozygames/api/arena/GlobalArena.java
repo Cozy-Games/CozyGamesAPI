@@ -16,25 +16,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.map;
+package com.github.cozygames.api.arena;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
+import com.github.cozygames.api.map.GlobalMap;
 import org.jetbrains.annotations.NotNull;
 
-public class GlobalMap extends Map<GlobalMap> {
+import java.util.Optional;
+
+public class GlobalArena extends Arena<GlobalArena, GlobalMap>  {
 
     /**
-     * Used to create a new instance of a map.
-     * <p>
-     * A map can be used to create a new arena.
+     * Used to create a new arena.
      *
-     * @param name           The map's name.
-     * @param serverName     The server the arena can be initialized on.
-     * @param gameIdentifier The game identifier.
+     * @param mapIdentifier   The map's identifier.
+     * @param groupIdentifier The group that is using the arena.
      */
-    public GlobalMap(@NotNull String name, @NotNull String serverName, @NotNull String gameIdentifier) {
-        super(name, serverName, gameIdentifier);
+    public GlobalArena(@NotNull String mapIdentifier, @NotNull String groupIdentifier) {
+        super(mapIdentifier, groupIdentifier);
     }
 
     @Override
@@ -43,12 +43,22 @@ public class GlobalMap extends Map<GlobalMap> {
     }
 
     @Override
-    public @NotNull GlobalMap createArena(@NotNull String groupIdentifier) {
-        return null;
+    public @NotNull Optional<GlobalMap> getMap() {
+        return this.getAPI().getMapManager().getGlobalMap(this.getMapIdentifier());
     }
 
     @Override
-    public void saveToLocalConfiguration() {
+    public void activate(@NotNull String groupIdentifier) {
+
+    }
+
+    @Override
+    public void deactivate() {
+
+    }
+
+    @Override
+    public void remove() {
 
     }
 }

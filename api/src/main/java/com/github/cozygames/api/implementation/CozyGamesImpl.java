@@ -21,6 +21,7 @@ package com.github.cozygames.api.implementation;
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
 import com.github.cozygames.api.database.table.MemberTable;
+import com.github.cozygames.api.map.MapManager;
 import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.MemberNotFoundException;
 import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
@@ -62,6 +63,7 @@ public class CozyGamesImpl implements CozyGames {
     private final @NotNull Configuration connectionConfig;
     private final @NotNull Database database;
     private final @NotNull KerbClient kerb;
+    private final @NotNull MapManager mapManager;
 
     /**
      * Used to create a new instance of the
@@ -102,6 +104,9 @@ public class CozyGamesImpl implements CozyGames {
         // If unable to check and attempt to reconnect.
         if (!this.kerb.connect()) this.kerb.checkAndAttemptToReconnect();
 
+        // Create the map manager.
+        this.mapManager = new MapManager(this);
+
         // Register this instance in the singleton provider.
         CozyGamesProvider.register(this);
     }
@@ -140,6 +145,11 @@ public class CozyGamesImpl implements CozyGames {
 
     public @NotNull <E extends Event> CompletableResultSet<E> callEvent(E event) {
         return this.kerb.callEvent(event);
+    }
+
+    @Override
+    public @NotNull MapManager getMapManager() {
+        return this.mapManager;
     }
 
     @Override

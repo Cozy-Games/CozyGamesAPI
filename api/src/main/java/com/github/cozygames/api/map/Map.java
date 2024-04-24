@@ -18,11 +18,11 @@
 
 package com.github.cozygames.api.map;
 
-import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.database.table.MapTable;
 import com.github.cozygames.api.indicator.Savable;
 import com.github.cozygames.api.item.Item;
 import com.github.cozygames.api.location.Position;
+import com.github.cozygames.api.member.MemberCapacity;
 import com.github.cozygames.api.schematic.Schematic;
 import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertable;
 import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
@@ -42,11 +42,9 @@ import java.util.Optional;
  *
  * @param <T> The top map class.
  */
-public abstract class Map<T extends Map<T>> implements Savable<T>, ConfigurationConvertable<T> {
+public abstract class Map<T extends Map<T>> extends ImmutableMap<T> implements ConfigurationConvertable<T>, Savable<T> {
 
-    private final @NotNull String name;
-    private final @NotNull String serverName;
-    private final @NotNull String gameIdentifier;
+    private int maximumSessionAmount;
 
     private @Nullable Schematic schematic;
     private @Nullable MemberCapacity capacity;
@@ -67,33 +65,10 @@ public abstract class Map<T extends Map<T>> implements Savable<T>, Configuration
                @NotNull String serverName,
                @NotNull String gameIdentifier) {
 
-        this.name = name;
-        this.serverName = serverName;
-        this.gameIdentifier = gameIdentifier;
+        super(name, serverName, gameIdentifier);
+
+        this.maximumSessionAmount = -1;
     }
-
-    /**
-     * Used to get the instance of the cozy games api.
-     * <p>
-     * This should be used within the map class so the
-     * service manager on some platforms can be used.
-     *
-     * @return The cozy games api instance.
-     */
-    public abstract @NotNull CozyGames getAPI();
-
-    /**
-     * The base method used to activate the map.
-     * <p>
-     * This will create a session for the group of players and begin a game.
-     * <p>
-     * This will ignore if it should create a new game. Checking if a game
-     * should begin should be checked before calling this method.
-     *
-     * @param groupIdentifier The group's identifier.
-     * @return This instance.
-     */
-    public abstract @NotNull T createSession(@NotNull String groupIdentifier);
 
     /**
      * Used to save the map to the location configuration.
@@ -103,52 +78,19 @@ public abstract class Map<T extends Map<T>> implements Savable<T>, Configuration
     public abstract void saveToLocalConfiguration();
 
     /**
-     * The map's unique identifier.
+     * The maximum amount of sessions that can run at
+     * the same time for this map type.
      * <p>
-     * To create this identifier the server name, game identifier
-     * and map name is combined and split by colons.
+     * If this is set to -1, there can be unlimited amount
+     * of sessions running at the same time for this map type.
      * <p>
-     * Example:
-     * <pre>{@code
-     * server1:bedwars:aquarium
-     * }</pre>
+     * However, when this is checked the server maximum session
+     * amount should also be checked before creating a session.
      *
-     * @return The arena's identifier.
+     * @return The maximum session amount.
      */
-    public @NotNull String getIdentifier() {
-        return this.serverName + ":" + this.gameIdentifier + ":" + this.name;
-    }
-
-    /**
-     * The map's unique name.
-     * <p>
-     * The name is not unique between game types and servers.
-     * To obtain a truly unique key, use the
-     * {@link Map#getIdentifier()} method.
-     *
-     * @return The map's name.
-     */
-    public @NotNull String getName() {
-        return this.name;
-    }
-
-    /**
-     * The server the map will be located on.
-     *
-     * @return The server's name.
-     */
-    public @NotNull String getServerName() {
-        return this.serverName;
-    }
-
-    /**
-     * The type of game that will be played
-     * when the map is created.
-     *
-     * @return The game identifier.
-     */
-    public @NotNull String getGameIdentifier() {
-        return this.gameIdentifier;
+    public int getMaximumSessionAmount() {
+        return this.maximumSessionAmount;
     }
 
     /**
@@ -181,6 +123,36 @@ public abstract class Map<T extends Map<T>> implements Savable<T>, Configuration
      */
     public @NotNull Optional<Item> getItem() {
         return Optional.ofNullable(this.item);
+    }
+
+    /**
+     * Used to get the position of the spawn point.
+     * <p>
+     * This will be used to get the first place the
+     * players should be teleported to.
+     *
+     * @return The optional position on the server in the world.
+     */
+    public @NotNull Optional<Position> getSpawnPoint() {
+        return Optional.ofNullable(this.spawnPoint);
+    }
+
+    /**
+     * Used to set the maximum amount of sessions that
+     * can run at the same time for this map type.
+     * <p>
+     * If this is set to -1, there can be unlimited amount
+     * of sessions running at the same time for this map type.
+     * <p>
+     * However, when this is checked the server maximum session
+     * amount should also be checked before creating a session.
+     *
+     * @param maximumSessionAmount The maximum session amount.
+     * @return This instance.
+     */
+    public @NotNull T setMaximumSessionAmount(int maximumSessionAmount) {
+        this.maximumSessionAmount = maximumSessionAmount;
+        return (T) this;
     }
 
     /**
@@ -223,13 +195,25 @@ public abstract class Map<T extends Map<T>> implements Savable<T>, Configuration
         return (T) this;
     }
 
+    /**
+     * Used to set the first place the players will get
+     * teleport to when a session is created.
+     *
+     * @param spawnPoint The spawn point position.
+     * @return This instance.
+     */
+    public @NotNull T setSpawnPoint(@Nullable Position spawnPoint) {
+        this.spawnPoint = spawnPoint;
+        return (T) this;
+    }
+
     @Override
     public @NotNull ConfigurationSection convert() {
         ConfigurationSection section = new MemoryConfigurationSection(new LinkedHashMap<>());
 
-        section.set("name", this.name);
-        section.set("serverName", this.serverName);
-        section.set("gameIdentifier", this.gameIdentifier);
+        section.set("name", this.getName());
+        section.set("serverName", this.getServerName());
+        section.set("gameIdentifier", this.getGameIdentifier());
 
         if (this.schematic != null) section.set("schematic", this.schematic.convert().getMap());
         if (this.capacity != null) section.set("capacity", this.capacity.convert().getMap());
@@ -262,5 +246,25 @@ public abstract class Map<T extends Map<T>> implements Savable<T>, Configuration
         // if it exists.
         this.saveToLocalConfiguration();
         return (T) this;
+    }
+
+    /**
+     * Used to convert the three compound keys into a unique identifier.
+     * <p>
+     * To create this identifier the server name, game identifier
+     * and map name is combined and split by colons.
+     * <p>
+     * Example:
+     * <pre>{@code
+     * server1:bedwars:aquarium
+     * }</pre>
+     *
+     * @param serverName     The server's name.
+     * @param gameIdentifier The game identifier.
+     * @param mapName        The map's name.
+     * @return The identifier.
+     */
+    public static @NotNull String getIdentifier(@NotNull String serverName, @NotNull String gameIdentifier, @NotNull String mapName) {
+        return serverName + ":" + gameIdentifier + ":" + mapName;
     }
 }

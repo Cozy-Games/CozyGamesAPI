@@ -62,7 +62,7 @@ public class ExampleMap extends Map<ExampleMap> {
     }
 
     @Override
-    public @NotNull ExampleMap createSession(@NotNull String groupIdentifier) {
+    public @NotNull ExampleMap createArena(@NotNull String groupIdentifier) {
         return this;
     }
 
