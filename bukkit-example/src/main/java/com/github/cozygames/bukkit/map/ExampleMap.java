@@ -20,6 +20,7 @@ package com.github.cozygames.bukkit.map;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.map.Map;
+import com.github.cozygames.api.map.MapFactory;
 import com.github.cozygames.bukkit.BukkitExamplePlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,12 +34,26 @@ public class ExampleMap extends Map<ExampleMap> {
      * <p>
      * A map can be used to create a new arena.
      *
-     * @param name           The map's name.
-     * @param serverName     The server the arena can be initialized on.
-     * @param gameIdentifier The game identifier.
+     * @param name The map's name.
      */
-    public ExampleMap(@NotNull String name, @NotNull String serverName, @NotNull String gameIdentifier) {
-        super(name, serverName, gameIdentifier);
+    public ExampleMap(@NotNull String name) {
+        super(
+                name,
+                BukkitExamplePlugin.getInstance().getAPI().getServerName(),
+                BukkitExamplePlugin.getInstance().getGameIdentifier()
+        );
+    }
+
+    /**
+     * Represents the example map factory.
+     * Used to create empty instances of the example map.
+     */
+    public static class Factory implements MapFactory<ExampleMap> {
+
+        @Override
+        public @NotNull ExampleMap create(@NotNull String name) {
+            return new ExampleMap(name);
+        }
     }
 
     @Override

@@ -22,10 +22,16 @@ import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
+import com.github.cozygames.bukkit.command.CommandManager;
+import com.github.cozyplugins.cozylibrary.CozyPlugin;
+import com.github.cozyplugins.cozylibrary.placeholder.PlaceholderManager;
+import com.github.smuddgge.squishyconfiguration.directory.ConfigurationDirectory;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 /**
  * Represents the bukkit cozy game's plugin.
@@ -35,6 +41,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class CozyGamesBukkitPlugin<L extends JavaPlugin, M extends Map<M>> extends CozyGamesPlugin<L, M> {
 
     private CozyGames apiPointer;
+    private CozyPlugin<L> cozyPlugin;
 
     /**
      * Used to create a cozy games bukkit plugin instance.
@@ -43,7 +50,60 @@ public abstract class CozyGamesBukkitPlugin<L extends JavaPlugin, M extends Map<
      */
     public CozyGamesBukkitPlugin(@NotNull L loader) {
         super(loader);
+
+        this.cozyPlugin = new CozyPlugin<>(loader) {
+            @Override
+            public boolean isCommandTypesEnabled() {
+                return this.isCommandTypesEnabled();
+            }
+
+            @Override
+            public void onEnable() {
+
+            }
+
+            @Override
+            public void onDisable() {
+
+            }
+
+            @Override
+            public void onLoadCommands(com.github.cozyplugins.cozylibrary.command.@NotNull CommandManager commandManager) {
+                this.onLoadCommands(commandManager);
+            }
+
+            @Override
+            public void onLoadPlaceholders(@NotNull PlaceholderManager<L> placeholderManager) {
+                this.onLoadPlaceholders(placeholderManager);
+            }
+        };
     }
+
+    /**
+     * Used to check if the command type configuration
+     * directory should be generated.
+     *
+     * @return True if the command types are enabled.
+     */
+    public abstract boolean isCommandTypesEnabled();
+
+    /**
+     * Called when the plugins commands should be loaded.
+     * <p>
+     * This way of registering commands doesn't have to be used.
+     * However, this way makes it allot easier.
+     *
+     * @param commandManager The instance of the command manager.
+     */
+    public abstract void onLoadCommands(@NotNull CommandManager commandManager);
+
+    /**
+     * Called when the placeholders should be loaded
+     * into the manager.
+     *
+     * @param placeholderManager The instance of the placeholder manager.
+     */
+    public abstract void onLoadPlaceholders(@NotNull PlaceholderManager<L> placeholderManager);
 
     @Override
     public @NotNull CozyGamesPlugin<L, M> enable() {
@@ -59,13 +119,39 @@ public abstract class CozyGamesBukkitPlugin<L extends JavaPlugin, M extends Map<
         // Set the instance of the api.
         this.apiPointer = gamesProvider.getProvider();
 
-        // enable super class.
+        // Enable cozy plugin.
+        this.cozyPlugin.enable();
+
+        // Enable super class.
         super.enable();
+        return this;
+    }
+
+    @Override
+    public @NotNull CozyGamesPlugin<L, M> disable() {
+
+        // Disable cozy plugin.
+        this.cozyPlugin.disable();
+
+        // disable super class.
+        super.disable();
         return this;
     }
 
     @Override
     public @NotNull CozyGames getAPI() {
         return this.apiPointer;
+    }
+
+    public @NotNull com.github.cozyplugins.cozylibrary.command.CommandManager getCommandManager() {
+        return this.cozyPlugin.getCommandManager();
+    }
+
+    public @NotNull Optional<PlaceholderManager<L>> getPlaceholderManager() {
+        return this.cozyPlugin.getPlaceholderManager();
+    }
+
+    public @NotNull ConfigurationDirectory getCommandDirectory() {
+        return this.cozyPlugin.getCommandDirectory();
     }
 }

@@ -19,9 +19,10 @@
 package com.github.cozygames.bukkit;
 
 import com.github.cozygames.api.map.MapFactory;
+import com.github.cozygames.bukkit.command.CommandManager;
 import com.github.cozygames.bukkit.map.ExampleMap;
-import com.github.cozygames.bukkit.map.ExampleMapFactory;
 import com.github.cozygames.bukkit.plugin.CozyGamesBukkitPlugin;
+import com.github.cozyplugins.cozylibrary.placeholder.PlaceholderManager;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
@@ -58,7 +59,7 @@ public final class BukkitExamplePlugin extends CozyGamesBukkitPlugin<BukkitExamp
 
     @Override
     public @NotNull MapFactory<ExampleMap> getMapFactory() {
-        return new ExampleMapFactory();
+        return new ExampleMap.Factory();
     }
 
     @Override
@@ -68,6 +69,21 @@ public final class BukkitExamplePlugin extends CozyGamesBukkitPlugin<BukkitExamp
 
     @Override
     public void onDisable() {
+
+    }
+
+    @Override
+    public boolean isCommandTypesEnabled() {
+        return false;
+    }
+
+    @Override
+    public void onLoadCommands(@NotNull CommandManager commandManager) {
+
+    }
+
+    @Override
+    public void onLoadPlaceholders(@NotNull PlaceholderManager<BukkitExampleLoader> placeholderManager) {
 
     }
 

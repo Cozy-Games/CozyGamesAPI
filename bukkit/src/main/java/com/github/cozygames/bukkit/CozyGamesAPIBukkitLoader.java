@@ -30,6 +30,7 @@ import com.github.kerbity.kerb.packet.event.Event;
 import com.github.kerbity.kerb.packet.event.Priority;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -40,15 +41,12 @@ import java.util.UUID;
 /**
  * Represents the bukkit plugin api loader.
  */
-public final class CozyGamesAPIBukkitLoader extends CozyPlugin {
+public final class CozyGamesAPIBukkitLoader extends JavaPlugin {
+
+    private CozyPlugin<CozyGamesAPIBukkitLoader> plugin;
 
     @Override
-    public boolean enableCommandDirectory() {
-        return true;
-    }
-
-    @Override
-    public void onCozyEnable() {
+    public void onEnable() {
         CozyGamesAPIBukkitPlugin plugin = new CozyGamesAPIBukkitPlugin(this);
 
         // Create a new instance of the api.
@@ -73,5 +71,14 @@ public final class CozyGamesAPIBukkitLoader extends CozyPlugin {
                 Priority.MEDIUM,
                 (EventListener<MemberTeleportEvent>) event -> new KerbEventListener().onMemberTeleportEvent(event)
         );
+
+        // Create the api plugin.
+        this.plugin = new CozyGamesAPIPlugin(this);
+        this.plugin.enable();
+    }
+
+    @Override
+    public void onDisable() {
+        this.plugin.disable();
     }
 }
