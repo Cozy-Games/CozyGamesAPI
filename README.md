@@ -47,4 +47,4 @@ Session: A running game in an arena. (Arena with group instance)
 ```
 
 **State Diagram**
-<img src="images/state_diagram.png">
+<img src=".images/state_diagram.png">
