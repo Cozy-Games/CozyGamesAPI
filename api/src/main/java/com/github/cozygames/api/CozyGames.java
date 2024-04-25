@@ -18,6 +18,7 @@
 
 package com.github.cozygames.api;
 
+import com.github.cozygames.api.arena.ArenaManager;
 import com.github.cozygames.api.map.MapManager;
 import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.MemberNotFoundException;
@@ -142,6 +143,17 @@ public interface CozyGames {
      */
     @NotNull
     MapManager getMapManager();
+
+    /**
+     * Used to get the instance of the arena manager.
+     * <p>
+     * The arena manager is used to register and unregister
+     * active arenas on servers.
+     *
+     * @return The area manager.
+     */
+    @NotNull
+    ArenaManager getArenaManager();
 
     /**
      * Used to get the instance of a member

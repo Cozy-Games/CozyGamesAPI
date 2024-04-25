@@ -30,7 +30,7 @@ import java.util.Optional;
 /**
  * Represents the map manager.
  * <p>
- * Used to register and unregister available maps.
+ * Used to register and unregister available {@link Map}'s.
  * <p>
  * Used to also get the instance of maps.
  */

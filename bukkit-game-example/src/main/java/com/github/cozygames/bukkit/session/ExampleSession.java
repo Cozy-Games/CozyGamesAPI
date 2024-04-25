@@ -22,6 +22,7 @@ import com.github.cozygames.api.session.Session;
 import com.github.cozygames.bukkit.arena.ExampleArena;
 import com.github.cozygames.bukkit.arena.ExampleArenaGetter;
 import com.github.cozygames.bukkit.map.ExampleMap;
+import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
 public class ExampleSession extends Session<ExampleArena, ExampleMap> {
@@ -33,5 +34,7 @@ public class ExampleSession extends Session<ExampleArena, ExampleMap> {
      */
     public ExampleSession(@NotNull String arenaIdentifier) {
         super(arenaIdentifier, new ExampleArenaGetter());
+
+        Location spawnPoint = this.getArena().getSpawnPoint();
     }
 }

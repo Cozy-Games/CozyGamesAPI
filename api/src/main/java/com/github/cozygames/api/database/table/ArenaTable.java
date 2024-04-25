@@ -18,14 +18,64 @@
 
 package com.github.cozygames.api.database.table;
 
+import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.database.record.ArenaRecord;
+import com.github.cozygames.api.map.Map;
+import com.github.smuddgge.squishydatabase.Query;
 import com.github.smuddgge.squishydatabase.interfaces.TableAdapter;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
 
 public class ArenaTable extends TableAdapter<ArenaRecord> {
 
     @Override
     public @NotNull String getName() {
         return "arenas";
+    }
+
+    /**
+     * Used to get an arena record from the arena
+     * table given the arena's identifier.
+     *
+     * @param identifier The arena's identifier.
+     * @return The optional arena record.
+     */
+    public @NotNull Optional<ArenaRecord> getArenaRecord(String identifier) {
+        final String serverName = identifier.split(":")[0];
+        final String gameIdentifier = identifier.split(":")[1];
+        final String mapName = identifier.split(":")[2];
+        final String worldName = identifier.split(":")[3];
+
+        final String mapIdentifier = Map.getIdentifier(serverName, gameIdentifier, mapName);
+
+        // Get the first record with the correct identifier.
+        ArenaRecord record = this.getFirstRecord(new Query()
+                .match("mapIdentifier", mapIdentifier)
+                .match("worldName", worldName)
+        );
+
+        return Optional.ofNullable(record);
+    }
+
+    /**
+     * Used to insert an arena instance into
+     * the arena table.
+     *
+     * @param arena The instance of the arena.
+     * @return This instance.
+     */
+    public @NotNull ArenaTable insertArena(Arena<?, ?> arena) {
+
+        // Create the arena record.
+        ArenaRecord record = new ArenaRecord();
+        record.mapIdentifier = arena.getMapIdentifier();
+        record.worldName = arena.getWorldName();
+
+        record.groupIdentifier = arena.getGroupIdentifier().orElse(null);
+
+        // Insert the record.
+        this.insertRecord(record);
+        return this;
     }
 }

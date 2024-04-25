@@ -20,6 +20,7 @@ package com.github.cozygames.api.implementation;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
+import com.github.cozygames.api.arena.ArenaManager;
 import com.github.cozygames.api.database.table.MemberTable;
 import com.github.cozygames.api.map.MapManager;
 import com.github.cozygames.api.member.Member;
@@ -64,6 +65,7 @@ public class CozyGamesImpl implements CozyGames {
     private final @NotNull Database database;
     private final @NotNull KerbClient kerb;
     private final @NotNull MapManager mapManager;
+    private final @NotNull ArenaManager arenaManager;
 
     /**
      * Used to create a new instance of the
@@ -106,6 +108,9 @@ public class CozyGamesImpl implements CozyGames {
 
         // Create the map manager.
         this.mapManager = new MapManager(this);
+
+        // Create the arena manager.
+        this.arenaManager = new ArenaManager(this);
 
         // Register this instance in the singleton provider.
         CozyGamesProvider.register(this);
@@ -150,6 +155,11 @@ public class CozyGamesImpl implements CozyGames {
     @Override
     public @NotNull MapManager getMapManager() {
         return this.mapManager;
+    }
+
+    @Override
+    public @NotNull ArenaManager getArenaManager() {
+        return this.arenaManager;
     }
 
     @Override
