@@ -161,4 +161,13 @@ public abstract class CozyGamesPlugin<
     public @NotNull MapConfiguration<M> getMapConfiguration() {
         return this.mapConfiguration;
     }
+
+    /**
+     * Used to get the instance of this plugin's session manager.
+     *
+     * @return The instance of the session manager.
+     */
+    public @NotNull SessionManager<S, A, M> getSessionManager() {
+        return this.sessionManager;
+    }
 }

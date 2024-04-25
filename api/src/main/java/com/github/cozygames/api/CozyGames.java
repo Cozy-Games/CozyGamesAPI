@@ -19,6 +19,7 @@
 package com.github.cozygames.api;
 
 import com.github.cozygames.api.arena.ArenaManager;
+import com.github.cozygames.api.group.GroupManager;
 import com.github.cozygames.api.map.MapManager;
 import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.MemberNotFoundException;
@@ -154,6 +155,17 @@ public interface CozyGames {
      */
     @NotNull
     ArenaManager getArenaManager();
+
+    /**
+     * Used to get the instance of the group manager.
+     * <p>
+     * Used to obtain the instance of groups and register
+     * groups within the cozy games network.
+     *
+     * @return The group manager.
+     */
+    @NotNull
+    GroupManager getGroupManager();
 
     /**
      * Used to get the instance of a member

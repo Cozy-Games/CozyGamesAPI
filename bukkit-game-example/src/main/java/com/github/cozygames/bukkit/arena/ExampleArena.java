@@ -18,16 +18,17 @@
 
 package com.github.cozygames.bukkit.arena;
 
-import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.arena.LocalArena;
+import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.cozygames.bukkit.BukkitExamplePlugin;
 import com.github.cozygames.bukkit.adapter.BukkitPositionConverter;
 import com.github.cozygames.bukkit.map.ExampleMap;
+import com.github.cozygames.bukkit.session.ExampleSession;
 import com.github.cozyplugins.cozylibrary.indicator.LocationConvertable;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
-public class ExampleArena extends Arena<ExampleArena, ExampleMap> implements LocationConvertable {
+public class ExampleArena extends LocalArena<ExampleSession, ExampleArena, ExampleMap> implements LocationConvertable {
 
     private final @NotNull Location spawnPoint;
 
@@ -49,32 +50,12 @@ public class ExampleArena extends Arena<ExampleArena, ExampleMap> implements Loc
     }
 
     @Override
-    public @NotNull CozyGames getAPI() {
-        return BukkitExamplePlugin.getInstance().getAPI();
+    public @NotNull CozyGamesPlugin<ExampleSession, ExampleArena, ExampleMap, ?> getPlugin() {
+        return BukkitExamplePlugin.getInstance();
     }
 
     @Override
-    public @NotNull ExampleMap getMap() {
-        return BukkitExamplePlugin.getInstance().getMapConfiguration().getType(this.getMapIdentifier()).orElseThrow();
-    }
-
-    @Override
-    public void activate(@NotNull String groupIdentifier) {
-
-    }
-
-    @Override
-    public void deactivate() {
-
-    }
-
-    @Override
-    public void remove() {
-
-    }
-
-    @Override
-    public void saveToLocalConfiguration() {
-
+    public @NotNull ExampleSession createSession() {
+        return new ExampleSession(this.getIdentifier());
     }
 }

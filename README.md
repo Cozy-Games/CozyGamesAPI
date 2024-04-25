@@ -35,7 +35,14 @@ CozyGamePlugin: Used in mini-game plugin's.
 
 ImmutableMap: The map base that contains unchangeable variables and methods.
 Map: For each mini-game map. (Relative position)
+LocalMap: The map instance in the mini game plugin.
+GlobalMap: The map type that is accessible from anywhere.
+
+ImmutableArena: The arena base that contains unchangeable variables and methods.
 Arena: A loaded map. (Actual locations)
+LocalArena: The arena instance in the mini game plugin.
+GlobalArena: The arena type that is accessible from anywhere.
+
 Session: A running game in an arena. (Arena with group instance)
 ```
 

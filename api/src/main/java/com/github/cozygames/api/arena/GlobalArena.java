@@ -23,7 +23,7 @@ import com.github.cozygames.api.CozyGamesProvider;
 import com.github.cozygames.api.map.GlobalMap;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
+import java.util.UUID;
 
 public class GlobalArena extends Arena<GlobalArena, GlobalMap> {
 
@@ -38,6 +38,16 @@ public class GlobalArena extends Arena<GlobalArena, GlobalMap> {
     }
 
     @Override
+    public void saveToLocalConfiguration() {
+
+    }
+
+    @Override
+    public void deleteFromLocalConfiguration() {
+
+    }
+
+    @Override
     public @NotNull CozyGames getAPI() {
         return CozyGamesProvider.get();
     }
@@ -48,7 +58,7 @@ public class GlobalArena extends Arena<GlobalArena, GlobalMap> {
     }
 
     @Override
-    public void activate(@NotNull String groupIdentifier) {
+    public void activate(@NotNull UUID groupIdentifier) {
 
     }
 
@@ -62,8 +72,4 @@ public class GlobalArena extends Arena<GlobalArena, GlobalMap> {
 
     }
 
-    @Override
-    public void saveToLocalConfiguration() {
-
-    }
 }

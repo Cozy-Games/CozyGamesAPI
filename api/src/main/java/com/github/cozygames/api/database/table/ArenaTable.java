@@ -72,10 +72,34 @@ public class ArenaTable extends TableAdapter<ArenaRecord> {
         record.mapIdentifier = arena.getMapIdentifier();
         record.worldName = arena.getWorldName();
 
-        record.groupIdentifier = arena.getGroupIdentifier().orElse(null);
+        arena.getGroupIdentifier().ifPresent(
+                groupIdentifier -> record.groupIdentifier = groupIdentifier.toString()
+        );
 
         // Insert the record.
         this.insertRecord(record);
+        return this;
+    }
+
+    /**
+     * Used to remove an arena from the database.
+     *
+     * @param identifier The arena's identifier.
+     * @return This instance.
+     */
+    @SuppressWarnings("all")
+    public @NotNull ArenaTable removeArena(@NotNull String identifier) {
+        final String serverName = identifier.split(":")[0];
+        final String gameIdentifier = identifier.split(":")[1];
+        final String mapName = identifier.split(":")[2];
+        final String worldName = identifier.split(":")[3];
+
+        final String mapIdentifier = Map.getIdentifier(serverName, gameIdentifier, mapName);
+
+        this.removeAllRecords(new Query()
+                .match("mapIdentifier", mapIdentifier)
+                .match("worldName", worldName)
+        );
         return this;
     }
 }

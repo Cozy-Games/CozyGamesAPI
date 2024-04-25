@@ -19,10 +19,10 @@
 package com.github.cozygames.api.arena;
 
 import com.github.cozygames.api.database.table.ArenaTable;
-import com.github.cozygames.api.database.table.MapTable;
+import com.github.cozygames.api.group.Group;
+import com.github.cozygames.api.indicator.Deletable;
 import com.github.cozygames.api.indicator.Savable;
 import com.github.cozygames.api.map.ImmutableMap;
-import com.github.cozygames.api.map.Map;
 import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertable;
 import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
 import com.github.smuddgge.squishyconfiguration.memory.MemoryConfigurationSection;
@@ -31,6 +31,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.LinkedHashMap;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Represents an arena.
@@ -42,9 +43,9 @@ import java.util.Optional;
  */
 public abstract class Arena<A extends ImmutableArena<A, M>, M extends ImmutableMap<M>>
         extends ImmutableArena<A, M>
-        implements ConfigurationConvertable<A>, Savable<A> {
+        implements ConfigurationConvertable<A>, Savable<A>, Deletable<A> {
 
-    private @Nullable String groupIdentifier;
+    private @Nullable UUID groupIdentifier;
 
     /**
      * Used to create a new arena.
@@ -57,19 +58,39 @@ public abstract class Arena<A extends ImmutableArena<A, M>, M extends ImmutableM
     }
 
     /**
-     * Used to save the arena to the location configuration.
+     * Used to save the arena to the local configuration.
      * <p>
      * This method is called in the {@link Arena#save()} method.
      */
     public abstract void saveToLocalConfiguration();
 
-    public @NotNull Optional<String> getGroupIdentifier() {
+    /**
+     * Used to delete this arena from the local configuration.
+     * <p>
+     * This method is called in the {@link Arena#delete()} method.
+     */
+    public abstract void deleteFromLocalConfiguration();
+
+    public @NotNull Optional<UUID> getGroupIdentifier() {
         return Optional.ofNullable(groupIdentifier);
     }
 
-    public @NotNull A setGroupIdentifier(@Nullable String groupIdentifier) {
+    public @NotNull A setGroupIdentifier(@Nullable UUID groupIdentifier) {
         this.groupIdentifier = groupIdentifier;
         return (A) this;
+    }
+
+    /**
+     * Used to get the instance of the group
+     * that is using the arena.
+     * <p>
+     * This will return empty if there are no groups using the arena.
+     *
+     * @return The optional group instance.
+     */
+    public @NotNull Optional<Group> getGroup() {
+        if (this.groupIdentifier == null) return Optional.empty();
+        return this.getAPI().getGroupManager().getGroup(this.groupIdentifier);
     }
 
     @Override
@@ -87,7 +108,8 @@ public abstract class Arena<A extends ImmutableArena<A, M>, M extends ImmutableM
     @Override
     public @NotNull A convert(@NotNull ConfigurationSection section) {
 
-        if (section.getKeys().contains("group_identifier")) this.groupIdentifier = section.getString("group_identifier");
+        if (section.getKeys().contains("group_identifier"))
+            this.groupIdentifier = UUID.fromString(section.getString("group_identifier"));
 
         return (A) this;
     }
@@ -103,6 +125,19 @@ public abstract class Arena<A extends ImmutableArena<A, M>, M extends ImmutableM
         // Save to the plugin's local configuration
         // if it exists.
         this.saveToLocalConfiguration();
+        return (A) this;
+    }
+
+    @Override
+    public @NotNull A delete() {
+
+        // Delete from the database.
+        this.getAPI().getDatabase()
+                .getTable(ArenaTable.class)
+                .removeArena(this.getIdentifier());
+
+        // Delete from the plugin's local configuration.
+        this.deleteFromLocalConfiguration();
         return (A) this;
     }
 

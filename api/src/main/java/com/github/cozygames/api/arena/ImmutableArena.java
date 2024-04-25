@@ -23,7 +23,7 @@ import com.github.cozygames.api.map.ImmutableMap;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Represents an unchangeable arena.
@@ -77,7 +77,7 @@ public abstract class ImmutableArena<A extends ImmutableArena<A, M>, M extends I
      * @param groupIdentifier The group identifier that will be
      *                        playing the game.
      */
-    public abstract void activate(@NotNull String groupIdentifier);
+    public abstract void activate(@NotNull UUID groupIdentifier);
 
     /**
      * Used to deactivate the arena.
@@ -87,9 +87,14 @@ public abstract class ImmutableArena<A extends ImmutableArena<A, M>, M extends I
     public abstract void deactivate();
 
     /**
-     * Used to remove the arena from the cozy game system.
+     * Used to remove the arena from the cozy game
+     * system.
      * <p>
-     * This should also delete the world the arena is located in.
+     * This should also delete the world the arena
+     * is located in.
+     * <p>
+     * This method should be used instead of the
+     * {@link Arena#delete()} method.
      */
     public abstract void remove();
 

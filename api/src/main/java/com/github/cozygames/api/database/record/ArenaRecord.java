@@ -23,6 +23,8 @@ import com.github.cozygames.api.indicator.RecordConvertable;
 import com.github.smuddgge.squishydatabase.record.Record;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 public class ArenaRecord extends Record implements RecordConvertable<GlobalArena> {
 
     /**
@@ -43,7 +45,7 @@ public class ArenaRecord extends Record implements RecordConvertable<GlobalArena
     @Override
     public @NotNull GlobalArena convert() {
         GlobalArena globalArena = new GlobalArena(this.mapIdentifier, this.worldName);
-        globalArena.setGroupIdentifier(this.groupIdentifier);
+        globalArena.setGroupIdentifier(UUID.fromString(this.groupIdentifier));
         return globalArena;
     }
 }

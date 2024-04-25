@@ -20,9 +20,13 @@ package com.github.cozygames.api.database.table;
 
 import com.github.cozygames.api.database.record.GroupRecord;
 import com.github.cozygames.api.group.Group;
+import com.github.smuddgge.squishydatabase.Query;
 import com.github.smuddgge.squishydatabase.interfaces.TableAdapter;
 import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * Represents the group table.
@@ -35,6 +39,16 @@ public class GroupTable extends TableAdapter<GroupRecord> {
     @Override
     public @NotNull String getName() {
         return "groups";
+    }
+
+    /**
+     * Used to get an instance of a group record.
+     *
+     * @param identifier The group's identifier.
+     * @return The optional group record.
+     */
+    public Optional<GroupRecord> getGroupRecord(@NotNull UUID identifier) {
+        return Optional.ofNullable(this.getFirstRecord(new Query().match("identifier", identifier.toString())));
     }
 
     /**

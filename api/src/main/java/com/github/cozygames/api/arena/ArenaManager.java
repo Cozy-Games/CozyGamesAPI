@@ -58,8 +58,8 @@ public class ArenaManager {
         return this;
     }
 
-    public @NotNull ArenaManager unregisterArena(@NotNull ImmutableArena<?, ?> map) {
-        this.localArenaList.remove(map);
+    public @NotNull ArenaManager unregisterArena(@NotNull ImmutableArena<?, ?> arena) {
+        this.localArenaList.remove(arena);
         return this;
     }
 

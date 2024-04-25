@@ -22,6 +22,7 @@ import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
 import com.github.cozygames.api.arena.ArenaManager;
 import com.github.cozygames.api.database.table.MemberTable;
+import com.github.cozygames.api.group.GroupManager;
 import com.github.cozygames.api.map.MapManager;
 import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.MemberNotFoundException;
@@ -66,6 +67,7 @@ public class CozyGamesImpl implements CozyGames {
     private final @NotNull KerbClient kerb;
     private final @NotNull MapManager mapManager;
     private final @NotNull ArenaManager arenaManager;
+    private final @NotNull GroupManager groupManager;
 
     /**
      * Used to create a new instance of the
@@ -111,6 +113,9 @@ public class CozyGamesImpl implements CozyGames {
 
         // Create the arena manager.
         this.arenaManager = new ArenaManager(this);
+
+        // Create the group manager.
+        this.groupManager = new GroupManager(this);
 
         // Register this instance in the singleton provider.
         CozyGamesProvider.register(this);
@@ -160,6 +165,11 @@ public class CozyGamesImpl implements CozyGames {
     @Override
     public @NotNull ArenaManager getArenaManager() {
         return this.arenaManager;
+    }
+
+    @Override
+    public @NotNull GroupManager getGroupManager() {
+        return this.groupManager;
     }
 
     @Override
