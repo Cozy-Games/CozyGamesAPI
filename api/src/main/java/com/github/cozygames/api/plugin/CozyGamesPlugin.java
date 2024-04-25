@@ -19,7 +19,7 @@
 package com.github.cozygames.api.plugin;
 
 import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.arena.ImmutableArena;
 import com.github.cozygames.api.configuration.MapConfiguration;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.map.MapFactory;
@@ -38,7 +38,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class CozyGamesPlugin<
         S extends Session<A, M>,
-        A extends Arena<A, M>,
+        A extends ImmutableArena<A, M>,
         M extends Map<M>,
         L> {
 

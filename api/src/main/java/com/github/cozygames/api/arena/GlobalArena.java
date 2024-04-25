@@ -25,16 +25,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
-public class GlobalArena extends Arena<GlobalArena, GlobalMap>  {
+public class GlobalArena extends Arena<GlobalArena, GlobalMap> {
 
     /**
      * Used to create a new arena.
      *
-     * @param mapIdentifier   The map's identifier.
-     * @param groupIdentifier The group that is using the arena.
+     * @param mapIdentifier The map's identifier.
+     * @param worldName     The name of the world this arena is located in.
      */
-    public GlobalArena(@NotNull String mapIdentifier, @NotNull String groupIdentifier) {
-        super(mapIdentifier, groupIdentifier);
+    public GlobalArena(@NotNull String mapIdentifier, @NotNull String worldName) {
+        super(mapIdentifier, worldName);
     }
 
     @Override
@@ -43,8 +43,8 @@ public class GlobalArena extends Arena<GlobalArena, GlobalMap>  {
     }
 
     @Override
-    public @NotNull Optional<GlobalMap> getMap() {
-        return this.getAPI().getMapManager().getGlobalMap(this.getMapIdentifier());
+    public @NotNull GlobalMap getMap() {
+        return this.getAPI().getMapManager().getGlobalMap(this.getMapIdentifier()).orElseThrow();
     }
 
     @Override
@@ -59,6 +59,11 @@ public class GlobalArena extends Arena<GlobalArena, GlobalMap>  {
 
     @Override
     public void remove() {
+
+    }
+
+    @Override
+    public void saveToLocalConfiguration() {
 
     }
 }

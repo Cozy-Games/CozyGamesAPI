@@ -18,10 +18,10 @@
 
 package com.github.cozygames.api.database.record;
 
-import com.github.cozygames.api.item.Item;
-import com.github.cozygames.api.map.GlobalMap;
-import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.indicator.RecordConvertable;
+import com.github.cozygames.api.item.Item;
+import com.github.cozygames.api.location.Position;
+import com.github.cozygames.api.map.GlobalMap;
 import com.github.cozygames.api.member.MemberCapacity;
 import com.github.cozygames.api.schematic.Schematic;
 import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
@@ -59,13 +59,20 @@ public class MapRecord extends Record implements RecordConvertable<GlobalMap> {
     public String capacityClass;
     public String itemClass;
 
+    public String spawnPointPositionClass;
+
     @Override
     public @NotNull GlobalMap convert() {
         GlobalMap map = new GlobalMap(this.name, this.serverName, this.gameIdentifier);
 
-        if (schematicClass != null) map.setSchematic(new Schematic().convert(this.asConfigurationSection(schematicClass)));
-        if (capacityClass != null) map.setCapacity(new MemberCapacity().convert(this.asConfigurationSection(capacityClass)));
-        if (itemClass != null) map.setItem(new Item().convert(this.asConfigurationSection(itemClass)));
+        if (schematicClass != null)
+            map.setSchematic(new Schematic().convert(this.asConfigurationSection(schematicClass)));
+        if (capacityClass != null)
+            map.setCapacity(new MemberCapacity().convert(this.asConfigurationSection(capacityClass)));
+        if (itemClass != null)
+            map.setItem(new Item().convert(this.asConfigurationSection(itemClass)));
+        if (spawnPointPositionClass != null)
+            map.setSpawnPoint(new Position(0, 0, 0).convert(this.asConfigurationSection(spawnPointPositionClass)));
 
         return map;
     }

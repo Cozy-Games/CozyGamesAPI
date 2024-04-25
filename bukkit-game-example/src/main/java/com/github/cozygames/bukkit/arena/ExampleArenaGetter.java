@@ -18,7 +18,7 @@
 
 package com.github.cozygames.bukkit.arena;
 
-import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.arena.ImmutableArena;
 import com.github.cozygames.api.arena.ArenaGetter;
 import com.github.cozygames.bukkit.map.ExampleMap;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +28,7 @@ import java.util.Optional;
 public class ExampleArenaGetter implements ArenaGetter<ExampleArena, ExampleMap> {
 
     @Override
-    public @NotNull Optional<Arena<ExampleArena, ExampleMap>> getArena(@NotNull String identifier) {
+    public @NotNull Optional<ExampleArena> getArena(@NotNull String identifier) {
         return Optional.empty();
     }
 }

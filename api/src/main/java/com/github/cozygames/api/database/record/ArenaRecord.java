@@ -31,10 +31,19 @@ public class ArenaRecord extends Record implements RecordConvertable<GlobalArena
      * These variables will not change once created.
      */
     public String mapIdentifier;
+    public String worldName;
+
+    /**
+     * Changeable variables.
+     * <p>
+     * These variables may be changed in the database.
+     */
     public String groupIdentifier;
 
     @Override
     public @NotNull GlobalArena convert() {
-        return new GlobalArena(mapIdentifier, groupIdentifier);
+        GlobalArena globalArena = new GlobalArena(this.mapIdentifier, this.worldName);
+        globalArena.setGroupIdentifier(this.groupIdentifier);
+        return globalArena;
     }
 }

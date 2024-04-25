@@ -219,6 +219,8 @@ public abstract class Map<T extends Map<T>> extends ImmutableMap<T> implements C
         if (this.capacity != null) section.set("capacity", this.capacity.convert().getMap());
         if (this.item != null) section.set("item", this.item.convert().getMap());
 
+        if (this.spawnPoint != null) section.set("spawn_point", this.spawnPoint.convert().getMap());
+
         return section;
     }
 
@@ -229,7 +231,10 @@ public abstract class Map<T extends Map<T>> extends ImmutableMap<T> implements C
             this.schematic = new Schematic().convert(section.getSection("schematic"));
         if (section.getKeys().contains("capacity"))
             this.capacity = new MemberCapacity().convert(section.getSection("capacity"));
-        if (section.getKeys().contains("item")) this.item = new Item().convert(section.getSection("item"));
+        if (section.getKeys().contains("item"))
+            this.item = new Item().convert(section.getSection("item"));
+        if (section.getKeys().contains("spawn_point"))
+            this.spawnPoint = new Position(0, 0, 0).convert(section.getSection("spawn_point"));
 
         return (T) this;
     }

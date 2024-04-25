@@ -32,7 +32,7 @@ import java.util.Optional;
  * @param <A> The arena that will be returned.
  * @param <M> The map type the arena is using.
  */
-public interface ArenaGetter<A extends Arena<A, M>, M extends Map<M>> {
+public interface ArenaGetter<A extends ImmutableArena<A, M>, M extends Map<M>> {
 
     /**
      * Used to get an instance of an arena.
@@ -41,5 +41,5 @@ public interface ArenaGetter<A extends Arena<A, M>, M extends Map<M>> {
      * @return The optional arena.
      */
     @NotNull
-    Optional<Arena<A, M>> getArena(@NotNull String identifier);
+    Optional<A> getArena(@NotNull String identifier);
 }

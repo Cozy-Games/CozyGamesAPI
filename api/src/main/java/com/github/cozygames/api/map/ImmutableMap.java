@@ -19,7 +19,7 @@
 package com.github.cozygames.api.map;
 
 import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.arena.ImmutableArena;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -67,15 +67,14 @@ public abstract class ImmutableMap<M extends ImmutableMap<M>> {
     /**
      * The base method used to activate the map.
      * <p>
-     * This will create a session for the group of players and begin a game.
+     * This will create a new arena using this map.
      * <p>
-     * This will ignore if it should create a new game. Checking if a game
-     * should begin should be checked before calling this method.
+     * This will ignore if it should create a new arena. Checking if an arena
+     * should be created should be checked before calling this method.
      *
-     * @param groupIdentifier The group's identifier.
      * @return This instance.
      */
-    public abstract @NotNull Arena<?, M> createArena(@NotNull String groupIdentifier);
+    public abstract @NotNull ImmutableArena<?, M> createArena();
 
     /**
      * The map's unique identifier.

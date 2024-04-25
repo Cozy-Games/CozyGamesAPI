@@ -18,13 +18,14 @@
 
 package com.github.cozygames.api.session;
 
-import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.arena.ArenaGetter;
+import com.github.cozygames.api.arena.ImmutableArena;
 import com.github.cozygames.api.map.Map;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 /**
@@ -36,7 +37,7 @@ import java.util.Optional;
  * @param <A> The arena class which is used.
  * @param <M> The map class which is in the arena.
  */
-public class Session<A extends Arena<A, M>, M extends Map<M>> {
+public class Session<A extends ImmutableArena<A, M>, M extends Map<M>> {
 
     private final @NotNull String arenaIdentifier;
     private final @NotNull ArenaGetter<A, M> arenaGetter;
@@ -64,11 +65,15 @@ public class Session<A extends Arena<A, M>, M extends Map<M>> {
     /**
      * Used to get the instance of the arena via
      * the provided arena getter instance.
+     * <p>
+     * All arena sessions should be stopped before the
+     * arena instance is deleted.
      *
      * @return The optional arena.
+     * @throws NoSuchElementException When the arena no longer exists.
      */
-    public @NotNull Optional<Arena<A, M>> getArena() {
-        return this.arenaGetter.getArena(this.getArenaIdentifier());
+    public @NotNull A getArena() {
+        return this.arenaGetter.getArena(this.getArenaIdentifier()).orElseThrow();
     }
 
     public @NotNull List<SessionComponent<A, M>> getComponentList() {

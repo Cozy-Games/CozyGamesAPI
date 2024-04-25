@@ -20,7 +20,7 @@ package com.github.cozygames.bukkit.plugin;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
-import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.arena.ImmutableArena;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.cozygames.api.session.Session;
@@ -42,7 +42,7 @@ import java.util.Optional;
  */
 public abstract class CozyGamesBukkitPlugin<
         S extends Session<A, M>,
-        A extends Arena<A, M>,
+        A extends ImmutableArena<A, M>,
         M extends Map<M>,
         L extends JavaPlugin> extends CozyGamesPlugin<S, A, M, L> {
 

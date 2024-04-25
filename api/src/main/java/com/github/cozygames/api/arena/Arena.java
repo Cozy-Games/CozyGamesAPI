@@ -18,13 +18,18 @@
 
 package com.github.cozygames.api.arena;
 
-import com.github.cozygames.api.CozyGames;
+import com.github.cozygames.api.database.table.ArenaTable;
+import com.github.cozygames.api.database.table.MapTable;
 import com.github.cozygames.api.indicator.Savable;
 import com.github.cozygames.api.map.ImmutableMap;
+import com.github.cozygames.api.map.Map;
 import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertable;
 import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
+import com.github.smuddgge.squishyconfiguration.memory.MemoryConfigurationSection;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.LinkedHashMap;
 import java.util.Optional;
 
 /**
@@ -35,10 +40,11 @@ import java.util.Optional;
  * @param <A> The top arena.
  * @param <M> The map type.
  */
-public abstract class Arena<A extends Arena<A, M>, M extends ImmutableMap<M>> implements ConfigurationConvertable<A>, Savable<A> {
+public abstract class Arena<A extends ImmutableArena<A, M>, M extends ImmutableMap<M>>
+        extends ImmutableArena<A, M>
+        implements ConfigurationConvertable<A>, Savable<A> {
 
-    private final @NotNull String mapIdentifier;
-    private final @NotNull String worldName;
+    private @Nullable String groupIdentifier;
 
     /**
      * Used to create a new arena.
@@ -47,70 +53,76 @@ public abstract class Arena<A extends Arena<A, M>, M extends ImmutableMap<M>> im
      * @param worldName     The name of the world this arena is located in.
      */
     public Arena(@NotNull String mapIdentifier, @NotNull String worldName) {
-        this.mapIdentifier = mapIdentifier;
-        this.worldName = worldName;
+        super(mapIdentifier, worldName);
     }
 
     /**
-     * Used to get the instance of the api to use.
+     * Used to save the arena to the location configuration.
      * <p>
-     * This should be used in case there is a service
-     * provider on the platform.
-     *
-     * @return The instance of the api.
+     * This method is called in the {@link Arena#save()} method.
      */
-    public abstract @NotNull CozyGames getAPI();
+    public abstract void saveToLocalConfiguration();
 
-    /**
-     * Used to get the instance of the map.
-     * <p>
-     * This uses the storage in case the map is updated.
-     *
-     * @return The optional instance of the map.
-     */
-    public abstract @NotNull Optional<M> getMap();
-
-    /**
-     * Used to activate the arena and begin a game session.
-     *
-     * @param groupIdentifier The group identifier that will be playing the game.
-     */
-    public abstract void activate(@NotNull String groupIdentifier);
-
-    /**
-     * Used to deactivate the arena.
-     * <p>
-     * This will stop any game session.
-     */
-    public abstract void deactivate();
-
-    /**
-     * Used to remove the arena from the cozy game system.
-     * <p>
-     * This should also delete the world the arena is located in.
-     */
-    public abstract void remove();
-
-    public @NotNull String getMapIdentifier() {
-        return this.mapIdentifier;
+    public @NotNull Optional<String> getGroupIdentifier() {
+        return Optional.ofNullable(groupIdentifier);
     }
 
-    public @NotNull String getWorldName() {
-        return this.worldName;
+    public @NotNull A setGroupIdentifier(@Nullable String groupIdentifier) {
+        this.groupIdentifier = groupIdentifier;
+        return (A) this;
     }
 
     @Override
     public @NotNull ConfigurationSection convert() {
-        return null;
+        ConfigurationSection section = new MemoryConfigurationSection(new LinkedHashMap<>());
+
+        section.set("map_identifier", this.getMapIdentifier());
+        section.set("world_name", this.getWorldName());
+
+        if (this.groupIdentifier != null) section.set("group_identifier", this.groupIdentifier);
+
+        return section;
     }
 
     @Override
-    public @NotNull A convert(@NotNull ConfigurationSection configurationSection) {
-        return null;
+    public @NotNull A convert(@NotNull ConfigurationSection section) {
+
+        if (section.getKeys().contains("group_identifier")) this.groupIdentifier = section.getString("group_identifier");
+
+        return (A) this;
     }
 
     @Override
     public @NotNull A save() {
-        return null;
+
+        // Save to the database.
+        this.getAPI().getDatabase()
+                .getTable(ArenaTable.class)
+                .insertArena(this);
+
+        // Save to the plugin's local configuration
+        // if it exists.
+        this.saveToLocalConfiguration();
+        return (A) this;
+    }
+
+    /**
+     * Used to get the arena identifier associated with a
+     * map identifier and world name.
+     * <p>
+     * This is the map identifier and world name
+     * seperated with a colon.
+     * <p>
+     * Example:
+     * <pre>{@code
+     * server1:bedwars:aquarium:world_bedwars_aquarium_1
+     * }</pre>
+     *
+     * @param mapIdentifier The map identifier.
+     * @param worldName     The world name.
+     * @return The arena identifier.
+     */
+    public static @NotNull String getIdentifier(@NotNull String mapIdentifier, @NotNull String worldName) {
+        return mapIdentifier + ":" + worldName;
     }
 }

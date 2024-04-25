@@ -19,9 +19,11 @@
 package com.github.cozygames.bukkit.map;
 
 import com.github.cozygames.api.CozyGames;
+import com.github.cozygames.api.arena.ImmutableArena;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.map.MapFactory;
 import com.github.cozygames.bukkit.BukkitExamplePlugin;
+import com.github.cozygames.bukkit.arena.ExampleArena;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -62,8 +64,18 @@ public class ExampleMap extends Map<ExampleMap> {
     }
 
     @Override
-    public @NotNull ExampleMap createArena(@NotNull String groupIdentifier) {
-        return this;
+    public @NotNull ImmutableArena<?, ExampleMap> createArena() {
+
+        // Create new world to host the arena.
+
+        // Build map.
+
+        // Create a new example arena.
+        ExampleArena arena = new ExampleArena(this.getIdentifier(), "world_new");
+
+        // Register the arena with the api.
+        this.getAPI().getArenaManager().registerArena(arena);
+        return arena;
     }
 
     @Override
