@@ -58,6 +58,16 @@ public class GlobalArena extends Arena<GlobalArena, GlobalMap> {
     }
 
     @Override
+    public @NotNull GlobalArena createWorld() {
+        return this;
+    }
+
+    @Override
+    public @NotNull GlobalArena deleteWorld() {
+        return this;
+    }
+
+    @Override
     public void activate(@NotNull UUID groupIdentifier) {
 
     }

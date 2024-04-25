@@ -31,7 +31,7 @@ import java.util.UUID;
  * A map that has been loaded into a world.
  *
  * @param <A> The top arena.
- * @param <M> The map type.
+ * @param <M> The map type using in this arena.
  */
 public abstract class ImmutableArena<A extends ImmutableArena<A, M>, M extends ImmutableMap<M>> {
 
@@ -70,6 +70,22 @@ public abstract class ImmutableArena<A extends ImmutableArena<A, M>, M extends I
      * @throws NoSuchElementException When the arena no longer exists.
      */
     public abstract @NotNull M getMap();
+
+    /**
+     * Used to create the world if it doesn't
+     * exist on the server.
+     *
+     * @return This instance.
+     */
+    public abstract @NotNull A createWorld();
+
+    /**
+     * Used to delete the world if it exists
+     * on the server.
+     *
+     * @return This instance.
+     */
+    public abstract @NotNull A deleteWorld();
 
     /**
      * Used to activate the arena and begin a game session.

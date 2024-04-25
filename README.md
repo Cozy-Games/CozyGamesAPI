@@ -41,6 +41,7 @@ GlobalMap: The map type that is accessible from anywhere.
 ImmutableArena: The arena base that contains unchangeable variables and methods.
 Arena: A loaded map. (Actual locations)
 LocalArena: The arena instance in the mini game plugin.
+LocalBukkitArena: Simplified local arena for bukkit plugins.
 GlobalArena: The arena type that is accessible from anywhere.
 
 Session: A running game in an arena. (Arena with group instance)

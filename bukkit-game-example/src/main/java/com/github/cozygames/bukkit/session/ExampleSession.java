@@ -18,9 +18,10 @@
 
 package com.github.cozygames.bukkit.session;
 
+import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.cozygames.api.session.Session;
+import com.github.cozygames.bukkit.BukkitExamplePlugin;
 import com.github.cozygames.bukkit.arena.ExampleArena;
-import com.github.cozygames.bukkit.arena.ExampleArenaGetter;
 import com.github.cozygames.bukkit.map.ExampleMap;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
@@ -33,8 +34,13 @@ public class ExampleSession extends Session<ExampleArena, ExampleMap> {
      * @param arenaIdentifier The arena identifier.
      */
     public ExampleSession(@NotNull String arenaIdentifier) {
-        super(arenaIdentifier, new ExampleArenaGetter());
+        super(arenaIdentifier);
 
         Location spawnPoint = this.getArena().getSpawnPoint();
+    }
+
+    @Override
+    public @NotNull CozyGamesPlugin<?, ExampleArena, ExampleMap, ?> getPlugin() {
+        return BukkitExamplePlugin.getInstance();
     }
 }

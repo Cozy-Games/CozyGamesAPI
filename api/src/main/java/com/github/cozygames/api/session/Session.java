@@ -18,9 +18,10 @@
 
 package com.github.cozygames.api.session;
 
-import com.github.cozygames.api.arena.ArenaGetter;
+import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.arena.ImmutableArena;
 import com.github.cozygames.api.map.Map;
+import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -37,10 +38,9 @@ import java.util.Optional;
  * @param <A> The arena class which is used.
  * @param <M> The map class which is in the arena.
  */
-public class Session<A extends ImmutableArena<A, M>, M extends Map<M>> {
+public abstract class Session<A extends Arena<A, M>, M extends Map<M>> {
 
     private final @NotNull String arenaIdentifier;
-    private final @NotNull ArenaGetter<A, M> arenaGetter;
     private final @NotNull List<SessionComponent<A, M>> sessionComponentList;
 
     /**
@@ -48,32 +48,36 @@ public class Session<A extends ImmutableArena<A, M>, M extends Map<M>> {
      *
      * @param arenaIdentifier The arena identifier.
      */
-    public Session(@NotNull String arenaIdentifier, @NotNull ArenaGetter<A, M> arenaGetter) {
+    public Session(@NotNull String arenaIdentifier) {
         this.arenaIdentifier = arenaIdentifier;
-        this.arenaGetter = arenaGetter;
         this.sessionComponentList = new ArrayList<>();
     }
+
+    /**
+     * Used to get the instance of the plugin.
+     *
+     * @return The instance of the plugin.
+     */
+    public abstract @NotNull CozyGamesPlugin<?, A, M, ?> getPlugin();
 
     public @NotNull String getArenaIdentifier() {
         return this.arenaIdentifier;
     }
 
-    public @NotNull ArenaGetter<A, M> getArenaGetter() {
-        return this.arenaGetter;
-    }
-
     /**
      * Used to get the instance of the arena via
-     * the provided arena getter instance.
+     * the arena configuration in the related plugin.
      * <p>
-     * All arena sessions should be stopped before the
+     * All arena session should be stopped before the
      * arena instance is deleted.
      *
      * @return The optional arena.
      * @throws NoSuchElementException When the arena no longer exists.
      */
     public @NotNull A getArena() {
-        return this.arenaGetter.getArena(this.getArenaIdentifier()).orElseThrow();
+        return this.getPlugin().getArenaConfiguration()
+                .getType(this.getArenaIdentifier())
+                .orElseThrow();
     }
 
     public @NotNull List<SessionComponent<A, M>> getComponentList() {

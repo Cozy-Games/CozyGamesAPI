@@ -18,10 +18,13 @@
 
 package com.github.cozygames.bukkit;
 
+import com.github.cozygames.api.arena.ArenaFactory;
 import com.github.cozygames.api.map.MapFactory;
 import com.github.cozygames.bukkit.arena.ExampleArena;
+import com.github.cozygames.bukkit.arena.ExampleArenaFactory;
 import com.github.cozygames.bukkit.command.CommandManager;
 import com.github.cozygames.bukkit.map.ExampleMap;
+import com.github.cozygames.bukkit.map.ExampleMapFactory;
 import com.github.cozygames.bukkit.plugin.CozyGamesBukkitPlugin;
 import com.github.cozygames.bukkit.session.ExampleSession;
 import com.github.cozyplugins.cozylibrary.placeholder.PlaceholderManager;
@@ -65,7 +68,12 @@ public final class BukkitExamplePlugin extends CozyGamesBukkitPlugin<
 
     @Override
     public @NotNull MapFactory<ExampleMap> getMapFactory() {
-        return new ExampleMap.Factory();
+        return new ExampleMapFactory();
+    }
+
+    @Override
+    public @NotNull ArenaFactory<ExampleArena, ExampleMap> getArenaFactory() {
+        return new ExampleArenaFactory();
     }
 
     @Override

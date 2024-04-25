@@ -20,9 +20,7 @@ package com.github.cozygames.api.map;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.arena.Arena;
-import com.github.cozygames.api.arena.ImmutableArena;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
-import com.github.cozygames.api.schematic.Schematic;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class LocalMap<A extends Arena<A, M>, M extends Map<M>> extends Map<M> {
@@ -55,22 +53,6 @@ public abstract class LocalMap<A extends Arena<A, M>, M extends Map<M>> extends 
      */
     public abstract @NotNull A createEmptyArena(@NotNull String identifier, @NotNull String worldName);
 
-    /**
-     * Used to create a new world in the server.
-     *
-     * @param worldName The world's name.
-     * @return This instance.
-     */
-    public abstract @NotNull M createWorld(@NotNull String worldName);
-
-    /**
-     * Used to build the map on the server in the new world.
-     *
-     * @param worldName The world's name.
-     * @return This instance.
-     */
-    public abstract @NotNull M buildMap(@NotNull String worldName, @NotNull Schematic schematic);
-
     @Override
     public @NotNull CozyGames getAPI() {
         return this.getPlugin().getAPI();
@@ -79,16 +61,14 @@ public abstract class LocalMap<A extends Arena<A, M>, M extends Map<M>> extends 
     @Override
     public @NotNull A createArena() {
 
+        // Get world name.
         final String worldName = "todo";
-
-        // Create new world to host the arena.
-        this.createWorld(worldName);
-
-        // Build map.
-        this.buildMap(worldName, this.getSchematic().orElseThrow());
 
         // Create a new arena.
         A arena = this.createEmptyArena(this.getIdentifier(), worldName);
+
+        // Create world.
+        arena.createWorld();
 
         // Register the arena with the api.
         this.getAPI().getArenaManager().registerArena(arena);

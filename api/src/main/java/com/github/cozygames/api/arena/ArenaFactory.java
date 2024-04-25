@@ -16,23 +16,24 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.map;
+package com.github.cozygames.api.arena;
 
+import com.github.cozygames.api.map.Map;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents a map event.
- * <p>
- * All map events should implement this interface.
+ * Represents a map factory.
+ *
+ * @param <M> The map that will be created.
  */
-public interface MapEvent {
+public interface ArenaFactory<A extends Arena<A, M>, M extends Map<M>> {
 
     /**
-     * Used to get the maps identifier which can
-     * be used for retrieving the map.
+     * Used to create a new empty instance of a map.
      *
-     * @return The map identifier.
+     * @param identifier The name of the map to create.
+     * @return The empty map instance.
      */
     @NotNull
-    String getMapIdentifier();
+    A create(@NotNull String identifier);
 }

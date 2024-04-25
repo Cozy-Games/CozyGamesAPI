@@ -71,6 +71,9 @@ public abstract class ImmutableMap<M extends ImmutableMap<M>> {
      * <p>
      * This will ignore if it should create a new arena. Checking if an arena
      * should be created should be checked before calling this method.
+     * <p>
+     * This should also create the world for the arena on the
+     * server but will not build the map.
      *
      * @return This instance.
      */

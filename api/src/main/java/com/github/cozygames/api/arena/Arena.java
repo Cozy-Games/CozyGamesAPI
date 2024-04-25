@@ -39,7 +39,7 @@ import java.util.UUID;
  * A map that has been loaded into a world.
  *
  * @param <A> The top arena.
- * @param <M> The map type.
+ * @param <M> The map type using in this arena.
  */
 public abstract class Arena<A extends ImmutableArena<A, M>, M extends ImmutableMap<M>>
         extends ImmutableArena<A, M>
@@ -58,6 +58,19 @@ public abstract class Arena<A extends ImmutableArena<A, M>, M extends ImmutableM
     }
 
     /**
+     * Used to create a new arena.
+     *
+     * @param identifier The arena's identifier. This can be provided by
+     *                   the {@link Arena#getIdentifier(String, String)} method.
+     */
+    public Arena(@NotNull String identifier) {
+        super(
+                identifier.split(":")[0] + ":" + identifier.split(":")[1] + ":" + identifier.split(":")[2],
+                identifier.split(":")[3]
+        );
+    }
+
+    /**
      * Used to save the arena to the local configuration.
      * <p>
      * This method is called in the {@link Arena#save()} method.
@@ -71,10 +84,25 @@ public abstract class Arena<A extends ImmutableArena<A, M>, M extends ImmutableM
      */
     public abstract void deleteFromLocalConfiguration();
 
+    /**
+     * Used to get the optional group identifier.
+     * <p>
+     * The group that is using this arena.
+     *
+     * @return The group identifier.
+     */
     public @NotNull Optional<UUID> getGroupIdentifier() {
         return Optional.ofNullable(groupIdentifier);
     }
 
+    /**
+     * Used to set the group identifier.
+     * <p>
+     * This can be set to null, indicating no group is using the arena.
+     *
+     * @param groupIdentifier The new group identifier.
+     * @return This instance.
+     */
     public @NotNull A setGroupIdentifier(@Nullable UUID groupIdentifier) {
         this.groupIdentifier = groupIdentifier;
         return (A) this;

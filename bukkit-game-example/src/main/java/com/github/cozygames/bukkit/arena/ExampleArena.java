@@ -18,7 +18,6 @@
 
 package com.github.cozygames.bukkit.arena;
 
-import com.github.cozygames.api.arena.LocalArena;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.cozygames.bukkit.BukkitExamplePlugin;
 import com.github.cozygames.bukkit.adapter.BukkitPositionConverter;
@@ -28,25 +27,20 @@ import com.github.cozyplugins.cozylibrary.indicator.LocationConvertable;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
-public class ExampleArena extends LocalArena<ExampleSession, ExampleArena, ExampleMap> implements LocationConvertable {
+public class ExampleArena extends LocalBukkitArena<ExampleSession, ExampleArena, ExampleMap> implements LocationConvertable {
 
     private final @NotNull Location spawnPoint;
 
-    /**
-     * Used to create a new arena.
-     *
-     * @param mapIdentifier The map's identifier.
-     * @param worldName     The name of the world this arena is located in.
-     */
     public ExampleArena(@NotNull String mapIdentifier, @NotNull String worldName) {
         super(mapIdentifier, worldName);
-
         this.spawnPoint = this.getMap().getSpawnPoint().orElseThrow()
                 .getLocation(new BukkitPositionConverter(), worldName);
     }
 
-    public @NotNull Location getSpawnPoint() {
-        return this.spawnPoint;
+    public ExampleArena(@NotNull String identifier) {
+        super(identifier);
+        this.spawnPoint = this.getMap().getSpawnPoint().orElseThrow()
+                .getLocation(new BukkitPositionConverter(), this.getWorldName());
     }
 
     @Override
@@ -57,5 +51,9 @@ public class ExampleArena extends LocalArena<ExampleSession, ExampleArena, Examp
     @Override
     public @NotNull ExampleSession createSession() {
         return new ExampleSession(this.getIdentifier());
+    }
+
+    public @NotNull Location getSpawnPoint() {
+        return this.spawnPoint;
     }
 }

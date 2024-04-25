@@ -27,6 +27,16 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
+/**
+ * Represents a local arena.
+ * <p>
+ * This simplifies the {@link Arena} class for
+ * creating new arena types in mini-game plugins.
+ *
+ * @param <S> The session class assosicated with this arena.
+ * @param <A> The top arena class.
+ * @param <M> The map type using in this arena.
+ */
 public abstract class LocalArena<S extends Session<A, M>, A extends Arena<A, M>, M extends Map<M>> extends Arena<A, M> {
 
     /**
@@ -37,6 +47,15 @@ public abstract class LocalArena<S extends Session<A, M>, A extends Arena<A, M>,
      */
     public LocalArena(@NotNull String mapIdentifier, @NotNull String worldName) {
         super(mapIdentifier, worldName);
+    }
+
+    /**
+     * Used to create a new local arena.
+     *
+     * @param identifier The arena's identifier.
+     */
+    public LocalArena(@NotNull String identifier) {
+        super(identifier);
     }
 
     /**
@@ -99,6 +118,9 @@ public abstract class LocalArena<S extends Session<A, M>, A extends Arena<A, M>,
         // Unregister session if exists.
         this.getPlugin().getSessionManager()
                 .unregisterSession(this.getIdentifier());
+
+        // Delete world.
+        this.deleteWorld();
     }
 
     @Override

@@ -19,7 +19,9 @@
 package com.github.cozygames.api.plugin;
 
 import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.arena.ImmutableArena;
+import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.arena.ArenaFactory;
+import com.github.cozygames.api.configuration.ArenaConfiguration;
 import com.github.cozygames.api.configuration.MapConfiguration;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.map.MapFactory;
@@ -38,13 +40,14 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class CozyGamesPlugin<
         S extends Session<A, M>,
-        A extends ImmutableArena<A, M>,
+        A extends Arena<A, M>,
         M extends Map<M>,
         L> {
 
     private final @NotNull L loader;
 
     private MapConfiguration<M> mapConfiguration;
+    private ArenaConfiguration<A, M> arenaConfiguration;
     private SessionManager<S, A, M> sessionManager;
 
     /**
@@ -84,10 +87,21 @@ public abstract class CozyGamesPlugin<
 
     /**
      * Used to get the instance of the map factory.
+     * <p>
+     * This is used to create empty map instances.
      *
      * @return The map factory instance.
      */
     public abstract @NotNull MapFactory<M> getMapFactory();
+
+    /**
+     * Used to get the instance of the arena factory.
+     * <p>
+     * This is used to create empty arena instances.
+     *
+     * @return The arena factory instance.
+     */
+    public abstract @NotNull ArenaFactory<A, M> getArenaFactory();
 
     /**
      * Called when the plugin is enabled.
@@ -116,6 +130,10 @@ public abstract class CozyGamesPlugin<
         this.mapConfiguration = new MapConfiguration<>(this.getLoader().getClass(), this.getMapFactory());
         this.mapConfiguration.reload();
 
+        // Set up the arena configuration directory.
+        this.arenaConfiguration = new ArenaConfiguration<>(this.getLoader().getClass(), this.getArenaFactory());
+        this.arenaConfiguration.reload();
+
         // Set up the session manager.
         this.sessionManager = new SessionManager<>();
 
@@ -138,7 +156,6 @@ public abstract class CozyGamesPlugin<
 
         this.sessionManager.stopAllSessions();
         this.sessionManager.removeAllSessions();
-
         return this;
     }
 
@@ -152,7 +169,7 @@ public abstract class CozyGamesPlugin<
     }
 
     /**
-     * Used to get the instance of the map storage.
+     * Used to get the instance of the local map storage.
      * <p>
      * A single type configuration directory.
      *
@@ -160,6 +177,17 @@ public abstract class CozyGamesPlugin<
      */
     public @NotNull MapConfiguration<M> getMapConfiguration() {
         return this.mapConfiguration;
+    }
+
+    /**
+     * Used to get the instance of the local arena storage.
+     * <p>
+     * A single type configuration directory.
+     *
+     * @return The arena configuration instance.
+     */
+    public @NotNull ArenaConfiguration<A, M> getArenaConfiguration() {
+        return this.arenaConfiguration;
     }
 
     /**

@@ -18,10 +18,7 @@
 
 package com.github.cozygames.bukkit.map;
 
-import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.arena.ImmutableArena;
 import com.github.cozygames.api.map.LocalMap;
-import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.map.MapFactory;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.cozygames.api.schematic.Schematic;
@@ -31,41 +28,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.WorldCreator;
 import org.bukkit.WorldType;
 import org.bukkit.generator.ChunkGenerator;
-import org.bukkit.generator.WorldInfo;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Random;
 
 /**
  * The example map.
  */
 public class ExampleMap extends LocalMap<ExampleArena, ExampleMap> {
 
-    /**
-     * Used to create a new instance of a map.
-     * <p>
-     * A map can be used to create a new arena.
-     *
-     * @param name The map's name.
-     */
     public ExampleMap(@NotNull String name) {
         super(
                 name,
                 BukkitExamplePlugin.getInstance().getAPI().getServerName(),
                 BukkitExamplePlugin.getInstance().getGameIdentifier()
         );
-    }
-
-    /**
-     * Represents the example map factory.
-     * Used to create empty instances of the example map.
-     */
-    public static class Factory implements MapFactory<ExampleMap> {
-
-        @Override
-        public @NotNull ExampleMap create(@NotNull String name) {
-            return new ExampleMap(name);
-        }
     }
 
     @Override
@@ -76,23 +51,5 @@ public class ExampleMap extends LocalMap<ExampleArena, ExampleMap> {
     @Override
     public @NotNull ExampleArena createEmptyArena(@NotNull String identifier, @NotNull String worldName) {
         return new ExampleArena(identifier, worldName);
-    }
-
-    @Override
-    public @NotNull ExampleMap createWorld(@NotNull String worldName) {
-
-        // Create the new world.
-        Bukkit.createWorld(
-                new WorldCreator(worldName)
-                        .type(WorldType.NORMAL)
-                        .generator(new ChunkGenerator() {})
-        );
-
-        return this;
-    }
-
-    @Override
-    public @NotNull ExampleMap buildMap(@NotNull String worldName, @NotNull Schematic schematic) {
-        return null;
     }
 }

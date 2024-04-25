@@ -16,30 +16,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.arena;
+package com.github.cozygames.api.event.map;
 
-import com.github.cozygames.api.map.Map;
+import com.github.cozygames.api.map.GlobalMap;
+import com.github.kerbity.kerb.packet.event.Event;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
+public class MapSaveToLocalConfigurationEvent extends Event implements MapEvent {
 
-/**
- * Used to get a specific type of arena given an identifier.
- * <p>
- * This can be implemented in the cozy game plugin to let
- * a session obtain the instance of the arena.
- *
- * @param <A> The arena that will be returned.
- * @param <M> The map type the arena is using.
- */
-public interface ArenaGetter<A extends ImmutableArena<A, M>, M extends Map<M>> {
+    private final @NotNull String mapIdentifier;
+    private final @NotNull GlobalMap instance;
 
     /**
-     * Used to get an instance of an arena.
+     * Used to create a new map save to local configuration event.
      *
-     * @param identifier The arena identifier.
-     * @return The optional arena.
+     * @param instance The instance of the global map.
      */
-    @NotNull
-    Optional<A> getArena(@NotNull String identifier);
+    public MapSaveToLocalConfigurationEvent(@NotNull GlobalMap instance) {
+        this.mapIdentifier = instance.getIdentifier();
+        this.instance = instance;
+    }
+
+    @Override
+    public @NotNull String getMapIdentifier() {
+        return this.mapIdentifier;
+    }
+
+    public @NotNull GlobalMap getInstance() {
+        return this.instance;
+    }
 }

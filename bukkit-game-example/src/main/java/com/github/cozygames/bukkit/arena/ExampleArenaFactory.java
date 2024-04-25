@@ -16,23 +16,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.map;
+package com.github.cozygames.bukkit.arena;
 
+import com.github.cozygames.api.arena.ArenaFactory;
+import com.github.cozygames.bukkit.map.ExampleMap;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents a map event.
- * <p>
- * All map events should implement this interface.
+ * Represents the example arena factory.
+ * Used to create empty instances of the example arena.
  */
-public interface MapEvent {
+public class ExampleArenaFactory implements ArenaFactory<ExampleArena, ExampleMap> {
 
-    /**
-     * Used to get the maps identifier which can
-     * be used for retrieving the map.
-     *
-     * @return The map identifier.
-     */
-    @NotNull
-    String getMapIdentifier();
+    @Override
+    public @NotNull ExampleArena create(@NotNull String identifier) {
+        return new ExampleArena(identifier);
+    }
 }
