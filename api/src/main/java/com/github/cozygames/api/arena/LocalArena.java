@@ -33,9 +33,10 @@ import java.util.UUID;
  * This simplifies the {@link Arena} class for
  * creating new arena types in mini-game plugins.
  *
- * @param <S> The session class assosicated with this arena.
- * @param <A> The top arena class.
- * @param <M> The map type using in this arena.
+ * @param <S> The session class associated with this arena.
+ * @param <A> The highest arena instance that should be used as a return value.
+ *            This makes it easier to chane method calls.
+ * @param <M> The map type this arena is created from.
  */
 public abstract class LocalArena<S extends Session<A, M>, A extends Arena<A, M>, M extends Map<M>> extends Arena<A, M> {
 
@@ -52,7 +53,8 @@ public abstract class LocalArena<S extends Session<A, M>, A extends Arena<A, M>,
     /**
      * Used to create a new local arena.
      *
-     * @param identifier The arena's identifier.
+     * @param identifier The arena's identifier. This can be provided by
+     *                   the {@link Arena#getIdentifier(String, String)} method.
      */
     public LocalArena(@NotNull String identifier) {
         super(identifier);
@@ -133,15 +135,5 @@ public abstract class LocalArena<S extends Session<A, M>, A extends Arena<A, M>,
 
         // Delete arena.
         this.delete();
-    }
-
-    @Override
-    public void saveToLocalConfiguration() {
-
-    }
-
-    @Override
-    public void deleteFromLocalConfiguration() {
-
     }
 }

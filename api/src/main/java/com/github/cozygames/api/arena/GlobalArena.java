@@ -25,10 +25,20 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
-public class GlobalArena extends Arena<GlobalArena, GlobalMap> {
+/**
+ * Represents a global arena.
+ * <p>
+ * This arena class is used to represents an arena
+ * that could be on a different server.
+ * <p>
+ * Using kerb events when you call a method within this
+ * class, and it will find the locally registered server and
+ * call the same method.
+ */
+public class GlobalArena extends ImmutableArena<GlobalArena, GlobalMap> {
 
     /**
-     * Used to create a new arena.
+     * Used to create a new global arena.
      *
      * @param mapIdentifier The map's identifier.
      * @param worldName     The name of the world this arena is located in.
@@ -37,14 +47,14 @@ public class GlobalArena extends Arena<GlobalArena, GlobalMap> {
         super(mapIdentifier, worldName);
     }
 
-    @Override
-    public void saveToLocalConfiguration() {
-
-    }
-
-    @Override
-    public void deleteFromLocalConfiguration() {
-
+    /**
+     * Used to create a new global arena.
+     *
+     * @param identifier The arena's identifier. This can be provided by
+     *                   the {@link Arena#getIdentifier(String, String)} method.
+     */
+    public GlobalArena(@NotNull String identifier) {
+        super(identifier);
     }
 
     @Override
@@ -74,12 +84,10 @@ public class GlobalArena extends Arena<GlobalArena, GlobalMap> {
 
     @Override
     public void deactivate() {
-
     }
 
     @Override
     public void remove() {
 
     }
-
 }

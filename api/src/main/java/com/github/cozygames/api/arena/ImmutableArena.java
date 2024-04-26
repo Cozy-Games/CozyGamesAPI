@@ -20,18 +20,28 @@ package com.github.cozygames.api.arena;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.map.ImmutableMap;
+import com.github.cozygames.api.map.Map;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.NoSuchElementException;
 import java.util.UUID;
 
 /**
- * Represents an unchangeable arena.
+ * Represents the base of an {@link Arena}.
+ * Containing the values that should not change
+ * though out the arena's lifetime.
  * <p>
- * A map that has been loaded into a world.
+ * Why does this exist?
+ * <p>
+ * This was split from the {@link Arena} class to be used in the {@link ArenaManager}.
+ * The local arena's in the arena manager are stored as {@link ImmutableArena}'s because
+ * the arena may be updated outside the arena manager. Yet, the arena manager is unable to
+ * detect these changes. Hence, if the {@link Arena#getGroupIdentifier()} was to be called
+ * it may return the wrong identifier as the registered local arena was never updated.
  *
- * @param <A> The top arena.
- * @param <M> The map type using in this arena.
+ * @param <A> The highest arena instance that should be used as a return value.
+ *            This makes it easier to chane method calls.
+ * @param <M> The map type this arena is created from.
  */
 public abstract class ImmutableArena<A extends ImmutableArena<A, M>, M extends ImmutableMap<M>> {
 
@@ -39,7 +49,7 @@ public abstract class ImmutableArena<A extends ImmutableArena<A, M>, M extends I
     private final @NotNull String worldName;
 
     /**
-     * Used to create a new arena.
+     * Used to create a new immutable arena.
      *
      * @param mapIdentifier The map's identifier.
      * @param worldName     The name of the world this arena is located in.
@@ -47,6 +57,16 @@ public abstract class ImmutableArena<A extends ImmutableArena<A, M>, M extends I
     public ImmutableArena(@NotNull String mapIdentifier, @NotNull String worldName) {
         this.mapIdentifier = mapIdentifier;
         this.worldName = worldName;
+    }
+
+    /**
+     * Used to create a new immutable arena.
+     *
+     * @param identifier The arena's identifier. This can be provided by
+     *                   the {@link Arena#getIdentifier(String, String)} method.
+     */
+    public ImmutableArena(@NotNull String identifier) {
+        this(Map.getIdentifier(identifier), identifier);
     }
 
     /**

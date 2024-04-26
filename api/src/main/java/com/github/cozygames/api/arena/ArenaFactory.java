@@ -18,21 +18,28 @@
 
 package com.github.cozygames.api.arena;
 
+import com.github.cozygames.api.configuration.ArenaConfiguration;
 import com.github.cozygames.api.map.Map;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents a map factory.
+ * The empty arena factory.
+ * <p>
+ * Used by the {@link ArenaConfiguration} to create an empty
+ * arena instance. When the {@link ArenaConfiguration#getType(String)}
+ * method is called, an empty instance is created and then converted
+ * to obtain the type requested.
  *
- * @param <M> The map that will be created.
+ * @param <A> The arena that will be created.
+ * @param <M> The map that is used within the arena.
  */
 public interface ArenaFactory<A extends Arena<A, M>, M extends Map<M>> {
 
     /**
-     * Used to create a new empty instance of a map.
+     * Used to create a new empty instance of the arena.
      *
-     * @param identifier The name of the map to create.
-     * @return The empty map instance.
+     * @param identifier The arena's identifier.
+     * @return The empty arena instance.
      */
     @NotNull
     A create(@NotNull String identifier);

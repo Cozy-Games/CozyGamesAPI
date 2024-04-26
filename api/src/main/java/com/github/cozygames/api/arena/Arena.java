@@ -34,12 +34,21 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Represents an arena.
+ * Represents the base arena.
  * <p>
  * A map that has been loaded into a world.
+ * <p>
+ * This level in the arena pyramid contains values that
+ * may change within the arena's lifetime. Methods are also
+ * provided to update this instance in the database and configuration.
+ * <p>
+ * This can be used in a mini-game plugin to create the arena's.
+ * However, the {@link LocalArena} class provides an easier
+ * implementation for mini-game plugins.
  *
- * @param <A> The top arena.
- * @param <M> The map type using in this arena.
+ * @param <A> The highest arena instance that should be used as a return value.
+ *            This makes it easier to chane method calls.
+ * @param <M> The map type this arena is created from.
  */
 public abstract class Arena<A extends ImmutableArena<A, M>, M extends ImmutableMap<M>>
         extends ImmutableArena<A, M>
@@ -64,25 +73,8 @@ public abstract class Arena<A extends ImmutableArena<A, M>, M extends ImmutableM
      *                   the {@link Arena#getIdentifier(String, String)} method.
      */
     public Arena(@NotNull String identifier) {
-        super(
-                identifier.split(":")[0] + ":" + identifier.split(":")[1] + ":" + identifier.split(":")[2],
-                identifier.split(":")[3]
-        );
+        super(identifier);
     }
-
-    /**
-     * Used to save the arena to the local configuration.
-     * <p>
-     * This method is called in the {@link Arena#save()} method.
-     */
-    public abstract void saveToLocalConfiguration();
-
-    /**
-     * Used to delete this arena from the local configuration.
-     * <p>
-     * This method is called in the {@link Arena#delete()} method.
-     */
-    public abstract void deleteFromLocalConfiguration();
 
     /**
      * Used to get the optional group identifier.
@@ -150,9 +142,6 @@ public abstract class Arena<A extends ImmutableArena<A, M>, M extends ImmutableM
                 .getTable(ArenaTable.class)
                 .insertArena(this);
 
-        // Save to the plugin's local configuration
-        // if it exists.
-        this.saveToLocalConfiguration();
         return (A) this;
     }
 
@@ -164,8 +153,6 @@ public abstract class Arena<A extends ImmutableArena<A, M>, M extends ImmutableM
                 .getTable(ArenaTable.class)
                 .removeArena(this.getIdentifier());
 
-        // Delete from the plugin's local configuration.
-        this.deleteFromLocalConfiguration();
         return (A) this;
     }
 
