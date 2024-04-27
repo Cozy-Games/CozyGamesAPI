@@ -16,33 +16,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.database.record;
+package com.github.cozygames.api.event.arena;
 
-import com.github.cozygames.api.indicator.RecordConvertable;
-import com.github.cozygames.api.member.Member;
-import com.github.smuddgge.squishydatabase.record.Record;
+import com.github.cozygames.api.arena.GlobalArena;
+import com.github.kerbity.kerb.packet.event.Event;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
 /**
- * Represents the member record.
+ * Represents the arena save to local configuration event.
  * <p>
- * Contains infomation about each player represented
- * by an {@link Member} instance.
+ * Called when the {@link GlobalArena#saveToLocalConfiguration()}
+ * method is called.
  */
-public class MemberRecord extends Record implements RecordConvertable<Member> {
+public class ArenaSaveLocalEvent extends Event implements ArenaEvent {
+
+    private final @NotNull GlobalArena arena;
 
     /**
-     * Final variables.
-     * <p>
-     * These variables will not change once created.
+     * Used to create an arena save to local
+     * configuration event.
+     *
+     * @param arena The instance of the global arena.
      */
-    public String uuid;
-    public String name;
+    public ArenaSaveLocalEvent(@NotNull GlobalArena arena) {
+        this.arena = arena;
+    }
 
     @Override
-    public @NotNull Member convert() {
-        return new Member(UUID.fromString(uuid), name);
+    public @NotNull String getArenaIdentifier() {
+        return this.arena.getIdentifier();
     }
 }

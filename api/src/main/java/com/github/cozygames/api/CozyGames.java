@@ -18,12 +18,12 @@
 
 package com.github.cozygames.api;
 
-import com.github.cozygames.api.arena.ArenaManager;
 import com.github.cozygames.api.group.GroupManager;
 import com.github.cozygames.api.map.MapManager;
 import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.MemberNotFoundException;
 import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
+import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.kerbity.kerb.client.KerbClient;
 import com.github.kerbity.kerb.packet.event.Event;
 import com.github.kerbity.kerb.result.CompletableResultSet;
@@ -31,6 +31,7 @@ import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.interfaces.Database;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -88,6 +89,17 @@ public interface CozyGames {
      */
     @NotNull
     CozyGamesAPIPlugin getPlugin();
+
+    /**
+     * Used to get the mini-game plugins that have been
+     * registered on this api instance.
+     * <p>
+     * Generally there should be 1 api instance per server.
+     *
+     * @return The list of local plugins.
+     */
+    @NotNull
+    List<CozyGamesPlugin<?, ?, ?, ?>> getLocalPlugins();
 
     /**
      * Used to get the instance of the connection configuration file.

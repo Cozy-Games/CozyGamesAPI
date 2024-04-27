@@ -18,6 +18,7 @@
 
 package com.github.cozygames.api.database.record;
 
+import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.arena.GlobalArena;
 import com.github.cozygames.api.indicator.RecordConvertable;
 import com.github.smuddgge.squishydatabase.record.Record;
@@ -25,6 +26,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
+/**
+ * Represents the arena record.
+ * <p>
+ * Contains the general infomation about an
+ * {@link Arena} instance.
+ */
 public class ArenaRecord extends Record implements RecordConvertable<GlobalArena> {
 
     /**

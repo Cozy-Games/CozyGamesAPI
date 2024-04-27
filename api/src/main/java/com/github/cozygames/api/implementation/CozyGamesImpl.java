@@ -20,7 +20,6 @@ package com.github.cozygames.api.implementation;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
-import com.github.cozygames.api.arena.ArenaManager;
 import com.github.cozygames.api.database.table.MemberTable;
 import com.github.cozygames.api.group.GroupManager;
 import com.github.cozygames.api.map.MapManager;

@@ -20,8 +20,6 @@ package com.github.cozygames.bukkit.plugin;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
-import com.github.cozygames.api.arena.Arena;
-import com.github.cozygames.api.arena.ImmutableArena;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.cozygames.api.session.Session;

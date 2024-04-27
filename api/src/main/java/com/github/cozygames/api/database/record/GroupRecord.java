@@ -18,6 +18,7 @@
 
 package com.github.cozygames.api.database.record;
 
+import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.group.Group;
 import com.github.cozygames.api.group.GroupType;
 import com.github.cozygames.api.indicator.RecordConvertable;
@@ -30,6 +31,9 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * The collection of players that are
  * waiting to play a game.
+ * <p>
+ * Contains the general infomation about a
+ * {@link Group} instance.
  */
 public class GroupRecord extends Record implements RecordConvertable<Group> {
 

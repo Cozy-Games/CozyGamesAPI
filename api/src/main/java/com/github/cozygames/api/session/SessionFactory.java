@@ -16,33 +16,28 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.database.record;
+package com.github.cozygames.api.session;
 
-import com.github.cozygames.api.indicator.RecordConvertable;
-import com.github.cozygames.api.member.Member;
-import com.github.smuddgge.squishydatabase.record.Record;
+import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.map.Map;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
 /**
- * Represents the member record.
+ * The empty session factory.
  * <p>
- * Contains infomation about each player represented
- * by an {@link Member} instance.
+ * Used by the {@link Arena} to create a new session.
+ *
+ * @param <S> The session that will be created.
+ * @param <A> The arena type that is used in the session.
+ * @param <M> The map type that is used in the arena.
  */
-public class MemberRecord extends Record implements RecordConvertable<Member> {
+public interface SessionFactory<S extends Session<A, M>, A extends Arena<A, M>, M extends Map<M>> {
 
     /**
-     * Final variables.
-     * <p>
-     * These variables will not change once created.
+     * Used to create an empty session instance.
+     *
+     * @param arenaIdentifier The arena identifier that is creating the session.
+     * @return The session instance.
      */
-    public String uuid;
-    public String name;
-
-    @Override
-    public @NotNull Member convert() {
-        return new Member(UUID.fromString(uuid), name);
-    }
+    S createSession(@NotNull String arenaIdentifier);
 }

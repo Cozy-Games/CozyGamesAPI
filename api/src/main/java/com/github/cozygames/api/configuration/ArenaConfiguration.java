@@ -27,9 +27,9 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Represents the arena configuration directory.
  * <p>
- * Used to store specific arena type's locally.
+ * Used to store a specific arena type locally.
  *
- * @param <A> The arena class.
+ * @param <A> The arena object that is stored.
  * @param <M> The map class the arena uses.
  */
 public class ArenaConfiguration<A extends Arena<A, M>, M extends Map<M>> extends SingleTypeConfigurationDirectory<A> {
@@ -37,19 +37,19 @@ public class ArenaConfiguration<A extends Arena<A, M>, M extends Map<M>> extends
     private final @NotNull ArenaFactory<A, M> arenaFactory;
 
     /**
-     * Used to create a new map configuration directory.
+     * Used to create a new arena configuration directory.
      *
      * @param resourceClass The class used to load the resource files.
      * @param arenaFactory  The arena factory.
      */
     public ArenaConfiguration(@NotNull Class<?> resourceClass, @NotNull ArenaFactory<A, M> arenaFactory) {
-        super("maps", resourceClass);
+        super("arenas", resourceClass);
 
         this.arenaFactory = arenaFactory;
     }
 
     @Override
     public @NotNull A createEmpty(@NotNull String identifier) {
-        return arenaFactory.create(identifier);
+        return this.arenaFactory.create(identifier);
     }
 }

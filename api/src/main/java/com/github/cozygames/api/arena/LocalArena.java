@@ -23,6 +23,7 @@ import com.github.cozygames.api.location.ServerLocation;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.cozygames.api.session.Session;
+import com.github.cozygames.api.session.SessionFactory;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -40,61 +41,64 @@ import java.util.UUID;
  */
 public abstract class LocalArena<S extends Session<A, M>, A extends Arena<A, M>, M extends Map<M>> extends Arena<A, M> {
 
+    private final @NotNull SessionFactory<S, A, M> sessionFactory;
+
     /**
-     * Used to create a new local arena.
+     * Used to create an instance of a local arena.
      *
-     * @param mapIdentifier The map's identifier.
-     * @param worldName     The name of the world this arena is located in.
+     * @param mapIdentifier  The map identifier.
+     * @param worldName      The name of the world the arena is located in.
+     * @param sessionFactory The instance of the session factory.
      */
-    public LocalArena(@NotNull String mapIdentifier, @NotNull String worldName) {
+    public LocalArena(@NotNull String mapIdentifier, @NotNull String worldName, @NotNull SessionFactory<S, A, M> sessionFactory) {
         super(mapIdentifier, worldName);
+
+        this.sessionFactory = sessionFactory;
     }
 
     /**
-     * Used to create a new local arena.
+     * Used to create an instance of a local arena.
      *
-     * @param identifier The arena's identifier. This can be provided by
-     *                   the {@link Arena#getIdentifier(String, String)} method.
+     * @param identifier     The arena's identifier. This can be provided by
+     *                       the {@link Arena#getIdentifier(String, String)} method.
+     * @param sessionFactory The instance of the session factory.
      */
-    public LocalArena(@NotNull String identifier) {
+    public LocalArena(@NotNull String identifier, @NotNull SessionFactory<S, A, M> sessionFactory) {
         super(identifier);
+
+        this.sessionFactory = sessionFactory;
     }
 
     /**
-     * Used to get the instance of the cozy game plugin
-     * where this arena is used.
+     * The instance of the mini-game plugin.
+     * <p>
+     * This is used to complete {@link Arena} methods.
      *
-     * @return The instance of the plugin.
+     * @return The instance of the mini-game plugin.
      */
     public abstract @NotNull CozyGamesPlugin<S, A, M, ?> getPlugin();
 
-    /**
-     * Used to create a new instance of a session
-     * that can be used in this arena.
-     *
-     * @return The instance of the new session.
-     */
-    public abstract @NotNull S createSession();
-
     @Override
-    public @NotNull CozyGames getAPI() {
+    public @NotNull CozyGames getApi() {
         return this.getPlugin().getAPI();
     }
 
     @Override
     public @NotNull M getMap() {
-        return this.getPlugin().getMapConfiguration().getType(this.getMapIdentifier()).orElseThrow();
+        return this.getPlugin().getMapConfiguration()
+                .getType(Map.getName(this.getMapIdentifier()))
+                .orElseThrow();
     }
 
     @Override
-    public void activate(@NotNull UUID groupIdentifier) {
+    public @NotNull A activate(@NotNull UUID groupIdentifier) {
 
         // Set the group identifier.
         this.setGroupIdentifier(groupIdentifier);
         this.save();
 
         // Create a new session.
-        S session = this.createSession();
+        S session = this.sessionFactory.createSession(this.getIdentifier());
 
         // Register session.
         this.getPlugin().getSessionManager().registerSession(session);
@@ -102,15 +106,16 @@ public abstract class LocalArena<S extends Session<A, M>, A extends Arena<A, M>,
         // Teleport players.
         this.getGroup().orElseThrow().getMembers().forEach(
                 member -> member.teleport(new ServerLocation(
-                        this.getAPI().getServerName(),
+                        this.getApi().getServerName(),
                         this.getWorldName(),
                         this.getMap().getSpawnPoint().orElseThrow()
                 ))
         );
+        return (A) this;
     }
 
     @Override
-    public void deactivate() {
+    public @NotNull A deactivate() {
 
         // Stop session if exists.
         this.getPlugin().getSessionManager()
@@ -123,17 +128,6 @@ public abstract class LocalArena<S extends Session<A, M>, A extends Arena<A, M>,
 
         // Delete world.
         this.deleteWorld();
-    }
-
-    @Override
-    public void remove() {
-
-        // Remove world.
-
-        // Unregister arena.
-        this.getAPI().getArenaManager().unregisterArena(this.getIdentifier());
-
-        // Delete arena.
-        this.delete();
+        return (A) this;
     }
 }

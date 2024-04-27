@@ -20,7 +20,6 @@ package com.github.cozygames.api.map;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
-import com.github.cozygames.api.arena.GlobalArena;
 import com.github.cozygames.api.event.map.MapCreateArenaEvent;
 import org.jetbrains.annotations.NotNull;
 

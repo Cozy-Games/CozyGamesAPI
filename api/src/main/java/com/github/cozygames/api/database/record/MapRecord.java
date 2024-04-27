@@ -22,6 +22,7 @@ import com.github.cozygames.api.indicator.RecordConvertable;
 import com.github.cozygames.api.item.Item;
 import com.github.cozygames.api.location.Position;
 import com.github.cozygames.api.map.GlobalMap;
+import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.member.MemberCapacity;
 import com.github.cozygames.api.schematic.Schematic;
 import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
@@ -34,10 +35,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashMap;
 
 /**
- * Represents the arena record.
+ * Represents the map record.
  * <p>
- * Represents the exact data that will be stored
- * in each arena record in the database.
+ * Contains the general infomation about an
+ * {@link Map} instance.
  */
 public class MapRecord extends Record implements RecordConvertable<GlobalMap> {
 
@@ -58,7 +59,6 @@ public class MapRecord extends Record implements RecordConvertable<GlobalMap> {
     public String schematicClass;
     public String capacityClass;
     public String itemClass;
-
     public String spawnPointPositionClass;
 
     @Override
@@ -77,6 +77,12 @@ public class MapRecord extends Record implements RecordConvertable<GlobalMap> {
         return map;
     }
 
+    /**
+     * Used to convert a json string into a configuration section.
+     *
+     * @param json The nullable json string.
+     * @return The nullable configuration section.
+     */
     private @Nullable ConfigurationSection asConfigurationSection(@Nullable String json) {
         if (json == null) return null;
         return new MemoryConfigurationSection(new Gson().fromJson(json, HashMap.class));

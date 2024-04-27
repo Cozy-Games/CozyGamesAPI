@@ -20,6 +20,7 @@ package com.github.cozygames.api.arena;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
+import com.github.cozygames.api.event.arena.*;
 import com.github.cozygames.api.map.GlobalMap;
 import org.jetbrains.annotations.NotNull;
 
@@ -28,27 +29,27 @@ import java.util.UUID;
 /**
  * Represents a global arena.
  * <p>
- * This arena class is used to represents an arena
+ * This arena class is used to represent an arena
  * that could be on a different server.
  * <p>
- * Using kerb events when you call a method within this
- * class, and it will find the locally registered server and
- * call the same method.
+ * This uses kerb events when you call a method within this
+ * class, and it will find the locally registered plugin with
+ * the same arena to call the related method.
  */
-public class GlobalArena extends ImmutableArena<GlobalArena, GlobalMap> {
+public class GlobalArena extends Arena<GlobalArena, GlobalMap> {
 
     /**
-     * Used to create a new global arena.
+     * Used to create an instance of a global arena.
      *
-     * @param mapIdentifier The map's identifier.
-     * @param worldName     The name of the world this arena is located in.
+     * @param mapIdentifier The map identifier.
+     * @param worldName     The name of the world the arena is located in.
      */
     public GlobalArena(@NotNull String mapIdentifier, @NotNull String worldName) {
         super(mapIdentifier, worldName);
     }
 
     /**
-     * Used to create a new global arena.
+     * Used to create an instance of a global arena.
      *
      * @param identifier The arena's identifier. This can be provided by
      *                   the {@link Arena#getIdentifier(String, String)} method.
@@ -58,36 +59,50 @@ public class GlobalArena extends ImmutableArena<GlobalArena, GlobalMap> {
     }
 
     @Override
-    public @NotNull CozyGames getAPI() {
+    public @NotNull CozyGames getApi() {
         return CozyGamesProvider.get();
     }
 
     @Override
     public @NotNull GlobalMap getMap() {
-        return this.getAPI().getMapManager().getGlobalMap(this.getMapIdentifier()).orElseThrow();
+        return this.getApi().getMapManager()
+                .getGlobalMap(this.getMapIdentifier())
+                .orElseThrow();
     }
 
     @Override
     public @NotNull GlobalArena createWorld() {
+        this.getApi().callEvent(new ArenaCreateWorldEvent(this.getIdentifier(), this.getWorldName()));
         return this;
     }
 
     @Override
     public @NotNull GlobalArena deleteWorld() {
+        this.getApi().callEvent(new ArenaDeleteWorldEvent(this.getIdentifier(), this.getWorldName()));
         return this;
     }
 
     @Override
-    public void activate(@NotNull UUID groupIdentifier) {
-
+    public @NotNull GlobalArena activate(@NotNull UUID groupIdentifier) {
+        this.getApi().callEvent(new ArenaActivateEvent(this.getIdentifier()));
+        return this;
     }
 
     @Override
-    public void deactivate() {
+    public @NotNull GlobalArena deactivate() {
+        this.getApi().callEvent(new ArenaDeactivateEvent(this.getIdentifier()));
+        return this;
     }
 
     @Override
-    public void remove() {
+    public @NotNull GlobalArena saveToLocalConfiguration() {
+        this.getApi().callEvent(new ArenaSaveLocalEvent(this));
+        return this;
+    }
 
+    @Override
+    public @NotNull GlobalArena deleteFromLocalConfiguration() {
+        this.getApi().callEvent(new ArenaDeleteLocalEvent(this.getIdentifier()));
+        return this;
     }
 }

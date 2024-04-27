@@ -16,33 +16,33 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.database.record;
+package com.github.cozygames.api.event.arena;
 
-import com.github.cozygames.api.indicator.RecordConvertable;
-import com.github.cozygames.api.member.Member;
-import com.github.smuddgge.squishydatabase.record.Record;
+import com.github.cozygames.api.arena.GlobalArena;
+import com.github.kerbity.kerb.packet.event.Event;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
 /**
- * Represents the member record.
+ * Represents the arena deactivate event.
  * <p>
- * Contains infomation about each player represented
- * by an {@link Member} instance.
+ * Called when the {@link GlobalArena#deactivate()}
+ * method is called.
  */
-public class MemberRecord extends Record implements RecordConvertable<Member> {
+public class ArenaDeactivateEvent extends Event implements ArenaEvent {
+
+    private final @NotNull String arenaIdentifier;
 
     /**
-     * Final variables.
-     * <p>
-     * These variables will not change once created.
+     * Used to create an arena deactivate event.
+     *
+     * @param arenaIdentifier The arena identifier.
      */
-    public String uuid;
-    public String name;
+    public ArenaDeactivateEvent(@NotNull String arenaIdentifier) {
+        this.arenaIdentifier = arenaIdentifier;
+    }
 
     @Override
-    public @NotNull Member convert() {
-        return new Member(UUID.fromString(uuid), name);
+    public @NotNull String getArenaIdentifier() {
+        return this.arenaIdentifier;
     }
 }

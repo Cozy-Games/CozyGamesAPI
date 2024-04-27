@@ -282,4 +282,14 @@ public abstract class Map<T extends Map<T>> extends ImmutableMap<T> implements C
     public static @NotNull String getIdentifier(@NotNull String arenaIdentifier) {
         return arenaIdentifier.split(":")[0] + ":" + arenaIdentifier.split(":")[1] + ":" + arenaIdentifier.split(":")[2];
     }
+
+    /**
+     * Used to get the maps name from the map identifier.
+     *
+     * @param mapIdentifier The map's identifier.
+     * @return The map's name.
+     */
+    public static @NotNull String getName(@NotNull String mapIdentifier) {
+        return mapIdentifier.split(":")[2];
+    }
 }

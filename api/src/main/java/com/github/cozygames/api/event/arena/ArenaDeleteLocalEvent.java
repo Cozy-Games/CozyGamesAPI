@@ -16,37 +16,34 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.session;
+package com.github.cozygames.api.event.arena;
 
-import com.github.cozygames.api.map.Map;
+import com.github.cozygames.api.arena.GlobalArena;
+import com.github.kerbity.kerb.packet.event.Event;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents a component of a session.
+ * Represents the arena delete to local configuration event.
  * <p>
- * Components can be used to organise different functions of a mini-game.
- *
- * @param <A> The arena class that is used in the session.
- * @param <M> The map class that is used in the arena.
+ * Called when the {@link GlobalArena#deleteFromLocalConfiguration()} ()}
+ * method is called.
  */
-public interface SessionComponent<A extends ImmutableArena<A, M>, M extends Map<M>> {
+public class ArenaDeleteLocalEvent extends Event implements ArenaEvent {
+
+    private final @NotNull String arenaIdentifier;
 
     /**
-     * Used to get the instance of the session this
-     * component is part of.
+     * Used to create an arena delete from local
+     * configuration event.
      *
-     * @return The instance of the session.
+     * @param arenaIdentifier The arena identifier.
      */
-    @NotNull
-    Session<A, M> getSession();
+    public ArenaDeleteLocalEvent(@NotNull String arenaIdentifier) {
+        this.arenaIdentifier = arenaIdentifier;
+    }
 
-    /**
-     * Used to start the session component.
-     */
-    void start();
-
-    /**
-     * Used to stop the session component.
-     */
-    void stop();
+    @Override
+    public @NotNull String getArenaIdentifier() {
+        return this.arenaIdentifier;
+    }
 }

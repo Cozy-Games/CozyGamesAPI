@@ -32,6 +32,8 @@ import java.util.UUID;
  * <p>
  * Contains all the members registered with
  * this cozy game's system.
+ * <p>
+ * Used to obtain {@link Member} instances.
  */
 public class MemberTable extends TableAdapter<MemberRecord> {
 

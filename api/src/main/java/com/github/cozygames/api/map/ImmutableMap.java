@@ -19,7 +19,6 @@
 package com.github.cozygames.api.map;
 
 import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.arena.ImmutableArena;
 import org.jetbrains.annotations.NotNull;
 
 /**

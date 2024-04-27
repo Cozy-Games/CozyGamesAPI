@@ -51,7 +51,7 @@ public class MapConfiguration<M extends Map<M>> extends SingleTypeConfigurationD
 
     @Override
     public @NotNull M createEmpty(@NotNull String identifier) {
-        return mapFactory.create(identifier);
+        return this.mapFactory.create(identifier);
     }
 
     @Override

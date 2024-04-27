@@ -27,6 +27,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
+/**
+ * The arena database table.
+ * <p>
+ * Contains the registered arena's.
+ */
 public class ArenaTable extends TableAdapter<ArenaRecord> {
 
     @Override
@@ -42,12 +47,8 @@ public class ArenaTable extends TableAdapter<ArenaRecord> {
      * @return The optional arena record.
      */
     public @NotNull Optional<ArenaRecord> getArenaRecord(String identifier) {
-        final String serverName = identifier.split(":")[0];
-        final String gameIdentifier = identifier.split(":")[1];
-        final String mapName = identifier.split(":")[2];
+        final String mapIdentifier = Map.getIdentifier(identifier);
         final String worldName = identifier.split(":")[3];
-
-        final String mapIdentifier = Map.getIdentifier(serverName, gameIdentifier, mapName);
 
         // Get the first record with the correct identifier.
         ArenaRecord record = this.getFirstRecord(new Query()
@@ -89,12 +90,8 @@ public class ArenaTable extends TableAdapter<ArenaRecord> {
      */
     @SuppressWarnings("all")
     public @NotNull ArenaTable removeArena(@NotNull String identifier) {
-        final String serverName = identifier.split(":")[0];
-        final String gameIdentifier = identifier.split(":")[1];
-        final String mapName = identifier.split(":")[2];
+        final String mapIdentifier = Map.getIdentifier(identifier);
         final String worldName = identifier.split(":")[3];
-
-        final String mapIdentifier = Map.getIdentifier(serverName, gameIdentifier, mapName);
 
         this.removeAllRecords(new Query()
                 .match("mapIdentifier", mapIdentifier)

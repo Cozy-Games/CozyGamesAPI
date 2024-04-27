@@ -16,20 +16,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+package com.github.cozygames.api.event.arena;
+
+import org.jetbrains.annotations.NotNull;
+
 /**
- * Contains classes that are used to
- * create and manage arenas.
+ * Represents an arena event.
  * <p>
- * An arena is a loaded map that is contained on a world in a server.
+ * Each arena event should implement this interface.
  * <p>
- * The {@link com.github.cozygames.api.arena.Arena} Represents the
- * base of an arena. Containing values that will be present in every arena.
- * <p>
- * The {@link com.github.cozygames.api.arena.GlobalArena} represents an arena
- * that could be on another server/api connection. It uses kerb events to call
- * the related method located in the registered plugin.
- * <p>
- * The {@link com.github.cozygames.api.arena.LocalArena} represents an arena
- * that is local to the plugin. It provides help when completing the arena methods.
+ * This will allow connections to the kerb client to
+ * listen to any arena event.
  */
-package com.github.cozygames.api.arena;
+public interface ArenaEvent {
+
+    /**
+     * Used to get the arena's identifier
+     * related with this event.
+     *
+     * @return The arena identifier.
+     */
+    @NotNull
+    String getArenaIdentifier();
+}
