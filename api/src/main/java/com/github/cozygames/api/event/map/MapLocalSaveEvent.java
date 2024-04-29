@@ -18,13 +18,19 @@
 
 package com.github.cozygames.api.event.map;
 
+import com.github.cozygames.api.arena.GlobalArena;
 import com.github.cozygames.api.map.GlobalMap;
 import com.github.kerbity.kerb.packet.event.Event;
 import org.jetbrains.annotations.NotNull;
 
-public class MapSaveToLocalConfigurationEvent extends Event implements MapEvent {
+/**
+ * Represents the map save to local configuration event.
+ * <p>
+ * Called when the {@link GlobalMap#saveToLocalConfiguration()}
+ * method is called.
+ */
+public class MapLocalSaveEvent extends Event implements MapEvent {
 
-    private final @NotNull String mapIdentifier;
     private final @NotNull GlobalMap instance;
 
     /**
@@ -32,14 +38,13 @@ public class MapSaveToLocalConfigurationEvent extends Event implements MapEvent 
      *
      * @param instance The instance of the global map.
      */
-    public MapSaveToLocalConfigurationEvent(@NotNull GlobalMap instance) {
-        this.mapIdentifier = instance.getIdentifier();
+    public MapLocalSaveEvent(@NotNull GlobalMap instance) {
         this.instance = instance;
     }
 
     @Override
     public @NotNull String getMapIdentifier() {
-        return this.mapIdentifier;
+        return this.instance.getIdentifier();
     }
 
     public @NotNull GlobalMap getInstance() {

@@ -16,27 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.session;
-
-import com.github.cozygames.api.arena.Arena;
-import org.jetbrains.annotations.NotNull;
-
 /**
- * The empty session factory.
- * <p>
- * Used by the {@link Arena} to create a new session.
- *
- * @param <S> The session that will be created.
- * @param <A> The arena type that is used in the session.
- * @param <M> The map type that is used in the arena.
+ * Contains kerb events that are called in the corresponding
+ * {@link com.github.cozygames.api.arena.GlobalArena} methods.
  */
-public interface SessionFactory<S extends Session<A, M>, A extends Arena<A, M>, M extends Map<M>> {
-
-    /**
-     * Used to create an empty session instance.
-     *
-     * @param arenaIdentifier The arena identifier that is creating the session.
-     * @return The session instance.
-     */
-    S createSession(@NotNull String arenaIdentifier);
-}
+package com.github.cozygames.api.event.arena;

@@ -82,9 +82,11 @@ public class MapTable extends TableAdapter<MapRecord> {
         record.serverName = map.getServerName();
         record.gameIdentifier = map.getGameIdentifier();
 
+        record.maximumSessionAmount = map.getMaximumSessionAmount();
         record.schematicClass = this.asJson(map.getSchematic().orElse(null));
         record.capacityClass = this.asJson(map.getCapacity().orElse(null));
-        record.itemClass = this.asJson(map.getItem().orElse(null));
+        map.getItemMaterial().ifPresent(material -> record.itemMaterialEnum = material.name());
+        record.spawnPointPositionClass = this.asJson(map.getSpawnPoint().orElse(null));
 
         // Insert the record.
         this.insertRecord(record);
@@ -94,5 +96,23 @@ public class MapTable extends TableAdapter<MapRecord> {
     private @Nullable String asJson(@Nullable ConfigurationConvertable<?> convertable) {
         if (convertable == null) return null;
         return new Gson().toJson(convertable.asMap());
+    }
+
+    /**
+     * Used to remove a map from the database.
+     *
+     * @param map The map instance to remove.
+     * @return This instance.
+     */
+    public @NotNull MapTable removeMap(Map<?> map) {
+
+        // Get the first record with the correct identifier.
+        this.removeAllRecords(new Query()
+                .match("name", map.getName())
+                .match("serverName", map.getServerName())
+                .match("gameIdentifier", map.getGameIdentifier())
+        );
+
+        return this;
     }
 }

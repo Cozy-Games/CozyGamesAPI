@@ -20,7 +20,6 @@ package com.github.cozygames.api.configuration;
 
 import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.arena.ArenaFactory;
-import com.github.cozygames.api.map.Map;
 import com.github.smuddgge.squishyconfiguration.directory.SingleTypeConfigurationDirectory;
 import org.jetbrains.annotations.NotNull;
 

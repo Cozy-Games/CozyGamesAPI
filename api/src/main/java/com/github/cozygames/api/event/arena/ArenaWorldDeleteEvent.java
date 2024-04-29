@@ -23,22 +23,22 @@ import com.github.kerbity.kerb.packet.event.Event;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents the arena create world event.
+ * Represents the arena delete world event.
  * <p>
- * Called when the {@link GlobalArena#createWorld()}
+ * Called when the {@link GlobalArena#deleteWorld()}
  * method is called.
  */
-public class ArenaCreateWorldEvent extends Event implements ArenaEvent {
+public class ArenaWorldDeleteEvent extends Event implements ArenaEvent {
 
     private final @NotNull String arenaIdentifier;
     private final @NotNull String worldName;
 
     /**
-     * Used to create an arena create world event.
+     * Used to create an arena delete world event.
      *
      * @param arenaIdentifier The arena identifier.
      */
-    public ArenaCreateWorldEvent(@NotNull String arenaIdentifier, @NotNull String worldName) {
+    public ArenaWorldDeleteEvent(@NotNull String arenaIdentifier, @NotNull String worldName) {
         this.arenaIdentifier = arenaIdentifier;
         this.worldName = worldName;
     }

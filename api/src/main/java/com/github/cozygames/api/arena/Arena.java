@@ -37,9 +37,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 /**
- * Represents the base arena.
+ * Represents the base arena class.
  * <p>
- * A map that has been loaded into a world on a server.
+ * A map that can be loaded into a world on a server.
  *
  * @param <A> The highest arena instance that should be used as a return value.
  *            This makes it easier to chane method calls.

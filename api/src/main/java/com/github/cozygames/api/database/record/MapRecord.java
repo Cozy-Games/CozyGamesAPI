@@ -19,7 +19,7 @@
 package com.github.cozygames.api.database.record;
 
 import com.github.cozygames.api.indicator.RecordConvertable;
-import com.github.cozygames.api.item.Item;
+import com.github.cozygames.api.item.ItemMaterial;
 import com.github.cozygames.api.location.Position;
 import com.github.cozygames.api.map.GlobalMap;
 import com.github.cozygames.api.map.Map;
@@ -56,23 +56,31 @@ public class MapRecord extends Record implements RecordConvertable<GlobalMap> {
      * <p>
      * These variables may be changed in the database.
      */
+    public int maximumSessionAmount;
     public String schematicClass;
     public String capacityClass;
-    public String itemClass;
+    public String itemMaterialEnum;
     public String spawnPointPositionClass;
 
     @Override
     public @NotNull GlobalMap convert() {
         GlobalMap map = new GlobalMap(this.name, this.serverName, this.gameIdentifier);
 
-        if (schematicClass != null)
+        if (schematicClass != null) {
             map.setSchematic(new Schematic().convert(this.asConfigurationSection(schematicClass)));
-        if (capacityClass != null)
+        }
+
+        if (capacityClass != null) {
             map.setCapacity(new MemberCapacity().convert(this.asConfigurationSection(capacityClass)));
-        if (itemClass != null)
-            map.setItem(new Item().convert(this.asConfigurationSection(itemClass)));
-        if (spawnPointPositionClass != null)
+        }
+
+        if (itemMaterialEnum != null) {
+            map.setItemMaterial(ItemMaterial.valueOf(this.itemMaterialEnum.toUpperCase()));
+        }
+
+        if (spawnPointPositionClass != null) {
             map.setSpawnPoint(new Position(0, 0, 0).convert(this.asConfigurationSection(spawnPointPositionClass)));
+        }
 
         return map;
     }

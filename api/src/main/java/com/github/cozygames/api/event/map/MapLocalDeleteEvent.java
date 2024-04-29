@@ -18,41 +18,34 @@
 
 package com.github.cozygames.api.event.map;
 
+import com.github.cozygames.api.arena.GlobalArena;
+import com.github.cozygames.api.event.arena.ArenaEvent;
 import com.github.cozygames.api.map.GlobalMap;
-import com.github.cozygames.api.map.LocalMap;
 import com.github.kerbity.kerb.packet.event.Event;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents the map create arena event.
+ * Represents the map delete from local configuration event.
  * <p>
- * This is called when the {@link GlobalMap#createArena()}
+ * Called when the {@link GlobalMap#deleteFromLocalConfiguration()} ()}
  * method is called.
- * <p>
- * The server with the instance of the local
- * map should call {@link LocalMap#createArena()}.
  */
-public class MapCreateArenaEvent extends Event implements MapEvent {
+public class MapLocalDeleteEvent extends Event implements MapEvent {
 
     private final @NotNull String mapIdentifier;
-    private final @NotNull String worldName;
 
     /**
-     * Used to create a new map create arena event.
+     * Used to create a map delete from local
+     * configuration event.
      *
-     * @param mapIdentifier The map's identifier.
+     * @param mapIdentifier The map identifier.
      */
-    public MapCreateArenaEvent(@NotNull String mapIdentifier, @NotNull String worldName) {
+    public MapLocalDeleteEvent(@NotNull String mapIdentifier) {
         this.mapIdentifier = mapIdentifier;
-        this.worldName = worldName;
     }
 
     @Override
     public @NotNull String getMapIdentifier() {
         return this.mapIdentifier;
-    }
-
-    public @NotNull String getWorldName() {
-        return this.worldName;
     }
 }

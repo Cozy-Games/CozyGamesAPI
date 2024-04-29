@@ -19,63 +19,38 @@
 package com.github.cozygames.api.map;
 
 import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.plugin.CozyGamesPlugin;
+import com.github.cozygames.api.arena.Arena;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class LocalMap<A extends Arena<A, M>, M extends Map<M>> extends Map<M> {
-
+public class LocalMap<M extends Map<M>> extends Map<M> {
     /**
-     * Used to create a new instance of a map.
-     * <p>
-     * A map can be used to create a new arena.
+     * Used to create a new local map instance.
      *
-     * @param name           The map's name.
-     * @param serverName     The server the arena can be initialized on.
-     * @param gameIdentifier The game identifier.
+     * @param name           The name of the map.
+     * @param serverName     The server the map was registered on and can be created on.
+     * @param gameIdentifier The game identifier that represents a game this map is used for.
      */
     public LocalMap(@NotNull String name, @NotNull String serverName, @NotNull String gameIdentifier) {
         super(name, serverName, gameIdentifier);
     }
 
-    /**
-     * Used to get the instance of the plugin that
-     * will be using this local map.
-     *
-     * @return The instance of the plugin.
-     */
-    public abstract @NotNull CozyGamesPlugin<?, A, M, ?> getPlugin();
-
-    /**
-     * Used to create a new arena class.
-     *
-     * @return The new instance of an arena.
-     */
-    public abstract @NotNull A createEmptyArena(@NotNull String identifier, @NotNull String worldName);
-
     @Override
-    public @NotNull CozyGames getAPI() {
-        return this.getPlugin().getAPI();
+    public @NotNull CozyGames getApi() {
+        return null;
     }
 
     @Override
-    public @NotNull A createArena() {
-
-        // Get world name.
-        final String worldName = "todo";
-
-        // Create a new arena.
-        A arena = this.createEmptyArena(this.getIdentifier(), worldName);
-
-        // Create world.
-        arena.createWorld();
-
-        // Register the arena with the api.
-        this.getAPI().getArenaManager().registerArena(arena);
-        return arena;
+    public @NotNull Arena<?, M> createArena() {
+        return null;
     }
 
     @Override
-    public void saveToLocalConfiguration() {
-        this.getPlugin().getMapConfiguration().insertType(this.getIdentifier(), (M) this);
+    public @NotNull M saveToLocalConfiguration() {
+        return null;
+    }
+
+    @Override
+    public @NotNull M deleteFromLocalConfiguration() {
+        return null;
     }
 }

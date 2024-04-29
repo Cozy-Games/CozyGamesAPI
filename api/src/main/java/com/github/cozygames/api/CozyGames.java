@@ -19,7 +19,6 @@
 package com.github.cozygames.api;
 
 import com.github.cozygames.api.group.GroupManager;
-import com.github.cozygames.api.map.MapManager;
 import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.MemberNotFoundException;
 import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;

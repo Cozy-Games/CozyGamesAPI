@@ -16,42 +16,44 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.map;
+package com.github.cozygames.api.event.arena;
 
-import com.github.cozygames.api.map.GlobalMap;
-import com.github.cozygames.api.map.LocalMap;
+import com.github.cozygames.api.arena.GlobalArena;
 import com.github.kerbity.kerb.packet.event.Event;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents the map create arena event.
+ * Represents the arena create world event.
  * <p>
- * This is called when the {@link GlobalMap#createArena()}
+ * Called when the {@link GlobalArena#createWorld()}
  * method is called.
- * <p>
- * The server with the instance of the local
- * map should call {@link LocalMap#createArena()}.
  */
-public class MapCreateArenaEvent extends Event implements MapEvent {
+public class ArenaWorldCreateEvent extends Event implements ArenaEvent {
 
-    private final @NotNull String mapIdentifier;
+    private final @NotNull String arenaIdentifier;
     private final @NotNull String worldName;
 
     /**
-     * Used to create a new map create arena event.
+     * Used to create an arena create world event.
      *
-     * @param mapIdentifier The map's identifier.
+     * @param arenaIdentifier The arena identifier.
      */
-    public MapCreateArenaEvent(@NotNull String mapIdentifier, @NotNull String worldName) {
-        this.mapIdentifier = mapIdentifier;
+    public ArenaWorldCreateEvent(@NotNull String arenaIdentifier, @NotNull String worldName) {
+        this.arenaIdentifier = arenaIdentifier;
         this.worldName = worldName;
     }
 
     @Override
-    public @NotNull String getMapIdentifier() {
-        return this.mapIdentifier;
+    public @NotNull String getArenaIdentifier() {
+        return this.arenaIdentifier;
     }
 
+    /**
+     * Used to get the name of the world
+     * that should be created.
+     *
+     * @return The world name.
+     */
     public @NotNull String getWorldName() {
         return this.worldName;
     }

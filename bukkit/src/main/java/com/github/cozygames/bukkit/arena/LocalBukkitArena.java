@@ -18,7 +18,6 @@
 
 package com.github.cozygames.bukkit.arena;
 
-import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.session.Session;
 import org.bukkit.Bukkit;
 import org.bukkit.World;

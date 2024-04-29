@@ -23,38 +23,27 @@ import com.github.kerbity.kerb.packet.event.Event;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents the arena delete world event.
+ * Represents the arena save to local configuration event.
  * <p>
- * Called when the {@link GlobalArena#deleteWorld()}
+ * Called when the {@link GlobalArena#saveToLocalConfiguration()}
  * method is called.
  */
-public class ArenaDeleteWorldEvent extends Event implements ArenaEvent {
+public class ArenaLocalSaveEvent extends Event implements ArenaEvent {
 
-    private final @NotNull String arenaIdentifier;
-    private final @NotNull String worldName;
+    private final @NotNull GlobalArena instance;
 
     /**
-     * Used to create an arena delete world event.
+     * Used to create an arena save to local
+     * configuration event.
      *
-     * @param arenaIdentifier The arena identifier.
+     * @param instance The instance of the global arena.
      */
-    public ArenaDeleteWorldEvent(@NotNull String arenaIdentifier, @NotNull String worldName) {
-        this.arenaIdentifier = arenaIdentifier;
-        this.worldName = worldName;
+    public ArenaLocalSaveEvent(@NotNull GlobalArena instance) {
+        this.instance = instance;
     }
 
     @Override
     public @NotNull String getArenaIdentifier() {
-        return this.arenaIdentifier;
-    }
-
-    /**
-     * Used to get the name of the world
-     * that should be created.
-     *
-     * @return The world name.
-     */
-    public @NotNull String getWorldName() {
-        return this.worldName;
+        return this.instance.getIdentifier();
     }
 }

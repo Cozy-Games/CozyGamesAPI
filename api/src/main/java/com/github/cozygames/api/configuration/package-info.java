@@ -16,20 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.item;
-
-import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertable;
-import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
-import org.jetbrains.annotations.NotNull;
-
-public class Item implements ConfigurationConvertable<Item> {
-    @Override
-    public @NotNull ConfigurationSection convert() {
-        return null;
-    }
-
-    @Override
-    public @NotNull Item convert(@NotNull ConfigurationSection configurationSection) {
-        return null;
-    }
-}
+/**
+ * Contains configuration classes.
+ * <p>
+ * These are used to interact with configuration files though a
+ * {@link com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection}
+ * instance.
+ */
+package com.github.cozygames.api.configuration;

@@ -23,12 +23,12 @@ import com.github.kerbity.kerb.packet.event.Event;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents the arena delete to local configuration event.
+ * Represents the arena delete from local configuration event.
  * <p>
  * Called when the {@link GlobalArena#deleteFromLocalConfiguration()} ()}
  * method is called.
  */
-public class ArenaDeleteLocalEvent extends Event implements ArenaEvent {
+public class ArenaLocalDeleteEvent extends Event implements ArenaEvent {
 
     private final @NotNull String arenaIdentifier;
 
@@ -38,7 +38,7 @@ public class ArenaDeleteLocalEvent extends Event implements ArenaEvent {
      *
      * @param arenaIdentifier The arena identifier.
      */
-    public ArenaDeleteLocalEvent(@NotNull String arenaIdentifier) {
+    public ArenaLocalDeleteEvent(@NotNull String arenaIdentifier) {
         this.arenaIdentifier = arenaIdentifier;
     }
 

@@ -18,16 +18,9 @@
 
 package com.github.cozygames.bukkit.map;
 
-import com.github.cozygames.api.map.LocalMap;
-import com.github.cozygames.api.map.MapFactory;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
-import com.github.cozygames.api.schematic.Schematic;
 import com.github.cozygames.bukkit.BukkitExamplePlugin;
 import com.github.cozygames.bukkit.arena.ExampleArena;
-import org.bukkit.Bukkit;
-import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
-import org.bukkit.generator.ChunkGenerator;
 import org.jetbrains.annotations.NotNull;
 
 /**

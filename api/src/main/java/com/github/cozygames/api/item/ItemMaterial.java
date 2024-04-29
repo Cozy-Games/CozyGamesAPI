@@ -16,34 +16,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.arena;
+package com.github.cozygames.api.item;
 
-import com.github.cozygames.api.arena.GlobalArena;
-import com.github.kerbity.kerb.packet.event.Event;
+import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertable;
+import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Represents the arena save to local configuration event.
- * <p>
- * Called when the {@link GlobalArena#saveToLocalConfiguration()}
- * method is called.
- */
-public class ArenaSaveLocalEvent extends Event implements ArenaEvent {
-
-    private final @NotNull GlobalArena arena;
-
-    /**
-     * Used to create an arena save to local
-     * configuration event.
-     *
-     * @param arena The instance of the global arena.
-     */
-    public ArenaSaveLocalEvent(@NotNull GlobalArena arena) {
-        this.arena = arena;
-    }
-
-    @Override
-    public @NotNull String getArenaIdentifier() {
-        return this.arena.getIdentifier();
-    }
+public enum ItemMaterial {
+    GRASS;
 }

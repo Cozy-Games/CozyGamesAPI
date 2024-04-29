@@ -20,44 +20,58 @@ package com.github.cozygames.api.map;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
+import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.arena.GlobalArena;
+import com.github.cozygames.api.event.arena.ArenaWorldDeleteEvent;
 import com.github.cozygames.api.event.map.MapCreateArenaEvent;
+import com.github.cozygames.api.event.map.MapLocalDeleteEvent;
+import com.github.cozygames.api.event.map.MapLocalSaveEvent;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents a global map.
+ * <p>
+ * This map class is used to represent a map
+ * that could be registered on a different server.
+ * <p>
+ * This uses kerb events when you call a method within this
+ * class, and it will find the locally registered plugin with
+ * the same map to call the related method.
+ */
 public class GlobalMap extends Map<GlobalMap> {
 
     /**
-     * Used to create a new instance of a map.
-     * <p>
-     * A map can be used to create a new arena.
+     * Used to create a new global map instance.
      *
-     * @param name           The map's name.
-     * @param serverName     The server the arena can be initialized on.
-     * @param gameIdentifier The game identifier.
+     * @param name           The name of the map.
+     * @param serverName     The server the map was registered on and can be created on.
+     * @param gameIdentifier The game identifier that represents a game this map is used for.
      */
     public GlobalMap(@NotNull String name, @NotNull String serverName, @NotNull String gameIdentifier) {
         super(name, serverName, gameIdentifier);
     }
 
     @Override
-    public @NotNull CozyGames getAPI() {
+    public @NotNull CozyGames getApi() {
         return CozyGamesProvider.get();
     }
 
     @Override
-    public @NotNull GlobalArena createArena() {
-
-        // Get the world name.
-        final String worldName = "TODO";
-
-        // Call the map create arena event.
-        this.getAPI().callEvent(new MapCreateArenaEvent(this.getIdentifier(), worldName));
-
-        // Create the corresponding global arena.
+    public @NotNull Arena<?, GlobalMap> createArena() {
+        final String worldName = "ToDo";
+        this.getApi().callEvent(new MapCreateArenaEvent(this.getIdentifier(), worldName));
         return new GlobalArena(this.getIdentifier(), worldName);
     }
 
     @Override
-    public void saveToLocalConfiguration() {
+    public @NotNull GlobalMap saveToLocalConfiguration() {
+        this.getApi().callEvent(new MapLocalSaveEvent(this));
+        return this;
+    }
 
+    @Override
+    public @NotNull GlobalMap deleteFromLocalConfiguration() {
+        this.getApi().callEvent(new MapLocalDeleteEvent(this.getIdentifier()));
+        return this;
     }
 }

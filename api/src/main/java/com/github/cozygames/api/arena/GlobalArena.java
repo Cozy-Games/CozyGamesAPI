@@ -72,13 +72,13 @@ public class GlobalArena extends Arena<GlobalArena, GlobalMap> {
 
     @Override
     public @NotNull GlobalArena createWorld() {
-        this.getApi().callEvent(new ArenaCreateWorldEvent(this.getIdentifier(), this.getWorldName()));
+        this.getApi().callEvent(new ArenaWorldCreateEvent(this.getIdentifier(), this.getWorldName()));
         return this;
     }
 
     @Override
     public @NotNull GlobalArena deleteWorld() {
-        this.getApi().callEvent(new ArenaDeleteWorldEvent(this.getIdentifier(), this.getWorldName()));
+        this.getApi().callEvent(new ArenaWorldDeleteEvent(this.getIdentifier(), this.getWorldName()));
         return this;
     }
 
@@ -96,13 +96,13 @@ public class GlobalArena extends Arena<GlobalArena, GlobalMap> {
 
     @Override
     public @NotNull GlobalArena saveToLocalConfiguration() {
-        this.getApi().callEvent(new ArenaSaveLocalEvent(this));
+        this.getApi().callEvent(new ArenaLocalSaveEvent(this));
         return this;
     }
 
     @Override
     public @NotNull GlobalArena deleteFromLocalConfiguration() {
-        this.getApi().callEvent(new ArenaDeleteLocalEvent(this.getIdentifier()));
+        this.getApi().callEvent(new ArenaLocalDeleteEvent(this.getIdentifier()));
         return this;
     }
 }
