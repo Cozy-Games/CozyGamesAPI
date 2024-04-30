@@ -1,2 +1,0 @@
-- Recode so the local instance is updated.
-- Why? The developers and minigame plugins may use the instance when implmeneting the methods.
