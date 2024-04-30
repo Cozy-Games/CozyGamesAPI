@@ -18,6 +18,8 @@
 
 package com.github.cozygames.api.session;
 
+import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.map.Map;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ import java.util.Optional;
  * @param <A> The arena class the session uses.
  * @param <M> The map class the session uses.
  */
-public class SessionManager<S extends Session<A, M>, A extends ImmutableArena<A, M>, M extends Map<M>> {
+public class SessionManager<S extends Session<A, M>, A extends Arena<A, M>, M extends Map<M>> {
 
     private final @NotNull List<S> sessionList;
 

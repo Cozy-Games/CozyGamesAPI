@@ -18,7 +18,11 @@
 
 package com.github.cozygames.bukkit.arena;
 
+import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.arena.LocalArena;
+import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.session.Session;
+import com.github.cozygames.api.session.SessionFactory;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -27,23 +31,12 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class LocalBukkitArena<S extends Session<A, M>, A extends Arena<A, M>, M extends Map<M>> extends LocalArena<S, A, M> {
 
-    /**
-     * Used to create a new local arena.
-     *
-     * @param mapIdentifier The map's identifier.
-     * @param worldName     The name of the world this arena is located in.
-     */
-    public LocalBukkitArena(@NotNull String mapIdentifier, @NotNull String worldName) {
-        super(mapIdentifier, worldName);
+    public LocalBukkitArena(@NotNull String mapIdentifier, @NotNull String worldName, @NotNull SessionFactory<S, A, M> sessionFactory) {
+        super(mapIdentifier, worldName, sessionFactory);
     }
 
-    /**
-     * Used to create a new local arena.
-     *
-     * @param identifier The arena's identifier.
-     */
-    public LocalBukkitArena(@NotNull String identifier) {
-        super(identifier);
+    public LocalBukkitArena(@NotNull String identifier, @NotNull SessionFactory<S, A, M> sessionFactory) {
+        super(identifier, sessionFactory);
     }
 
     @Override

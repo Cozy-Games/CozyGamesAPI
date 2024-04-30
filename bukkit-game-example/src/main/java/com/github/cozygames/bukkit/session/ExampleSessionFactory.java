@@ -16,34 +16,17 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.arena;
+package com.github.cozygames.bukkit.session;
 
-import com.github.cozygames.api.arena.GlobalArena;
-import com.github.kerbity.kerb.packet.event.Event;
+import com.github.cozygames.api.session.SessionFactory;
+import com.github.cozygames.bukkit.arena.ExampleArena;
+import com.github.cozygames.bukkit.map.ExampleMap;
 import org.jetbrains.annotations.NotNull;
 
-/**
- * Represents the arena save to local configuration event.
- * <p>
- * Called when the {@link GlobalArena#saveToLocalConfiguration()}
- * method is called.
- */
-public class ArenaLocalSaveEvent extends Event implements ArenaEvent {
-
-    private final @NotNull GlobalArena instance;
-
-    /**
-     * Used to create an arena save to local
-     * configuration event.
-     *
-     * @param instance The instance of the global arena.
-     */
-    public ArenaLocalSaveEvent(@NotNull GlobalArena instance) {
-        this.instance = instance;
-    }
+public class ExampleSessionFactory implements SessionFactory<ExampleSession, ExampleArena, ExampleMap> {
 
     @Override
-    public @NotNull String getArenaIdentifier() {
-        return this.instance.getIdentifier();
+    public ExampleSession createSession(@NotNull String arenaIdentifier) {
+        return new ExampleSession(arenaIdentifier);
     }
 }

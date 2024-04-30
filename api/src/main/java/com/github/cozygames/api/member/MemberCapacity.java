@@ -118,6 +118,20 @@ public class MemberCapacity implements ConfigurationConvertable<MemberCapacity> 
         return this.possibleCapacityList.contains(memberAmount);
     }
 
+    /**
+     * Used to check if this member capacity contains all of
+     * another member capacity instance.
+     *
+     * @param memberCapacity The instance of the member capacity.
+     * @return True if this instance contains the member capacity.
+     */
+    public boolean contains(@NotNull MemberCapacity memberCapacity) {
+        for (int capacity : memberCapacity.getPossibleCapacityList()) {
+            if (!this.possibleCapacityList.contains(capacity)) return false;
+        }
+        return true;
+    }
+
     @Override
     public @NotNull ConfigurationSection convert() {
         return null;

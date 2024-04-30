@@ -21,7 +21,7 @@ package com.github.cozygames.api.member;
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
 import com.github.cozygames.api.database.table.MemberTable;
-import com.github.cozygames.api.event.member.MemberTeleportEvent;
+import com.github.cozygames.api.event.internal.member.MemberTeleportEvent;
 import com.github.cozygames.api.indicator.Savable;
 import com.github.cozygames.api.location.ServerLocation;
 import com.github.kerbity.kerb.result.CompletableResultSet;

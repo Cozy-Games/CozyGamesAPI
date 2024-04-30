@@ -16,10 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.arena;
+package com.github.cozygames.api.event.internal.arena;
 
+import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.arena.GlobalArena;
-import com.github.kerbity.kerb.packet.event.Event;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -28,7 +28,9 @@ import org.jetbrains.annotations.NotNull;
  * Called when the {@link GlobalArena#deleteFromLocalConfiguration()} ()}
  * method is called.
  */
-public class ArenaLocalDeleteEvent extends Event implements ArenaEvent {
+public class ArenaLocalDeleteEvent extends ArenaEvent {
+
+    private boolean isComplete;
 
     private final @NotNull String arenaIdentifier;
 
@@ -45,5 +47,11 @@ public class ArenaLocalDeleteEvent extends Event implements ArenaEvent {
     @Override
     public @NotNull String getArenaIdentifier() {
         return this.arenaIdentifier;
+    }
+
+    @Override
+    public @NotNull ArenaEvent executeMethod(@NotNull Arena<?, ?> arena) {
+        arena.deleteFromLocalConfiguration();
+        return this;
     }
 }

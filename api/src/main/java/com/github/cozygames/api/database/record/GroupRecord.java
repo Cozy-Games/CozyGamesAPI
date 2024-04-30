@@ -18,7 +18,6 @@
 
 package com.github.cozygames.api.database.record;
 
-import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.group.Group;
 import com.github.cozygames.api.group.GroupType;
 import com.github.cozygames.api.indicator.RecordConvertable;

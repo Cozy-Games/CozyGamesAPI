@@ -16,23 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.map;
-
-import org.jetbrains.annotations.NotNull;
-
 /**
- * Represents a map event.
- * <p>
- * All map events should implement this interface.
+ * Represents events that are called from the
+ * {@link com.github.cozygames.api.member.Member} class.
  */
-public interface MapEvent {
-
-    /**
-     * Used to get the maps identifier which can
-     * be used for retrieving the map.
-     *
-     * @return The map identifier.
-     */
-    @NotNull
-    String getMapIdentifier();
-}
+package com.github.cozygames.api.event.internal.member;

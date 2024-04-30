@@ -16,5 +16,6 @@ public interface Replicable<T> {
      *
      * @return The instance of the duplicated class.
      */
-    @NotNull T duplicate();
+    @NotNull
+    T duplicate();
 }

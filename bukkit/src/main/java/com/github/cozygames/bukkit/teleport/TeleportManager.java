@@ -18,7 +18,7 @@
 
 package com.github.cozygames.bukkit.teleport;
 
-import com.github.cozygames.api.event.member.MemberTeleportEvent;
+import com.github.cozygames.api.event.internal.member.MemberTeleportEvent;
 import com.github.cozygames.bukkit.adapter.BukkitLocationConverter;
 import com.github.cozyplugins.cozylibrary.user.PlayerUser;
 import org.bukkit.event.EventHandler;

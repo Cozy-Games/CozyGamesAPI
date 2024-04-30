@@ -16,26 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.arena;
-
-import org.jetbrains.annotations.NotNull;
-
 /**
- * Represents an arena event.
+ * Contains classes used to create sessions
+ * and session components.
  * <p>
- * Each arena event should implement this interface.
- * <p>
- * This will allow connections to the kerb client to
- * listen to any arena event.
+ * Sessions are used to streamline a game's mechanics
+ * and represents an active arena.
  */
-public interface ArenaEvent {
-
-    /**
-     * Used to get the arena's identifier
-     * related with this event.
-     *
-     * @return The arena identifier.
-     */
-    @NotNull
-    String getArenaIdentifier();
-}
+package com.github.cozygames.api.session;

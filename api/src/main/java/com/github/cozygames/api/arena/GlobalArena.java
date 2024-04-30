@@ -20,7 +20,7 @@ package com.github.cozygames.api.arena;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
-import com.github.cozygames.api.event.arena.*;
+import com.github.cozygames.api.event.internal.arena.*;
 import com.github.cozygames.api.map.GlobalMap;
 import org.jetbrains.annotations.NotNull;
 
@@ -66,7 +66,7 @@ public class GlobalArena extends Arena<GlobalArena, GlobalMap> {
     @Override
     public @NotNull GlobalMap getMap() {
         return this.getApi().getMapManager()
-                .getGlobalMap(this.getMapIdentifier())
+                .getMap(this.getMapIdentifier())
                 .orElseThrow();
     }
 

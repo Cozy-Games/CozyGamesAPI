@@ -18,6 +18,8 @@
 
 package com.github.cozygames.bukkit.map;
 
+import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.map.LocalMap;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.cozygames.bukkit.BukkitExamplePlugin;
 import com.github.cozygames.bukkit.arena.ExampleArena;
@@ -26,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * The example map.
  */
-public class ExampleMap extends LocalMap<ExampleArena, ExampleMap> {
+public class ExampleMap extends LocalMap<ExampleMap> {
 
     public ExampleMap(@NotNull String name) {
         super(
@@ -37,12 +39,22 @@ public class ExampleMap extends LocalMap<ExampleArena, ExampleMap> {
     }
 
     @Override
-    public @NotNull CozyGamesPlugin<?, ExampleArena, ExampleMap, ?> getPlugin() {
+    public @NotNull CozyGamesPlugin<?, ?, ExampleMap, ?> getPlugin() {
         return BukkitExamplePlugin.getInstance();
     }
 
     @Override
-    public @NotNull ExampleArena createEmptyArena(@NotNull String identifier, @NotNull String worldName) {
-        return new ExampleArena(identifier, worldName);
+    public @NotNull Arena<?, ExampleMap> createArena() {
+        return null;
+    }
+
+    @Override
+    public @NotNull ExampleMap saveToLocalConfiguration() {
+        return null;
+    }
+
+    @Override
+    public @NotNull ExampleMap deleteFromLocalConfiguration() {
+        return null;
     }
 }

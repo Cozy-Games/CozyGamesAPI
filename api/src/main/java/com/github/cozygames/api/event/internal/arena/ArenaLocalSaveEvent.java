@@ -16,35 +16,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.arena;
+package com.github.cozygames.api.event.internal.arena;
 
+import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.arena.GlobalArena;
-import com.github.kerbity.kerb.packet.event.Event;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
 /**
- * Represents the arena activate event.
+ * Represents the arena save to local configuration event.
  * <p>
- * Called when the {@link GlobalArena#activate(UUID)}
+ * Called when the {@link GlobalArena#saveToLocalConfiguration()}
  * method is called.
  */
-public class ArenaActivateEvent extends Event implements ArenaEvent {
+public class ArenaLocalSaveEvent extends ArenaEvent {
 
-    private final @NotNull String arenaIdentifier;
+    private boolean isComplete;
+
+    private final @NotNull GlobalArena instance;
 
     /**
-     * Used to create an arena activate event.
+     * Used to create an arena save to local
+     * configuration event.
      *
-     * @param arenaIdentifier The arena identifier.
+     * @param instance The instance of the global arena.
      */
-    public ArenaActivateEvent(@NotNull String arenaIdentifier) {
-        this.arenaIdentifier = arenaIdentifier;
+    public ArenaLocalSaveEvent(@NotNull GlobalArena instance) {
+        this.instance = instance;
     }
 
     @Override
     public @NotNull String getArenaIdentifier() {
-        return this.arenaIdentifier;
+        return this.instance.getIdentifier();
+    }
+
+    @Override
+    public @NotNull ArenaEvent executeMethod(@NotNull Arena<?, ?> arena) {
+        arena.saveToLocalConfiguration();
+        return this;
     }
 }

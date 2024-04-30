@@ -47,8 +47,23 @@ public class GroupTable extends TableAdapter<GroupRecord> {
      * @param identifier The group's identifier.
      * @return The optional group record.
      */
-    public Optional<GroupRecord> getGroupRecord(@NotNull UUID identifier) {
+    public @NotNull Optional<GroupRecord> getGroupRecord(@NotNull UUID identifier) {
         return Optional.ofNullable(this.getFirstRecord(new Query().match("identifier", identifier.toString())));
+    }
+
+    /**
+     * Used to get an instance of a group that
+     * contains a certain player uuid.
+     *
+     * @param playerUuid The player uuid to look for.
+     * @return The optional group record.
+     */
+    public @NotNull Optional<GroupRecord> getGroupRecordFromPlayer(@NotNull UUID playerUuid) {
+        for (GroupRecord record : this.getRecordList()) {
+            final Group group = record.convert();
+            if (group.getMemberUuids().contains(playerUuid)) return Optional.of(record);
+        }
+        return Optional.empty();
     }
 
     /**
@@ -56,8 +71,9 @@ public class GroupTable extends TableAdapter<GroupRecord> {
      * group database table.
      *
      * @param group The group instance.
+     * @return This instance.
      */
-    public void insertGroup(@NotNull Group group) {
+    public @NotNull GroupTable insertGroup(@NotNull Group group) {
 
         GroupRecord record = new GroupRecord();
         record.identifier = group.getIdentifier().toString();
@@ -67,5 +83,17 @@ public class GroupTable extends TableAdapter<GroupRecord> {
         record.groupJson = new Gson().toJson(group);
 
         this.insertRecord(record);
+        return this;
+    }
+
+    /**
+     * Used to remove a group from the group table.
+     *
+     * @param group The instance of the group to remove.
+     * @return This instance.
+     */
+    public @NotNull GroupTable removeGroup(@NotNull Group group) {
+        this.removeAllRecords(new Query().match("identifier", group.getIdentifier().toString()));
+        return this;
     }
 }

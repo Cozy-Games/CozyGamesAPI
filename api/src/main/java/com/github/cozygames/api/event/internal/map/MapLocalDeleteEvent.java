@@ -16,38 +16,42 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.map;
+package com.github.cozygames.api.event.internal.map;
 
-import com.github.cozygames.api.arena.GlobalArena;
 import com.github.cozygames.api.map.GlobalMap;
-import com.github.kerbity.kerb.packet.event.Event;
+import com.github.cozygames.api.map.Map;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents the map save to local configuration event.
+ * Represents the map delete from local configuration event.
  * <p>
- * Called when the {@link GlobalMap#saveToLocalConfiguration()}
+ * Called when the {@link GlobalMap#deleteFromLocalConfiguration()} ()}
  * method is called.
  */
-public class MapLocalSaveEvent extends Event implements MapEvent {
+public class MapLocalDeleteEvent extends MapEvent {
 
-    private final @NotNull GlobalMap instance;
+    private boolean isComplete;
+
+    private final @NotNull String mapIdentifier;
 
     /**
-     * Used to create a new map save to local configuration event.
+     * Used to create a map delete from local
+     * configuration event.
      *
-     * @param instance The instance of the global map.
+     * @param mapIdentifier The map identifier.
      */
-    public MapLocalSaveEvent(@NotNull GlobalMap instance) {
-        this.instance = instance;
+    public MapLocalDeleteEvent(@NotNull String mapIdentifier) {
+        this.mapIdentifier = mapIdentifier;
     }
 
     @Override
     public @NotNull String getMapIdentifier() {
-        return this.instance.getIdentifier();
+        return this.mapIdentifier;
     }
 
-    public @NotNull GlobalMap getInstance() {
-        return this.instance;
+    @Override
+    public @NotNull MapEvent executeMethod(@NotNull Map<?> map) {
+        map.deleteFromLocalConfiguration();
+        return this;
     }
 }

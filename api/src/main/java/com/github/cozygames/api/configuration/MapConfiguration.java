@@ -18,6 +18,7 @@
 
 package com.github.cozygames.api.configuration;
 
+import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.map.MapFactory;
 import com.github.smuddgge.squishyconfiguration.directory.SingleTypeConfigurationDirectory;
 import org.jetbrains.annotations.NotNull;

@@ -16,19 +16,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit.listener;
-
-import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.event.internal.member.MemberTeleportEvent;
-import org.bukkit.Bukkit;
-import org.jetbrains.annotations.NotNull;
-
-public class KerbEventListener {
-
-    public @NotNull MemberTeleportEvent onMemberTeleportEvent(@NotNull MemberTeleportEvent event) {
-        final CozyGames api = Bukkit.getServicesManager().getRegistration(CozyGames.class).getProvider();
-        if (!event.getLocation().getServerName().equalsIgnoreCase(api.getServerName())) return event;
-
-        return event;
-    }
-}
+/**
+ * Contains classes that are used to
+ * create and manage maps.
+ * <p>
+ * A map represents a configured build that can be loaded in an arena.
+ * <p>
+ * The {@link com.github.cozygames.api.map.Map} Represents the
+ * base of a map. Containing values that will be present in every map.
+ * <p>
+ * The {@link com.github.cozygames.api.map.GlobalMap} represents a map
+ * that could be on another server/api connection. It uses kerb events to call
+ * the related method located in the registered plugin.
+ * <p>
+ * The {@link com.github.cozygames.api.map.LocalMap} represents a map
+ * that is local to the plugin. It provides help when completing the map methods.
+ */
+package com.github.cozygames.api.map;

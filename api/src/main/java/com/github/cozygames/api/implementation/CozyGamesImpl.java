@@ -20,13 +20,17 @@ package com.github.cozygames.api.implementation;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
+import com.github.cozygames.api.arena.ArenaManager;
 import com.github.cozygames.api.database.table.MemberTable;
 import com.github.cozygames.api.group.GroupManager;
+import com.github.cozygames.api.map.MapManager;
 import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.MemberNotFoundException;
 import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
+import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.kerbity.kerb.client.KerbClient;
 import com.github.kerbity.kerb.packet.event.Event;
+import com.github.kerbity.kerb.packet.event.Priority;
 import com.github.kerbity.kerb.result.CompletableResultSet;
 import com.github.smuddgge.squishyconfiguration.implementation.YamlConfiguration;
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
@@ -37,6 +41,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -66,6 +72,8 @@ public class CozyGamesImpl implements CozyGames {
     private final @NotNull MapManager mapManager;
     private final @NotNull ArenaManager arenaManager;
     private final @NotNull GroupManager groupManager;
+
+    private final @NotNull List<CozyGamesPlugin<?, ?, ?, ?>> localPluginList;
 
     /**
      * Used to create a new instance of the
@@ -106,6 +114,9 @@ public class CozyGamesImpl implements CozyGames {
         // If unable to check and attempt to reconnect.
         if (!this.kerb.connect()) this.kerb.checkAndAttemptToReconnect();
 
+        // Register cozy games internal listener.
+        this.kerb.registerListener(Priority.HIGH, new CozyGamesInternalListener(this));
+
         // Create the map manager.
         this.mapManager = new MapManager(this);
 
@@ -114,6 +125,9 @@ public class CozyGamesImpl implements CozyGames {
 
         // Create the group manager.
         this.groupManager = new GroupManager(this);
+
+        // Initialize the local plugin list.
+        this.localPluginList = new ArrayList<>();
 
         // Register this instance in the singleton provider.
         CozyGamesProvider.register(this);
@@ -134,6 +148,23 @@ public class CozyGamesImpl implements CozyGames {
     @Override
     public @NotNull CozyGamesAPIPlugin getPlugin() {
         return this.plugin;
+    }
+
+    @Override
+    public @NotNull List<CozyGamesPlugin<?, ?, ?, ?>> getLocalPlugins() {
+        return this.localPluginList;
+    }
+
+    @Override
+    public @NotNull CozyGames registerLocalPlugin(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin) {
+        this.localPluginList.add(plugin);
+        return this;
+    }
+
+    @Override
+    public @NotNull CozyGames unregisterLocalPlugin(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin) {
+        this.localPluginList.remove(plugin);
+        return this;
     }
 
     @Override

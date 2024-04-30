@@ -19,10 +19,20 @@
 package com.github.cozygames.api.map;
 
 import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import org.jetbrains.annotations.NotNull;
 
-public class LocalMap<M extends Map<M>> extends Map<M> {
+/**
+ * Represents a local map.
+ * <p>
+ * This simplifies the {@link Map} class for
+ * creating new map types in mini-game plugins.
+ *
+ * @param <M> The highest map instance that should be used as a return value.
+ *            This makes it easier to chane method calls.
+ */
+public abstract class LocalMap<M extends Map<M>> extends Map<M> {
+
     /**
      * Used to create a new local map instance.
      *
@@ -34,23 +44,17 @@ public class LocalMap<M extends Map<M>> extends Map<M> {
         super(name, serverName, gameIdentifier);
     }
 
+    /**
+     * The instance of the mini-game plugin.
+     * <p>
+     * This is used to complete {@link Map} methods.
+     *
+     * @return The instance of the mini-game plugin.
+     */
+    public abstract @NotNull CozyGamesPlugin<?, ?, M, ?> getPlugin();
+
     @Override
     public @NotNull CozyGames getApi() {
-        return null;
-    }
-
-    @Override
-    public @NotNull Arena<?, M> createArena() {
-        return null;
-    }
-
-    @Override
-    public @NotNull M saveToLocalConfiguration() {
-        return null;
-    }
-
-    @Override
-    public @NotNull M deleteFromLocalConfiguration() {
-        return null;
+        return this.getPlugin().getAPI();
     }
 }

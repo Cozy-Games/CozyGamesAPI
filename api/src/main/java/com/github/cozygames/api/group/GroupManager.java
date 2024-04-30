@@ -28,14 +28,33 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Represents the group manager.
+ * <p>
+ * Used to get {@link Group}'s from the database.
+ * <p>
+ * Saving and deleting a group can be done by calling
+ * the {@link Group#save()} and {@link Group#delete()}
+ * methods.
+ */
 public class GroupManager {
 
     private final @NotNull CozyGames api;
 
+    /**
+     * Used to create a new group manager.
+     *
+     * @param api The instance of the api connection.
+     */
     public GroupManager(@NotNull CozyGames api) {
         this.api = api;
     }
 
+    /**
+     * Used to get all the groups.
+     *
+     * @return The list of groups.
+     */
     public @NotNull List<Group> getGroupList() {
         return this.api.getDatabase()
                 .getTable(GroupTable.class)
@@ -61,10 +80,29 @@ public class GroupManager {
         return new ArrayList<>();
     }
 
+    /**
+     * Used to get a group based on the group identifier.
+     *
+     * @param identifier The group identifier to look for.
+     * @return The optional group instance.
+     */
     public @NotNull Optional<Group> getGroup(@NotNull UUID identifier) {
         return this.api.getDatabase()
                 .getTable(GroupTable.class)
                 .getGroupRecord(identifier)
+                .map(GroupRecord::convert);
+    }
+
+    /**
+     * Used to get a group instance that contains a certain player.
+     *
+     * @param playerUuid The player's uuid.
+     * @return The optional group.
+     */
+    public @NotNull Optional<Group> getGroupFromPlayer(@NotNull UUID playerUuid) {
+        return this.api.getDatabase()
+                .getTable(GroupTable.class)
+                .getGroupRecordFromPlayer(playerUuid)
                 .map(GroupRecord::convert);
     }
 }

@@ -16,43 +16,45 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.map;
+package com.github.cozygames.api.event.internal.map;
 
 import com.github.cozygames.api.map.GlobalMap;
-import com.github.cozygames.api.map.LocalMap;
-import com.github.kerbity.kerb.packet.event.Event;
+import com.github.cozygames.api.map.Map;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents the map create arena event.
+ * Represents the map save to local configuration event.
  * <p>
- * This is called when the {@link GlobalMap#createArena()}
+ * Called when the {@link GlobalMap#saveToLocalConfiguration()}
  * method is called.
- * <p>
- * The server with the instance of the local
- * map should call {@link LocalMap#createArena()}.
  */
-public class MapCreateArenaEvent extends Event implements MapEvent {
+public class MapLocalSaveEvent extends MapEvent {
 
-    private final @NotNull String mapIdentifier;
-    private final @NotNull String worldName;
+    private boolean isComplete;
+
+    private final @NotNull GlobalMap instance;
 
     /**
-     * Used to create a new map create arena event.
+     * Used to create a new map save to local configuration event.
      *
-     * @param mapIdentifier The map's identifier.
+     * @param instance The instance of the global map.
      */
-    public MapCreateArenaEvent(@NotNull String mapIdentifier, @NotNull String worldName) {
-        this.mapIdentifier = mapIdentifier;
-        this.worldName = worldName;
+    public MapLocalSaveEvent(@NotNull GlobalMap instance) {
+        this.instance = instance;
     }
 
     @Override
     public @NotNull String getMapIdentifier() {
-        return this.mapIdentifier;
+        return this.instance.getIdentifier();
     }
 
-    public @NotNull String getWorldName() {
-        return this.worldName;
+    @Override
+    public @NotNull MapEvent executeMethod(@NotNull Map<?> map) {
+        map.saveToLocalConfiguration();
+        return this;
+    }
+
+    public @NotNull GlobalMap getInstance() {
+        return this.instance;
     }
 }

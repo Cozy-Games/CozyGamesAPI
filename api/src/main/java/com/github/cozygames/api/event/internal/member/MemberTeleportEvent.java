@@ -16,11 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.member;
+package com.github.cozygames.api.event.internal.member;
 
 import com.github.cozygames.api.location.ServerLocation;
 import com.github.cozygames.api.member.Member;
-import com.github.kerbity.kerb.packet.event.CompletableEvent;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -29,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
  * When called, the api plugin's should work together
  * to teleport the member to the specific server and location.
  */
-public class MemberTeleportEvent extends CompletableEvent implements MemberEvent {
+public class MemberTeleportEvent extends MemberEvent {
 
     private final @NotNull Member member;
     private final @NotNull ServerLocation location;

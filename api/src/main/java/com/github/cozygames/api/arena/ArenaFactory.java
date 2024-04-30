@@ -19,6 +19,7 @@
 package com.github.cozygames.api.arena;
 
 import com.github.cozygames.api.configuration.ArenaConfiguration;
+import com.github.cozygames.api.map.Map;
 import org.jetbrains.annotations.NotNull;
 
 /**

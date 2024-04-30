@@ -16,19 +16,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit.listener;
-
-import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.event.internal.member.MemberTeleportEvent;
-import org.bukkit.Bukkit;
-import org.jetbrains.annotations.NotNull;
-
-public class KerbEventListener {
-
-    public @NotNull MemberTeleportEvent onMemberTeleportEvent(@NotNull MemberTeleportEvent event) {
-        final CozyGames api = Bukkit.getServicesManager().getRegistration(CozyGames.class).getProvider();
-        if (!event.getLocation().getServerName().equalsIgnoreCase(api.getServerName())) return event;
-
-        return event;
-    }
-}
+/**
+ * Provides implementations of the core api {@link com.github.cozygames.api.CozyGames}.
+ * <p>
+ * These classes are to only be used within the api respiratory.
+ * <p>
+ * To create an instance of {@link com.github.cozygames.api.implementation.CozyGamesImpl}, use
+ * the {@link com.github.cozygames.api.implementation.CozyGamesBuilder} within this maven project.
+ * <pre>{@code
+ * CozyGames cozyGames = new CozyGamesBuilder(plugin).build();
+ * }</pre>
+ */
+package com.github.cozygames.api.implementation;

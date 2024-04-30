@@ -16,44 +16,50 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.arena;
+package com.github.cozygames.api.event.internal.map;
 
-import com.github.cozygames.api.arena.GlobalArena;
-import com.github.kerbity.kerb.packet.event.Event;
+import com.github.cozygames.api.map.GlobalMap;
+import com.github.cozygames.api.map.LocalMap;
+import com.github.cozygames.api.map.Map;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents the arena delete world event.
+ * Represents the map create arena event.
  * <p>
- * Called when the {@link GlobalArena#deleteWorld()}
+ * This is called when the {@link GlobalMap#createArena()}
  * method is called.
+ * <p>
+ * The server with the instance of the local
+ * map should call {@link LocalMap#createArena()}.
  */
-public class ArenaWorldDeleteEvent extends Event implements ArenaEvent {
+public class MapCreateArenaEvent extends MapEvent {
 
-    private final @NotNull String arenaIdentifier;
+    private boolean isComplete;
+
+    private final @NotNull String mapIdentifier;
     private final @NotNull String worldName;
 
     /**
-     * Used to create an arena delete world event.
+     * Used to create a new map create arena event.
      *
-     * @param arenaIdentifier The arena identifier.
+     * @param mapIdentifier The map's identifier.
      */
-    public ArenaWorldDeleteEvent(@NotNull String arenaIdentifier, @NotNull String worldName) {
-        this.arenaIdentifier = arenaIdentifier;
+    public MapCreateArenaEvent(@NotNull String mapIdentifier, @NotNull String worldName) {
+        this.mapIdentifier = mapIdentifier;
         this.worldName = worldName;
     }
 
     @Override
-    public @NotNull String getArenaIdentifier() {
-        return this.arenaIdentifier;
+    public @NotNull String getMapIdentifier() {
+        return this.mapIdentifier;
     }
 
-    /**
-     * Used to get the name of the world
-     * that should be created.
-     *
-     * @return The world name.
-     */
+    @Override
+    public @NotNull MapEvent executeMethod(@NotNull Map<?> map) {
+        map.createArena();
+        return this;
+    }
+
     public @NotNull String getWorldName() {
         return this.worldName;
     }

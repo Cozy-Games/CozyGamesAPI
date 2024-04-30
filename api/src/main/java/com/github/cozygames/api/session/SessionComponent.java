@@ -18,6 +18,8 @@
 
 package com.github.cozygames.api.session;
 
+import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.map.Map;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -28,7 +30,7 @@ import org.jetbrains.annotations.NotNull;
  * @param <A> The arena class that is used in the session.
  * @param <M> The map class that is used in the arena.
  */
-public interface SessionComponent<A extends ImmutableArena<A, M>, M extends Map<M>> {
+public interface SessionComponent<A extends Arena<A, M>, M extends Map<M>> {
 
     /**
      * Used to get the instance of the session this

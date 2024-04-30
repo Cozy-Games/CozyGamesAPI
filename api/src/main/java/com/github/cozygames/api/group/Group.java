@@ -21,6 +21,7 @@ package com.github.cozygames.api.group;
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
 import com.github.cozygames.api.database.table.GroupTable;
+import com.github.cozygames.api.indicator.Deletable;
 import com.github.cozygames.api.indicator.Savable;
 import com.github.cozygames.api.member.Member;
 import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertable;
@@ -40,10 +41,10 @@ import java.util.UUID;
  * This is exclusively stored in the database.
  * The database can be obtained with {@link CozyGames#getDatabase()}.
  */
-public class Group implements ConfigurationConvertable<Group>, Savable<Group> {
+public class Group implements ConfigurationConvertable<Group>, Savable<Group>, Deletable<Group> {
 
     private final @NotNull UUID identifier;
-    private @NotNull List<Member> memberList;
+    private final @NotNull List<Member> memberList;
     private @NotNull String gameIdentifier;
 
     /**
@@ -178,10 +179,23 @@ public class Group implements ConfigurationConvertable<Group>, Savable<Group> {
     @Override
     public @NotNull Group save() {
 
+        // Insert the group.
         CozyGamesProvider.get()
                 .getDatabase()
                 .getTable(GroupTable.class)
                 .insertGroup(this);
+
+        return this;
+    }
+
+    @Override
+    public @NotNull Group delete() {
+
+        // Remove the group.
+        CozyGamesProvider.get()
+                .getDatabase()
+                .getTable(GroupTable.class)
+                .removeGroup(this);
 
         return this;
     }

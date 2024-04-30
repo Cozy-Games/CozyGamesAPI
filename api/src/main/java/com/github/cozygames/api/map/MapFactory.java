@@ -33,5 +33,6 @@ public interface MapFactory<M extends Map<M>> {
      * @param name The name of the map to create.
      * @return The empty map instance.
      */
-    @NotNull M create(@NotNull String name);
+    @NotNull
+    M create(@NotNull String name);
 }

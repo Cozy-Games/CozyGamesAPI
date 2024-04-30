@@ -16,19 +16,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit.listener;
-
-import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.event.internal.member.MemberTeleportEvent;
-import org.bukkit.Bukkit;
-import org.jetbrains.annotations.NotNull;
-
-public class KerbEventListener {
-
-    public @NotNull MemberTeleportEvent onMemberTeleportEvent(@NotNull MemberTeleportEvent event) {
-        final CozyGames api = Bukkit.getServicesManager().getRegistration(CozyGames.class).getProvider();
-        if (!event.getLocation().getServerName().equalsIgnoreCase(api.getServerName())) return event;
-
-        return event;
-    }
-}
+/**
+ * Contains classes that are used to represents groups
+ * of players that are waiting to play a certain game.
+ * <p>
+ * The {@link com.github.cozygames.api.group.Group} class represents
+ * the base group that all other groups must inherit.
+ */
+package com.github.cozygames.api.group;

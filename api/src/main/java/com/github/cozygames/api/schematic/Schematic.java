@@ -22,6 +22,9 @@ import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertab
 import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents a schematic that can be built in a world.
+ */
 public class Schematic implements ConfigurationConvertable<Schematic> {
 
     @Override

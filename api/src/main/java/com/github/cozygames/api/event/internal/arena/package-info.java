@@ -20,4 +20,4 @@
  * Contains kerb events that are called in the corresponding
  * {@link com.github.cozygames.api.arena.GlobalArena} methods.
  */
-package com.github.cozygames.api.event.arena;
+package com.github.cozygames.api.event.internal.arena;

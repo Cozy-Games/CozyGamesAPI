@@ -16,33 +16,49 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.arena;
+package com.github.cozygames.api.event.internal.arena;
 
+import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.arena.GlobalArena;
-import com.github.kerbity.kerb.packet.event.Event;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 /**
- * Represents the arena deactivate event.
+ * Represents the arena activate event.
  * <p>
- * Called when the {@link GlobalArena#deactivate()}
+ * Called when the {@link GlobalArena#activate(UUID)}
  * method is called.
  */
-public class ArenaDeactivateEvent extends Event implements ArenaEvent {
+public class ArenaActivateEvent extends ArenaEvent {
+
+    private boolean isComplete;
 
     private final @NotNull String arenaIdentifier;
+    private final @NotNull UUID groupIdentifier;
 
     /**
-     * Used to create an arena deactivate event.
+     * Used to create an arena activate event.
      *
      * @param arenaIdentifier The arena identifier.
      */
-    public ArenaDeactivateEvent(@NotNull String arenaIdentifier) {
+    public ArenaActivateEvent(@NotNull String arenaIdentifier, @NotNull String groupIdentifier) {
         this.arenaIdentifier = arenaIdentifier;
+        this.groupIdentifier = UUID.fromString(groupIdentifier);
     }
 
     @Override
     public @NotNull String getArenaIdentifier() {
         return this.arenaIdentifier;
+    }
+
+    public @NotNull UUID getGroupIdentifier() {
+        return this.groupIdentifier;
+    }
+
+    @Override
+    public @NotNull ArenaEvent executeMethod(@NotNull Arena<?, ?> arena) {
+        arena.activate(this.groupIdentifier);
+        return this;
     }
 }

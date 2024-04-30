@@ -16,36 +16,41 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.map;
+package com.github.cozygames.api.event.internal.arena;
 
+import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.arena.GlobalArena;
-import com.github.cozygames.api.event.arena.ArenaEvent;
-import com.github.cozygames.api.map.GlobalMap;
-import com.github.kerbity.kerb.packet.event.Event;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents the map delete from local configuration event.
+ * Represents the arena deactivate event.
  * <p>
- * Called when the {@link GlobalMap#deleteFromLocalConfiguration()} ()}
+ * Called when the {@link GlobalArena#deactivate()}
  * method is called.
  */
-public class MapLocalDeleteEvent extends Event implements MapEvent {
+public class ArenaDeactivateEvent extends ArenaEvent {
 
-    private final @NotNull String mapIdentifier;
+    private boolean isComplete;
+
+    private final @NotNull String arenaIdentifier;
 
     /**
-     * Used to create a map delete from local
-     * configuration event.
+     * Used to create an arena deactivate event.
      *
-     * @param mapIdentifier The map identifier.
+     * @param arenaIdentifier The arena identifier.
      */
-    public MapLocalDeleteEvent(@NotNull String mapIdentifier) {
-        this.mapIdentifier = mapIdentifier;
+    public ArenaDeactivateEvent(@NotNull String arenaIdentifier) {
+        this.arenaIdentifier = arenaIdentifier;
     }
 
     @Override
-    public @NotNull String getMapIdentifier() {
-        return this.mapIdentifier;
+    public @NotNull String getArenaIdentifier() {
+        return this.arenaIdentifier;
+    }
+
+    @Override
+    public @NotNull ArenaEvent executeMethod(@NotNull Arena<?, ?> arena) {
+        arena.deactivate();
+        return this;
     }
 }

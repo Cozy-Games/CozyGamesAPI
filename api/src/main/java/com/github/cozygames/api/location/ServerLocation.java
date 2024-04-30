@@ -86,8 +86,8 @@ public class ServerLocation {
      * another location type.
      *
      * @param converter The instance of the location converter.
+     * @param <T>       The location type.
      * @return The instance of the location.
-     * @param <T> The location type.
      */
     public <T> @NotNull T getLocation(@NotNull Converter<T> converter) {
         return converter.convert(this);

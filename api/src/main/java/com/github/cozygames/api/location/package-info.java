@@ -16,26 +16,19 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.event.member;
-
-import com.github.cozygames.api.member.Member;
-import org.jetbrains.annotations.NotNull;
-
 /**
- * Represents a member event.
+ * Contains classes to represent different kinds of locations.
  * <p>
- * Each member event should implement this interface.
+ * The {@link com.github.cozygames.api.location.Vector} is the simplest
+ * with only x, zy and z variables.
  * <p>
- * This will allow connections to the kerb client to
- * listen to any member event.
+ * The {@link com.github.cozygames.api.location.Position} expands on the
+ * vector class by adding yaw and pitch.
+ * <p>
+ * You can also create a position region with the
+ * {@link com.github.cozygames.api.location.PositionRegion} class.
+ * <p>
+ * The {@link com.github.cozygames.api.location.ServerLocation} uses the position
+ * class, a world and server name to represent a location on a server.
  */
-public interface MemberEvent {
-
-    /**
-     * Used to get the instance of the member.
-     *
-     * @return The instance of the member.
-     */
-    @NotNull
-    Member getMember();
-}
+package com.github.cozygames.api.location;

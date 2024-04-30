@@ -16,19 +16,10 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit.listener;
-
-import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.event.internal.member.MemberTeleportEvent;
-import org.bukkit.Bukkit;
-import org.jetbrains.annotations.NotNull;
-
-public class KerbEventListener {
-
-    public @NotNull MemberTeleportEvent onMemberTeleportEvent(@NotNull MemberTeleportEvent event) {
-        final CozyGames api = Bukkit.getServicesManager().getRegistration(CozyGames.class).getProvider();
-        if (!event.getLocation().getServerName().equalsIgnoreCase(api.getServerName())) return event;
-
-        return event;
-    }
-}
+/**
+ * Contains internal api events.
+ * <p>
+ * Internal events are used within the api to
+ * bridge api connections.
+ */
+package com.github.cozygames.api.event.internal;

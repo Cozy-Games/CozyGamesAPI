@@ -9,24 +9,29 @@
 
 # The name of the server this plugin is on.
 # This will be used in kerb events and the database.
-server_name: ""
+server_name: "network_server_1"
+
+# The address used to connect to the minecraft network.
+# This can then be used in mini-game scoreboards to advertise
+# what server they are currently playing on.
+server_address: "network.com"
 
 # The event distributor server connection.
 # Most of this infomation should be present on your kerb server.
 kerb:
   # The port the kerb server is listening to.
-  server_port: 5000
+  server_port: 7000
   # The kerb server's address.
-  server_address: ""
+  server_address: "00.000.00.000"
   # The path from the container to the server certificate.
   #This should be the same one as on the kerb server.
-  server_certificate_path: ""
+  server_certificate_path: "server.p12"
   # The path from the container to the client certificate.
   # This should be the same one as on the kerb server.
-  client_certificate_path: ""
+  client_certificate_path: "client.p12"
   # The password to log into the kerb server.
   # This should be the same password as in the kerb configuration.
-  password: ""
+  password: "12345"
   # The maximum time the client should wait for the event result list.
   max_wait_time_millis: 400
   # True if the client should auto reconnect to the server after

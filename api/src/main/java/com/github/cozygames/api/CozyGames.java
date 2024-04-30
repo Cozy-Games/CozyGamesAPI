@@ -18,7 +18,11 @@
 
 package com.github.cozygames.api;
 
+import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.arena.ArenaManager;
 import com.github.cozygames.api.group.GroupManager;
+import com.github.cozygames.api.map.Map;
+import com.github.cozygames.api.map.MapManager;
 import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.MemberNotFoundException;
 import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
@@ -99,6 +103,29 @@ public interface CozyGames {
      */
     @NotNull
     List<CozyGamesPlugin<?, ?, ?, ?>> getLocalPlugins();
+
+    /**
+     * Used to register a local plugin with this
+     * api connection.
+     * <p>
+     * This is used to obtain the local instances
+     * of {@link Map}s and {@link Arena}s.
+     *
+     * @param plugin The instance of the plugin.
+     * @return This instance.
+     */
+    @NotNull
+    CozyGames registerLocalPlugin(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin);
+
+    /**
+     * Used to unregister a local plugin with this
+     * api connection.
+     *
+     * @param plugin The instance of the plugin.
+     * @return This instance.
+     */
+    @NotNull
+    CozyGames unregisterLocalPlugin(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin);
 
     /**
      * Used to get the instance of the connection configuration file.
