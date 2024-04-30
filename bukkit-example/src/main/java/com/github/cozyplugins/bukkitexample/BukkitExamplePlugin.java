@@ -22,7 +22,7 @@ public final class BukkitExamplePlugin extends JavaPlugin {
         CozyGames api = this.getAPI();
 
         // Example of getting the list of available maps.
-        List<GlobalMap> globalMapList = api.getMapManager().getGlobalMapList();
+        List<GlobalMap> globalMapList = api.getMapManager().getMapList();
 
         // Example of getting a member.
         // This will first try to find them on the server.
