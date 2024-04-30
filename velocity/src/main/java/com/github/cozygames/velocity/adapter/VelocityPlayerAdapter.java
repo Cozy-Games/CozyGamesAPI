@@ -16,16 +16,26 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.velocity;
+package com.github.cozygames.velocity.adapter;
 
-import com.velocitypowered.api.plugin.Plugin;
+import com.github.cozygames.api.member.Member;
+import com.github.cozygames.api.member.PlayerAdapter;
+import com.velocitypowered.api.proxy.Player;
+import com.velocitypowered.api.proxy.ProxyServer;
+import org.jetbrains.annotations.NotNull;
 
-@Plugin(
-        id = "cozygamesapi",
-        name = "CozyGamesAPI",
-        version = "@version@",
-        description = "The api used to interface with the cozy game system.",
-        authors = {"Smuddgge"}
-)
-public class CozyGamesAPI_Velocity {
+import java.util.Optional;
+
+public class VelocityPlayerAdapter implements PlayerAdapter<Player> {
+
+    private final @NotNull ProxyServer server;
+
+    public VelocityPlayerAdapter(@NotNull ProxyServer server) {
+        this.server = server;
+    }
+
+    @Override
+    public Optional<Player> getPlayer(@NotNull Member member) {
+        return this.server.getPlayer(member.getUuid());
+    }
 }
