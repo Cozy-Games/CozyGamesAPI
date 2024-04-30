@@ -6,6 +6,7 @@
 #                 |___/
 #
 # Author: Smuddgge and Contributors
+# File: The connection configuration file used to create a api connection.
 
 # The name of the server this plugin is on.
 # This will be used in kerb events and the database.
