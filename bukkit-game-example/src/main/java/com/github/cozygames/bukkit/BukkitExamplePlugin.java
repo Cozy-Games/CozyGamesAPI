@@ -32,6 +32,8 @@ import com.github.cozyplugins.cozylibrary.placeholder.PlaceholderManager;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+
 /**
  * Represents the instance of the
  * bukkit example plugin.
@@ -60,6 +62,11 @@ public final class BukkitExamplePlugin extends CozyGamesBukkitPlugin<
 
         // Set up the singleton instance.
         BukkitExamplePlugin.instance = this;
+    }
+
+    @Override
+    public @NotNull File getDataFolder() {
+        return this.getLoader().getDataFolder();
     }
 
     @Override

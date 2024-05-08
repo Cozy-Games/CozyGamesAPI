@@ -346,6 +346,8 @@ public abstract class Map<M extends Map<M>> implements ConfigurationConvertable<
                 .getTable(MapTable.class)
                 .insertMap(this);
 
+        // Save to the local configuration.
+        this.saveToLocalConfiguration();
         return (M) this;
     }
 
@@ -357,6 +359,8 @@ public abstract class Map<M extends Map<M>> implements ConfigurationConvertable<
                 .getTable(MapTable.class)
                 .removeMap(this);
 
+        // Delete from the local configuration.
+        this.deleteFromLocalConfiguration();
         return (M) this;
     }
 

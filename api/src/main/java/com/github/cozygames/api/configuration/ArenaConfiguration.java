@@ -21,6 +21,7 @@ package com.github.cozygames.api.configuration;
 import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.arena.ArenaFactory;
 import com.github.cozygames.api.map.Map;
+import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.smuddgge.squishyconfiguration.directory.SingleTypeConfigurationDirectory;
 import org.jetbrains.annotations.NotNull;
 
@@ -39,13 +40,12 @@ public class ArenaConfiguration<A extends Arena<A, M>, M extends Map<M>> extends
     /**
      * Used to create a new arena configuration directory.
      *
-     * @param resourceClass The class used to load the resource files.
-     * @param arenaFactory  The arena factory.
+     * @param plugin The instance of the plugin.
      */
-    public ArenaConfiguration(@NotNull Class<?> resourceClass, @NotNull ArenaFactory<A, M> arenaFactory) {
-        super("arenas", resourceClass);
+    public ArenaConfiguration(@NotNull CozyGamesPlugin<?, A, M, ?> plugin) {
+        super(plugin.getDataFolder().getAbsolutePath(), "arenas", plugin.getLoader().getClass());
 
-        this.arenaFactory = arenaFactory;
+        this.arenaFactory = plugin.getArenaFactory();
     }
 
     @Override

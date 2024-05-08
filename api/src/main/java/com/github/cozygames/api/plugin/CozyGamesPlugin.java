@@ -30,6 +30,8 @@ import com.github.cozygames.api.session.SessionFactory;
 import com.github.cozygames.api.session.SessionManager;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+
 /**
  * Represents a foundation that can be used
  * in cozy game plugin's.
@@ -59,6 +61,15 @@ public abstract class CozyGamesPlugin<
     public CozyGamesPlugin(@NotNull L loader) {
         this.loader = loader;
     }
+
+    /**
+     * Used to get the plugin's data folder.
+     * <p>
+     * The location where the configuration files should be stored.
+     *
+     * @return The data folder file.
+     */
+    public abstract @NotNull File getDataFolder();
 
     /**
      * Used to get the instance of the api on
@@ -139,11 +150,11 @@ public abstract class CozyGamesPlugin<
     public @NotNull CozyGamesPlugin<S, A, M, L> enable() {
 
         // Set up the map configuration directory.
-        this.mapConfiguration = new MapConfiguration<>(this.getLoader().getClass(), this.getMapFactory());
+        this.mapConfiguration = new MapConfiguration<>(this);
         this.mapConfiguration.reload();
 
         // Set up the arena configuration directory.
-        this.arenaConfiguration = new ArenaConfiguration<>(this.getLoader().getClass(), this.getArenaFactory());
+        this.arenaConfiguration = new ArenaConfiguration<>(this);
         this.arenaConfiguration.reload();
 
         // Set up the session manager.

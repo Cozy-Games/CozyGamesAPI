@@ -20,6 +20,7 @@ package com.github.cozygames.api.configuration;
 
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.map.MapFactory;
+import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.smuddgge.squishyconfiguration.directory.SingleTypeConfigurationDirectory;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,13 +41,12 @@ public class MapConfiguration<M extends Map<M>> extends SingleTypeConfigurationD
     /**
      * Used to create a new map configuration directory.
      *
-     * @param resourceClass The class used to load the resource files.
-     * @param factory       The map factory.
+     * @param plugin The instance of the plugin.
      */
-    public MapConfiguration(@NotNull Class<?> resourceClass, @NotNull MapFactory<M> factory) {
-        super("maps", resourceClass);
+    public MapConfiguration(@NotNull CozyGamesPlugin<?, ?, M, ?> plugin) {
+        super(plugin.getDataFolder().getAbsolutePath(), "maps", plugin.getLoader().getClass());
 
-        this.mapFactory = factory;
+        this.mapFactory = plugin.getMapFactory();
     }
 
     @Override
