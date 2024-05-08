@@ -106,6 +106,25 @@ public class MapManager {
     }
 
     /**
+     * Used to unregister maps with a specific game identifier.
+     *
+     * @param gameIdentifier The game identifier to filter.
+     * @return This instance.
+     */
+    public @NotNull MapManager unregisterMapList(@NotNull String gameIdentifier) {
+        this.localRegisteredMapList.removeIf(identifier -> {
+
+            // Check if the map still exists.
+            final Map<?> map = this.getMap(identifier).orElse(null);
+            if (map == null) return true;
+
+            // Check if the map equals the specific game identifier.
+            return map.getGameIdentifier().equals(gameIdentifier);
+        });
+        return this;
+    }
+
+    /**
      * Used to get the list of global maps.
      *
      * @return The list of global maps.

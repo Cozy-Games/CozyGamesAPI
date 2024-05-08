@@ -172,6 +172,10 @@ public abstract class CozyGamesPlugin<
         this.sessionManager.stopAllSessions();
         this.sessionManager.removeAllSessions();
 
+        // Unregister maps and arenas.
+        this.getApi().getMapManager().unregisterMapList(this.getGameIdentifier());
+        this.getApi().getArenaManager().removeMapList(this.getGameIdentifier());
+
         // Unregister this plugin from the api.
         this.getApi().unregisterLocalPlugin(this);
         return this;

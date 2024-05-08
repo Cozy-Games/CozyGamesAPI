@@ -21,7 +21,10 @@ package com.github.cozygames.api.arena;
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.database.record.ArenaRecord;
 import com.github.cozygames.api.database.table.ArenaTable;
+import com.github.cozygames.api.map.Map;
+import com.github.cozygames.api.map.MapManager;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
+import com.github.smuddgge.squishydatabase.Query;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -111,5 +114,21 @@ public class ArenaManager {
      */
     public @NotNull Optional<GlobalArena> getFirstArena(@NotNull ArenaFilter arenaFilter) {
         return Optional.ofNullable(arenaFilter.filterArenas(this.getArenaList()).get(0));
+    }
+
+    /**
+     * Used to remove arenas with a specific game identifier.
+     *
+     * @param gameIdentifier The game identifier to filter.
+     * @return This instance.
+     */
+    public @NotNull ArenaManager removeMapList(@NotNull String gameIdentifier) {
+        for (ArenaRecord record : this.api.getDatabase().getTable(ArenaTable.class).getRecordList()) {
+            final Arena<?, ?> arena = record.convert();
+
+            // If the game identifier matches, delete the arena.
+            if (arena.getMap().getGameIdentifier().equalsIgnoreCase(gameIdentifier)) arena.delete();
+        }
+        return this;
     }
 }

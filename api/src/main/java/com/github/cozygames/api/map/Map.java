@@ -133,7 +133,7 @@ public abstract class Map<M extends Map<M>> implements ConfigurationConvertable<
      * @return The instance of the map's identifier.
      */
     public @NotNull String getIdentifier() {
-        return Map.getIdentifier(this.name, this.serverName, this.gameIdentifier);
+        return Map.getIdentifier(this.serverName, this.gameIdentifier, this.name);
     }
 
     /**
@@ -296,46 +296,6 @@ public abstract class Map<M extends Map<M>> implements ConfigurationConvertable<
         return (M) this;
     }
 
-    /**
-     * Used to convert the three compound keys into a unique identifier.
-     * <p>
-     * To create this identifier the server name, game identifier
-     * and map name is combined and split by colons.
-     * <p>
-     * Example:
-     * <pre>{@code
-     * server1:bedwars:aquarium
-     * }</pre>
-     *
-     * @param serverName     The server's name.
-     * @param gameIdentifier The game identifier.
-     * @param mapName        The map's name.
-     * @return The identifier.
-     */
-    public static @NotNull String getIdentifier(@NotNull String serverName, @NotNull String gameIdentifier, @NotNull String mapName) {
-        return serverName + ":" + gameIdentifier + ":" + mapName;
-    }
-
-    /**
-     * Used to get the map identifier from an arena identifier.
-     *
-     * @param arenaIdentifier The instance of the arena identifier.
-     * @return The map identifier.
-     */
-    public static @NotNull String getIdentifier(@NotNull String arenaIdentifier) {
-        return arenaIdentifier.split(":")[0] + ":" + arenaIdentifier.split(":")[1] + ":" + arenaIdentifier.split(":")[2];
-    }
-
-    /**
-     * Used to get the maps name from the map identifier.
-     *
-     * @param mapIdentifier The map's identifier.
-     * @return The map's name.
-     */
-    public static @NotNull String getName(@NotNull String mapIdentifier) {
-        return mapIdentifier.split(":")[2];
-    }
-
     @Override
     public @NotNull ConfigurationSection convert() {
         ConfigurationSection section = new MemoryConfigurationSection(new LinkedHashMap<>());
@@ -398,5 +358,45 @@ public abstract class Map<M extends Map<M>> implements ConfigurationConvertable<
                 .removeMap(this);
 
         return (M) this;
+    }
+
+    /**
+     * Used to convert the three compound keys into a unique identifier.
+     * <p>
+     * To create this identifier the server name, game identifier
+     * and map name is combined and split by colons.
+     * <p>
+     * Example:
+     * <pre>{@code
+     * server1:bedwars:aquarium
+     * }</pre>
+     *
+     * @param serverName     The server's name.
+     * @param gameIdentifier The game identifier.
+     * @param mapName        The map's name.
+     * @return The identifier.
+     */
+    public static @NotNull String getIdentifier(@NotNull String serverName, @NotNull String gameIdentifier, @NotNull String mapName) {
+        return serverName + ":" + gameIdentifier + ":" + mapName;
+    }
+
+    /**
+     * Used to get the map identifier from an arena identifier.
+     *
+     * @param arenaIdentifier The instance of the arena identifier.
+     * @return The map identifier.
+     */
+    public static @NotNull String getIdentifier(@NotNull String arenaIdentifier) {
+        return arenaIdentifier.split(":")[0] + ":" + arenaIdentifier.split(":")[1] + ":" + arenaIdentifier.split(":")[2];
+    }
+
+    /**
+     * Used to get the maps name from the map identifier.
+     *
+     * @param mapIdentifier The map's identifier.
+     * @return The map's name.
+     */
+    public static @NotNull String getName(@NotNull String mapIdentifier) {
+        return mapIdentifier.split(":")[2];
     }
 }
