@@ -78,6 +78,7 @@ public class MapTable extends TableAdapter<MapRecord> {
 
         // Create the map record.
         MapRecord record = new MapRecord();
+        record.identifier = map.getIdentifier();
         record.name = map.getName();
         record.serverName = map.getServerName();
         record.gameIdentifier = map.getGameIdentifier();

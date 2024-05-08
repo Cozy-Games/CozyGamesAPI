@@ -21,7 +21,9 @@ package com.github.cozygames.api.database.record;
 import com.github.cozygames.api.group.Group;
 import com.github.cozygames.api.group.GroupType;
 import com.github.cozygames.api.indicator.RecordConvertable;
+import com.github.smuddgge.squishydatabase.record.Field;
 import com.github.smuddgge.squishydatabase.record.Record;
+import com.github.smuddgge.squishydatabase.record.RecordFieldType;
 import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 
@@ -41,6 +43,7 @@ public class GroupRecord extends Record implements RecordConvertable<Group> {
      * <p>
      * These variables will not change once created.
      */
+    @Field(type = RecordFieldType.PRIMARY)
     public String identifier;
     public String gameIdentifier;
 

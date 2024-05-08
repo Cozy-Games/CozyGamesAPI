@@ -20,7 +20,9 @@ package com.github.cozygames.api.database.record;
 
 import com.github.cozygames.api.indicator.RecordConvertable;
 import com.github.cozygames.api.member.Member;
+import com.github.smuddgge.squishydatabase.record.Field;
 import com.github.smuddgge.squishydatabase.record.Record;
+import com.github.smuddgge.squishydatabase.record.RecordFieldType;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
@@ -38,6 +40,7 @@ public class MemberRecord extends Record implements RecordConvertable<Member> {
      * <p>
      * These variables will not change once created.
      */
+    @Field(type = RecordFieldType.PRIMARY)
     public String uuid;
     public String name;
 

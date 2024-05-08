@@ -27,7 +27,9 @@ import com.github.cozygames.api.member.MemberCapacity;
 import com.github.cozygames.api.schematic.Schematic;
 import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
 import com.github.smuddgge.squishyconfiguration.memory.MemoryConfigurationSection;
+import com.github.smuddgge.squishydatabase.record.Field;
 import com.github.smuddgge.squishydatabase.record.Record;
+import com.github.smuddgge.squishydatabase.record.RecordFieldType;
 import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -47,6 +49,8 @@ public class MapRecord extends Record implements RecordConvertable<GlobalMap> {
      * <p>
      * These variables will not change once created.
      */
+    @Field(type = RecordFieldType.PRIMARY)
+    public String identifier;
     public String name;
     public String serverName;
     public String gameIdentifier;
