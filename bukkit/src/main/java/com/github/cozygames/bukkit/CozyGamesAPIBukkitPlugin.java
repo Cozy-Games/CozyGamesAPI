@@ -93,6 +93,14 @@ public class CozyGamesAPIBukkitPlugin implements CozyGamesAPIPlugin {
         return new BukkitPlayerAdapter();
     }
 
+    @Override
+    public boolean isOnline(@NotNull UUID playerUuid) {
+        return Bukkit.getOnlinePlayers().stream()
+                .map(Player::getUniqueId)
+                .toList()
+                .contains(playerUuid);
+    }
+
     /**
      * Used to get the instance of the teleport manager.
      *

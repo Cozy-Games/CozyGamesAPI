@@ -94,11 +94,11 @@ public final class BukkitExamplePlugin extends CozyGamesBukkitPlugin<
 
     @Override
     public boolean isCommandTypesEnabled() {
-        return false;
+        return true;
     }
 
     @Override
-    public void onLoadCommands(@NotNull CommandManager commandManager) {
+    public void onLoadCommands(com.github.cozyplugins.cozylibrary.command.@NotNull CommandManager commandManager) {
 
         // Register the main plugin command tree /example.
         commandManager.getTypeManager().registerCommandType(

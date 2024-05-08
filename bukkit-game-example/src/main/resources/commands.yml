@@ -7,3 +7,17 @@
 #
 # Author: Smuddgge and Contributors
 # File: The configurable command type file used to specify commands.
+
+example:
+  type: "example"
+  name: "example"
+  # Contains all the map commands.
+  map:
+    name: "map"
+    # Used to create a new map.
+    create:
+      type: "create"
+      name: "create"
+      region_undefined: "&ePlease select the maps region using world edit first."
+      map_name_undefined: "&ePlease enter the map name as the next command argument. {syntax}"
+      map_created: "&aCreated a new map with identifier &f{identifier} &a."

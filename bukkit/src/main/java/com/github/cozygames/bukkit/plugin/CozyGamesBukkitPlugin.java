@@ -24,8 +24,8 @@ import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.cozygames.api.session.Session;
-import com.github.cozygames.bukkit.command.CommandManager;
 import com.github.cozyplugins.cozylibrary.CozyPlugin;
+import com.github.cozyplugins.cozylibrary.command.CommandManager;
 import com.github.cozyplugins.cozylibrary.placeholder.PlaceholderManager;
 import com.github.smuddgge.squishyconfiguration.directory.ConfigurationDirectory;
 import org.bukkit.Bukkit;
@@ -60,7 +60,7 @@ public abstract class CozyGamesBukkitPlugin<
         this.cozyPlugin = new CozyPlugin<>(loader) {
             @Override
             public boolean isCommandTypesEnabled() {
-                return this.isCommandTypesEnabled();
+                return CozyGamesBukkitPlugin.this.isCommandTypesEnabled();
             }
 
             @Override
@@ -74,13 +74,13 @@ public abstract class CozyGamesBukkitPlugin<
             }
 
             @Override
-            public void onLoadCommands(com.github.cozyplugins.cozylibrary.command.@NotNull CommandManager commandManager) {
-                this.onLoadCommands(commandManager);
+            public void onLoadCommands(@NotNull CommandManager commandManager) {
+                CozyGamesBukkitPlugin.this.onLoadCommands(commandManager);
             }
 
             @Override
             public void onLoadPlaceholders(@NotNull PlaceholderManager<L> placeholderManager) {
-                this.onLoadPlaceholders(placeholderManager);
+                CozyGamesBukkitPlugin.this.onLoadPlaceholders(placeholderManager);
             }
         };
     }

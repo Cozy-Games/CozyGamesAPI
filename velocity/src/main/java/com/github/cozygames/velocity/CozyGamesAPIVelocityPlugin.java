@@ -79,4 +79,9 @@ public class CozyGamesAPIVelocityPlugin implements CozyGamesAPIPlugin {
     public @NotNull PlayerAdapter<?> getPlayerAdapter() {
         return new VelocityPlayerAdapter(this.proxy);
     }
+
+    @Override
+    public boolean isOnline(@NotNull UUID playerUuid) {
+        return this.proxy.getPlayer(playerUuid).isPresent();
+    }
 }

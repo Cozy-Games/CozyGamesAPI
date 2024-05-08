@@ -82,7 +82,7 @@
         <dependency>
             <groupId>com.github.Cozy-Plugins</groupId>
             <artifactId>CozyLibrary</artifactId>
-            <version>3.0.1</version>
+            <version>3.0.2</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.github.Smuddgge</groupId>
@@ -96,6 +96,12 @@
             <groupId>com.sk89q.worldedit</groupId>
             <artifactId>worldedit-bukkit</artifactId>
             <version>7.4.0-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.sk89q.worldedit.worldedit-libs</groupId>
+                    <artifactId>core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 
@@ -123,6 +129,14 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <artifactSet>
+                        <excludes>
+                            <exclude>com.sk89q.worldedit:*</exclude>
+                            <exclude>org.enginehub.lin-bus:*</exclude>
+                        </excludes>
+                    </artifactSet>
+                </configuration>
             </plugin>
         </plugins>
         <resources>
