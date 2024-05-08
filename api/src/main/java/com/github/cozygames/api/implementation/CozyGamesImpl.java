@@ -85,6 +85,9 @@ public class CozyGamesImpl implements CozyGames {
     public CozyGamesImpl(@NotNull CozyGamesAPIPlugin plugin) {
         this.plugin = plugin;
 
+        // Log start up message.
+        this.getPlugin().getLogger().log("Setting up the cozy games api.");
+
         // Create connection configuration instance.
         this.connectionConfig = new YamlConfiguration(this.plugin.getDataFolder(), "connection.yaml");
         this.connectionConfig.setDefaultPath("connection.yaml");
@@ -131,6 +134,9 @@ public class CozyGamesImpl implements CozyGames {
 
         // Register this instance in the singleton provider.
         CozyGamesProvider.register(this);
+
+        // Log finished message.
+        this.getPlugin().getLogger().log("Finished setting up the cozy games api.");
     }
 
     @Override

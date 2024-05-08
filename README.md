@@ -6,6 +6,7 @@ status: In Development
 ```
 
 **Brief**
+
 ```
 Ever wanted to have your very own mini-games Minecraft network?
 This API is here to make it easy.
@@ -18,6 +19,7 @@ All servers will now let players play that mini-game.
 ```
 
 **How it works**
+
 ```
 Once an map has been set up and a player starts a game, 
 it will generate a new world and build the map.
@@ -26,6 +28,7 @@ it will generate a new world and build the map.
 # Developers
 
 **Class Breakdown**
+
 ```yaml
 CozyGames: The base api.
 CozyGamesProvider: A way of obtaining the api.

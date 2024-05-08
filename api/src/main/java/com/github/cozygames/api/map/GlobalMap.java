@@ -22,7 +22,6 @@ import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
 import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.arena.GlobalArena;
-import com.github.cozygames.api.event.internal.map.MapCreateArenaEvent;
 import com.github.cozygames.api.event.internal.map.MapLocalDeleteEvent;
 import com.github.cozygames.api.event.internal.map.MapLocalSaveEvent;
 import org.jetbrains.annotations.NotNull;
@@ -58,7 +57,6 @@ public class GlobalMap extends Map<GlobalMap> {
     @Override
     public @NotNull Arena<?, GlobalMap> createArena() {
         final String worldName = "ToDo";
-        this.getApi().callEvent(new MapCreateArenaEvent(this.getIdentifier(), worldName));
         return new GlobalArena(this.getIdentifier(), worldName);
     }
 

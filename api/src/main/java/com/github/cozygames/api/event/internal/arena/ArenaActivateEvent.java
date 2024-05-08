@@ -42,9 +42,9 @@ public class ArenaActivateEvent extends ArenaEvent {
      *
      * @param arenaIdentifier The arena identifier.
      */
-    public ArenaActivateEvent(@NotNull String arenaIdentifier, @NotNull String groupIdentifier) {
+    public ArenaActivateEvent(@NotNull String arenaIdentifier, @NotNull UUID groupIdentifier) {
         this.arenaIdentifier = arenaIdentifier;
-        this.groupIdentifier = UUID.fromString(groupIdentifier);
+        this.groupIdentifier = groupIdentifier;
     }
 
     @Override

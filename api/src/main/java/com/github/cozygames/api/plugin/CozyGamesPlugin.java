@@ -26,6 +26,7 @@ import com.github.cozygames.api.configuration.MapConfiguration;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.map.MapFactory;
 import com.github.cozygames.api.session.Session;
+import com.github.cozygames.api.session.SessionFactory;
 import com.github.cozygames.api.session.SessionManager;
 import org.jetbrains.annotations.NotNull;
 
@@ -68,7 +69,7 @@ public abstract class CozyGamesPlugin<
      *
      * @return The instance of the api.
      */
-    public abstract @NotNull CozyGames getAPI();
+    public abstract @NotNull CozyGames getApi();
 
     /**
      * Used to get the game identifier this plugin
@@ -104,6 +105,15 @@ public abstract class CozyGamesPlugin<
     public abstract @NotNull ArenaFactory<A, M> getArenaFactory();
 
     /**
+     * Used to get the instance of the session factory.
+     * <p>
+     * This is used to create empty session instances.
+     *
+     * @return The session factory instance.
+     */
+    public abstract @NotNull SessionFactory<S, A, M> getSessionFactory();
+
+    /**
      * Called when the plugin is enabled.
      * <p>
      * This is called after the super class
@@ -121,6 +131,8 @@ public abstract class CozyGamesPlugin<
 
     /**
      * Called when the loader is enabled.
+     * <p>
+     * This will register this plugin instance with the api.
      *
      * @return This instance.
      */
@@ -141,6 +153,8 @@ public abstract class CozyGamesPlugin<
         // class has finished setting up.
         this.onEnable();
 
+        // Register this plugin with the api.
+        this.getApi().registerLocalPlugin(this);
         return this;
     }
 
@@ -154,8 +168,12 @@ public abstract class CozyGamesPlugin<
         // Call the on disable method before disabling.
         this.onDisable();
 
+        // Stop sessions.
         this.sessionManager.stopAllSessions();
         this.sessionManager.removeAllSessions();
+
+        // Unregister this plugin from the api.
+        this.getApi().unregisterLocalPlugin(this);
         return this;
     }
 

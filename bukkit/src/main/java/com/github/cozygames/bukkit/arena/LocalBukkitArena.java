@@ -22,8 +22,9 @@ import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.arena.LocalArena;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.session.Session;
-import com.github.cozygames.api.session.SessionFactory;
+import com.github.cozygames.bukkit.adapter.BukkitPositionConverter;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.generator.ChunkGenerator;
@@ -31,12 +32,22 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class LocalBukkitArena<S extends Session<A, M>, A extends Arena<A, M>, M extends Map<M>> extends LocalArena<S, A, M> {
 
-    public LocalBukkitArena(@NotNull String mapIdentifier, @NotNull String worldName, @NotNull SessionFactory<S, A, M> sessionFactory) {
-        super(mapIdentifier, worldName, sessionFactory);
+    private final @NotNull Location spawnPoint;
+
+    public LocalBukkitArena(@NotNull String mapIdentifier, @NotNull String worldName) {
+        super(mapIdentifier, worldName);
+
+        this.spawnPoint = this.getMap()
+                .getSpawnPoint().orElseThrow()
+                .getLocation(new BukkitPositionConverter(), worldName);
     }
 
-    public LocalBukkitArena(@NotNull String identifier, @NotNull SessionFactory<S, A, M> sessionFactory) {
-        super(identifier, sessionFactory);
+    public LocalBukkitArena(@NotNull String identifier) {
+        super(identifier);
+
+        this.spawnPoint = this.getMap()
+                .getSpawnPoint().orElseThrow()
+                .getLocation(new BukkitPositionConverter(), this.getWorldName());
     }
 
     @Override
@@ -52,7 +63,8 @@ public abstract class LocalBukkitArena<S extends Session<A, M>, A extends Arena<
         }
 
         // Create the world.
-        Bukkit.createWorld(new WorldCreator(this.getWorldName()).generator(new ChunkGenerator() {}));
+        Bukkit.createWorld(new WorldCreator(this.getWorldName()).generator(new ChunkGenerator() {
+        }));
         return (A) this;
     }
 
@@ -69,5 +81,9 @@ public abstract class LocalBukkitArena<S extends Session<A, M>, A extends Arena<
         world.getWorldFolder().delete();
 
         return (A) this;
+    }
+
+    public @NotNull Location getSpawnPoint() {
+        return this.spawnPoint;
     }
 }

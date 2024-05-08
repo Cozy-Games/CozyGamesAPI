@@ -19,6 +19,7 @@
 package com.github.cozygames.api.map;
 
 import com.github.cozygames.api.CozyGames;
+import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -55,6 +56,25 @@ public abstract class LocalMap<M extends Map<M>> extends Map<M> {
 
     @Override
     public @NotNull CozyGames getApi() {
-        return this.getPlugin().getAPI();
+        return this.getPlugin().getApi();
+    }
+
+    @Override
+    public @NotNull Arena<?, M> createArena() {
+        final String worldName = "ToDo";
+        final String identifier = Arena.getIdentifier(this.getIdentifier(), worldName);
+        return this.getPlugin().getArenaConfiguration().createEmpty(identifier);
+    }
+
+    @Override
+    public @NotNull M saveToLocalConfiguration() {
+        this.getPlugin().getMapConfiguration().insertType(this.getName(), (M) this);
+        return (M) this;
+    }
+
+    @Override
+    public @NotNull M deleteFromLocalConfiguration() {
+        this.getPlugin().getMapConfiguration().removeType(this.getName());
+        return (M) this;
     }
 }

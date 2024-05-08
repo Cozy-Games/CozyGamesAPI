@@ -18,23 +18,22 @@
 
 package com.github.cozygames.velocity;
 
+import com.github.cozygames.api.console.LoggerAdapter;
 import com.github.cozygames.api.member.PlayerAdapter;
 import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
 import com.github.cozygames.velocity.adapter.VelocityPlayerAdapter;
 import com.google.inject.Inject;
-import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
-import net.kyori.adventure.text.logger.slf4j.ComponentLogger;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 @Plugin(
         id = "cozygamesapi",
@@ -47,16 +46,23 @@ public class CozyGamesAPIVelocityPlugin implements CozyGamesAPIPlugin {
 
     public ProxyServer proxy;
     public File dataFolder;
+    public Logger logger;
 
     @Inject
-    public CozyGamesAPIVelocityPlugin(ProxyServer proxy, @DataDirectory final Path folder) {
+    public CozyGamesAPIVelocityPlugin(ProxyServer proxy, @DataDirectory final Path folder, @NotNull Logger logger) {
         this.proxy = proxy;
         this.dataFolder = folder.toFile();
+        this.logger = logger;
     }
 
     @Override
     public @NotNull File getDataFolder() {
         return this.dataFolder;
+    }
+
+    @Override
+    public @NotNull com.github.cozygames.api.console.Logger getLogger() {
+        return new LoggerAdapter(false, this.logger).setBothPrefixes("&7[API] ");
     }
 
     @Override

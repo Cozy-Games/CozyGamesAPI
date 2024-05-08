@@ -27,7 +27,6 @@ import com.github.cozyplugins.cozylibrary.CozyPlugin;
 import com.github.kerbity.kerb.client.listener.EventListener;
 import com.github.kerbity.kerb.packet.event.Priority;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 

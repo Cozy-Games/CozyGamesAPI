@@ -18,6 +18,7 @@
 
 package com.github.cozygames.api.plugin;
 
+import com.github.cozygames.api.console.Logger;
 import com.github.cozygames.api.member.PlayerAdapter;
 import org.jetbrains.annotations.NotNull;
 
@@ -45,6 +46,16 @@ public interface CozyGamesAPIPlugin {
      */
     @NotNull
     File getDataFolder();
+
+    /**
+     * Used to get the instance of the cozy games api logger.
+     * <p>
+     * This can be used by the api the log important infomation.
+     *
+     * @return The api plugin's logger.
+     */
+    @NotNull
+    Logger getLogger();
 
     /**
      * Used to get the instance of a players name

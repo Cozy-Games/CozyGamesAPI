@@ -34,19 +34,15 @@ import org.jetbrains.annotations.NotNull;
  */
 public class MapCreateArenaEvent extends MapEvent {
 
-    private boolean isComplete;
-
     private final @NotNull String mapIdentifier;
-    private final @NotNull String worldName;
 
     /**
      * Used to create a new map create arena event.
      *
      * @param mapIdentifier The map's identifier.
      */
-    public MapCreateArenaEvent(@NotNull String mapIdentifier, @NotNull String worldName) {
+    public MapCreateArenaEvent(@NotNull String mapIdentifier) {
         this.mapIdentifier = mapIdentifier;
-        this.worldName = worldName;
     }
 
     @Override
@@ -58,9 +54,5 @@ public class MapCreateArenaEvent extends MapEvent {
     public @NotNull MapEvent executeMethod(@NotNull Map<?> map) {
         map.createArena();
         return this;
-    }
-
-    public @NotNull String getWorldName() {
-        return this.worldName;
     }
 }

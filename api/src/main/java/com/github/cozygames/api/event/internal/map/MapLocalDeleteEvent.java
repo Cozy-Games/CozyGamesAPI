@@ -30,8 +30,6 @@ import org.jetbrains.annotations.NotNull;
  */
 public class MapLocalDeleteEvent extends MapEvent {
 
-    private boolean isComplete;
-
     private final @NotNull String mapIdentifier;
 
     /**

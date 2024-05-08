@@ -16,17 +16,20 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit.session;
+package com.github.cozygames.api.logger;
 
-import com.github.cozygames.api.session.SessionFactory;
-import com.github.cozygames.bukkit.arena.ExampleArena;
-import com.github.cozygames.bukkit.map.ExampleMap;
 import org.jetbrains.annotations.NotNull;
 
-public class ExampleSessionFactory implements SessionFactory<ExampleSession, ExampleArena, ExampleMap> {
+import java.util.logging.Logger;
 
-    @Override
-    public ExampleSession createSession(@NotNull String arenaIdentifier) {
-        return new ExampleSession(arenaIdentifier);
+public class CozyGamesLogger {
+
+    private final @NotNull Logger logger;
+
+    public CozyGamesLogger(@NotNull Logger logger) {
+        this.logger = logger;
+    }
+
+    public void info(@NotNull String message) {
     }
 }

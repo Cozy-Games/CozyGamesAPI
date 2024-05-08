@@ -18,6 +18,8 @@
 
 package com.github.cozygames.bukkit;
 
+import com.github.cozygames.api.console.Logger;
+import com.github.cozygames.api.console.LoggerAdapter;
 import com.github.cozygames.api.member.PlayerAdapter;
 import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
 import com.github.cozygames.bukkit.adapter.BukkitPlayerAdapter;
@@ -54,6 +56,11 @@ public class CozyGamesAPIBukkitPlugin implements CozyGamesAPIPlugin {
     @Override
     public @NotNull File getDataFolder() {
         return this.loader.getDataFolder();
+    }
+
+    @Override
+    public @NotNull Logger getLogger() {
+        return new LoggerAdapter(false, this.loader.getLogger()).setBothPrefixes("&7[API] ");
     }
 
     @Override

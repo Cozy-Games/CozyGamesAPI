@@ -1,6 +1,8 @@
 /*
- * CozyGamesAPI - The api used to interface with the cozy game system.
- * Copyright (C) 2024 Smuddgge
+ * DeveloperTools
+ * A library of tools helpful in testing and development.
+ *
+ * Copyright (C) 2023  MineManiaUK Staff
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,20 +18,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit.arena;
-
-import com.github.cozygames.api.arena.ArenaFactory;
-import com.github.cozygames.bukkit.map.ExampleMap;
-import org.jetbrains.annotations.NotNull;
-
 /**
- * Represents the example arena factory.
- * Used to create empty instances of the example arena.
+ * Classes used for testing code in java junit tests.
+ * A quicker way of testing using junit.
+ *
+ * <ul>
+ *     <li>
+ *         To check a result you can use a new instance of a
+ *         {@link com.github.cozygames.api.testing.ResultChecker}.
+ *     </li>
+ * </ul>
  */
-public class ExampleArenaFactory implements ArenaFactory<ExampleArena, ExampleMap> {
-
-    @Override
-    public @NotNull ExampleArena create(@NotNull String identifier) {
-        return new ExampleArena(identifier);
-    }
-}
+package com.github.cozygames.api.testing;

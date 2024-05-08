@@ -145,7 +145,7 @@ public abstract class CozyGamesBukkitPlugin<
     }
 
     @Override
-    public @NotNull CozyGames getAPI() {
+    public @NotNull CozyGames getApi() {
         return this.apiPointer;
     }
 

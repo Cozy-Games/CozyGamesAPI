@@ -1,6 +1,8 @@
 /*
- * CozyGamesAPI - The api used to interface with the cozy game system.
- * Copyright (C) 2024 Smuddgge
+ * DeveloperTools
+ * A library of tools helpful in testing and development.
+ *
+ * Copyright (C) 2023  MineManiaUK Staff
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +18,15 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit.map;
-
-import com.github.cozygames.api.map.MapFactory;
-import org.jetbrains.annotations.NotNull;
-
 /**
- * Represents the example map factory.
- * Used to create empty instances of maps.
+ * Classes used for sending messages to the console
+ * with support for colors.
+ *
+ * <ul>
+ *     <li>
+ *         To send a message to console you can use the static methods in
+ *         {@link com.github.minemaniauk.developertools.console.Console}.
+ *     </li>
+ * </ul>
  */
-public class ExampleMapFactory implements MapFactory<ExampleMap> {
-
-    @Override
-    public @NotNull ExampleMap create(@NotNull String name) {
-        return new ExampleMap(name);
-    }
-}
+package com.github.cozygames.api.console;

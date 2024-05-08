@@ -84,7 +84,7 @@ public class GlobalArena extends Arena<GlobalArena, GlobalMap> {
 
     @Override
     public @NotNull GlobalArena activate(@NotNull UUID groupIdentifier) {
-        this.getApi().callEvent(new ArenaActivateEvent(this.getIdentifier()));
+        this.getApi().callEvent(new ArenaActivateEvent(this.getIdentifier(), groupIdentifier));
         return this;
     }
 

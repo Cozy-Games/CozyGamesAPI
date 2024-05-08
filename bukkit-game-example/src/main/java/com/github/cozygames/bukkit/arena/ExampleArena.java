@@ -20,48 +20,19 @@ package com.github.cozygames.bukkit.arena;
 
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.cozygames.bukkit.BukkitExamplePlugin;
-import com.github.cozygames.bukkit.adapter.BukkitPositionConverter;
 import com.github.cozygames.bukkit.map.ExampleMap;
 import com.github.cozygames.bukkit.session.ExampleSession;
-import com.github.cozygames.bukkit.session.ExampleSessionFactory;
 import com.github.cozyplugins.cozylibrary.indicator.LocationConvertable;
-import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
 public class ExampleArena extends LocalBukkitArena<ExampleSession, ExampleArena, ExampleMap> implements LocationConvertable {
 
-    private final @NotNull Location spawnPoint;
-
-    public ExampleArena(@NotNull String mapIdentifier, @NotNull String worldName) {
-        super(mapIdentifier, worldName, new ExampleSessionFactory());
-        this.spawnPoint = this.getMap().getSpawnPoint().orElseThrow()
-                .getLocation(new BukkitPositionConverter(), worldName);
-    }
-
     public ExampleArena(@NotNull String identifier) {
-        super(identifier, new ExampleSessionFactory());
-        this.spawnPoint = this.getMap().getSpawnPoint().orElseThrow()
-                .getLocation(new BukkitPositionConverter(), this.getWorldName());
+        super(identifier);
     }
 
     @Override
     public @NotNull CozyGamesPlugin<ExampleSession, ExampleArena, ExampleMap, ?> getPlugin() {
         return BukkitExamplePlugin.getInstance();
-    }
-
-    public @NotNull Location getSpawnPoint() {
-        return this.spawnPoint;
-    }
-
-    @Override
-    public @NotNull ExampleArena saveToLocalConfiguration() {
-        this.getPlugin().getArenaConfiguration().insertType(this.getIdentifier(), this);
-        return this;
-    }
-
-    @Override
-    public @NotNull ExampleArena deleteFromLocalConfiguration() {
-        this.getPlugin().getArenaConfiguration().removeType(this.getIdentifier());
-        return this;
     }
 }
