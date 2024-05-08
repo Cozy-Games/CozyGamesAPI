@@ -24,6 +24,7 @@ import com.github.cozygames.api.database.table.GroupTable;
 import com.github.cozygames.api.indicator.Deletable;
 import com.github.cozygames.api.indicator.Savable;
 import com.github.cozygames.api.member.Member;
+import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
 import com.github.smuddgge.squishyconfiguration.indicator.ConfigurationConvertable;
 import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
 import com.github.smuddgge.squishyconfiguration.memory.MemoryConfigurationSection;
@@ -85,6 +86,39 @@ public class Group implements ConfigurationConvertable<Group>, Savable<Group>, D
      */
     public @NotNull List<Member> getMembers() {
         return this.memberList;
+    }
+
+    /**
+     * Used to get the list of online members.
+     * <p>
+     * This will check if the member is online via the apis
+     * {@link com.github.cozygames.api.plugin.CozyGamesAPIPlugin#isOnline(UUID)} method.
+     *
+     * @return The list of online members.
+     */
+    public @NotNull List<Member> getMembersOnline() {
+        return this.memberList.stream()
+                .filter(member -> CozyGamesProvider.get().getPlugin().isOnline(member.getUuid()))
+                .toList();
+    }
+
+    /**
+     * Used to get the list of online players.
+     * <p>
+     * This will check if the member is online via the apis
+     * {@link com.github.cozygames.api.plugin.CozyGamesAPIPlugin#isOnline(UUID)} method.
+     * <p>
+     * It will then use the {@link CozyGamesAPIPlugin#getPlayerAdapter()} to
+     * convert the member into the platform's player class.
+     *
+     * @param clazz The class to convert the member into.
+     * @param <T> The player class.
+     * @return The list of players.
+     */
+    public <T> @NotNull List<T> getMembersOnline(@NotNull Class<T> clazz) {
+        return this.getMembersOnline().stream()
+                .map(member -> member.getPlayer(clazz).orElseThrow())
+                .toList();
     }
 
     /**

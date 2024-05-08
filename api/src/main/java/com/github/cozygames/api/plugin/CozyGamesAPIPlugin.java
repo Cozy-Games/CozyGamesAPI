@@ -19,6 +19,7 @@
 package com.github.cozygames.api.plugin;
 
 import com.github.cozygames.api.console.Logger;
+import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.PlayerAdapter;
 import org.jetbrains.annotations.NotNull;
 
@@ -89,4 +90,12 @@ public interface CozyGamesAPIPlugin {
      */
     @NotNull
     PlayerAdapter<?> getPlayerAdapter();
+
+    /**
+     * Used to check if a certain player is on the server currently.
+     *
+     * @param playerUuid The player's uuid.
+     * @return True if they are online.
+     */
+    boolean isOnline(@NotNull UUID playerUuid);
 }

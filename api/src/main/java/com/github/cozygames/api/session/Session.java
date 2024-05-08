@@ -19,6 +19,7 @@
 package com.github.cozygames.api.session;
 
 import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.group.Group;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -26,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 /**
  * Represents a game session.
@@ -41,6 +41,7 @@ public abstract class Session<A extends Arena<A, M>, M extends Map<M>> {
 
     private final @NotNull String arenaIdentifier;
     private final @NotNull List<SessionComponent<A, M>> sessionComponentList;
+    private final @NotNull Group group;
 
     /**
      * Used to create a new session instance.
@@ -50,6 +51,7 @@ public abstract class Session<A extends Arena<A, M>, M extends Map<M>> {
     public Session(@NotNull String arenaIdentifier) {
         this.arenaIdentifier = arenaIdentifier;
         this.sessionComponentList = new ArrayList<>();
+        this.group = this.getArena().getGroup().orElseThrow();
     }
 
     /**
@@ -79,6 +81,17 @@ public abstract class Session<A extends Arena<A, M>, M extends Map<M>> {
                 .orElseThrow();
     }
 
+    /**
+     * Used to get the group of players in this session.
+     * <p>
+     * This will not change in this session's lifetime.
+     *
+     * @return The instance of the group.
+     */
+    public @NotNull Group getGroup() {
+        return this.group;
+    }
+
     public @NotNull List<SessionComponent<A, M>> getComponentList() {
         return this.sessionComponentList;
     }
@@ -87,18 +100,25 @@ public abstract class Session<A extends Arena<A, M>, M extends Map<M>> {
      * Used to get the instance of a specific session component.
      *
      * @param clazz The session component class.
-     * @return The optional registered session component.
+     * @return The registered session component.
+     * @throws NoSuchElementException When the session component isnt
+     *                                registered with this session.
      */
     @SuppressWarnings("all")
-    public <C extends SessionComponent<A, M>> @NotNull Optional<C> getComponent(@NotNull Class<C> clazz) {
+    public <C extends SessionComponent<A, M>> @NotNull C getComponent(@NotNull Class<C> clazz) {
         for (SessionComponent<A, M> sessionComponent : this.sessionComponentList) {
 
             // Check if the class name are the same.
             if (sessionComponent.getClass().getName().equals(clazz.getName())) {
-                return (Optional<C>) Optional.of(sessionComponent);
+                return (C) sessionComponent;
             }
         }
-        return Optional.empty();
+
+        throw new NoSuchElementException(
+                "Attempted to get the session component " + clazz
+                        + " but it isnt registered with this session "
+                        + this.getArena().getIdentifier() + "."
+        );
     }
 
     /**

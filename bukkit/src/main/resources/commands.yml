@@ -1,0 +1,5 @@
+create:
+  type: "create"
+  region_undefined: "&ePlease select the maps region using world edit first."
+  map_name_undefined: "&ePlease enter the map name as the next command argument. {syntax}"
+  map_created: "&aCreated a new map with identifier &f{identifier} &a."

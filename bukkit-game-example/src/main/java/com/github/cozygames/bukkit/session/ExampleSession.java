@@ -23,6 +23,7 @@ import com.github.cozygames.api.session.Session;
 import com.github.cozygames.bukkit.BukkitExamplePlugin;
 import com.github.cozygames.bukkit.arena.ExampleArena;
 import com.github.cozygames.bukkit.map.ExampleMap;
+import com.github.cozygames.bukkit.session.component.ExampleScoreboardComponent;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,7 +37,11 @@ public class ExampleSession extends Session<ExampleArena, ExampleMap> {
     public ExampleSession(@NotNull String arenaIdentifier) {
         super(arenaIdentifier);
 
-        Location spawnPoint = this.getArena().getSpawnPoint();
+        // Register all components.
+        this.registerComponent(new ExampleScoreboardComponent(this));
+
+        // Activate first components.
+        this.getComponent(ExampleScoreboardComponent.class).start();
     }
 
     @Override
