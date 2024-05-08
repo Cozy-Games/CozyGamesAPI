@@ -31,6 +31,7 @@ import com.github.cozygames.api.session.SessionManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Represents a foundation that can be used
@@ -153,6 +154,11 @@ public abstract class CozyGamesPlugin<
         this.mapConfiguration = new MapConfiguration<>(this);
         this.mapConfiguration.reload();
 
+        // Register all available maps.
+        for (Map<M> map : this.getMapConfiguration().getAllTypes()) {
+            this.getApi().getMapManager().registerMap(map);
+        }
+
         // Set up the arena configuration directory.
         this.arenaConfiguration = new ArenaConfiguration<>(this);
         this.arenaConfiguration.reload();
@@ -186,6 +192,15 @@ public abstract class CozyGamesPlugin<
         // Unregister maps and arenas.
         this.getApi().getMapManager().unregisterMapList(this.getGameIdentifier());
         this.getApi().getArenaManager().removeMapList(this.getGameIdentifier());
+
+        // Remove arenas.
+        for (Arena<A, M> arena : new ArrayList<>(this.getArenaConfiguration().getAllTypes())) {
+            arena.deleteWorld();
+            arena.delete();
+        }
+
+        // Ensure empty arena configuration.
+        this.getArenaConfiguration().getDirectory().delete();
 
         // Unregister this plugin from the api.
         this.getApi().unregisterLocalPlugin(this);

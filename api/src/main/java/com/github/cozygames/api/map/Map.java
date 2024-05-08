@@ -55,6 +55,7 @@ public abstract class Map<M extends Map<M>> implements ConfigurationConvertable<
 
     private int maximumSessionAmount;
 
+    private @Nullable String permission;
     private @Nullable Schematic schematic;
     private @Nullable MemberCapacity capacity;
     private @Nullable ItemMaterial itemMaterial;
@@ -115,6 +116,38 @@ public abstract class Map<M extends Map<M>> implements ConfigurationConvertable<
      * @return This instance.
      */
     public abstract @NotNull M deleteFromLocalConfiguration();
+
+    /**
+     * Used to specifically save this map
+     * to the database.
+     *
+     * @return This instance.
+     */
+    public @NotNull M saveToDatabase() {
+
+        // Save the map to the database.
+        this.getApi().getDatabase()
+                .getTable(MapTable.class)
+                .insertMap(this);
+
+        return (M) this;
+    }
+
+    /**
+     * Used to specifically delete this map
+     * from the database.
+     *
+     * @return This instance.
+     */
+    public @NotNull M deleteFromDatabase() {
+
+        // Delete the map from the database.
+        this.getApi().getDatabase()
+                .getTable(MapTable.class)
+                .removeMap(this);
+
+        return (M) this;
+    }
 
     /**
      * Used to get the map's unique identifier.
@@ -186,6 +219,22 @@ public abstract class Map<M extends Map<M>> implements ConfigurationConvertable<
     }
 
     /**
+     * Used to get the permission that should be
+     * checked before creating an arena.
+     * <p>
+     * A player/member must have this permission
+     * to play the map.
+     * <p>
+     * This is good for disability maps but still
+     * letting admins use them for testing.
+     *
+     * @return The optional permission.
+     */
+    public @NotNull Optional<String> getPermission() {
+        return Optional.ofNullable(this.permission);
+    }
+
+    /**
      * The schematic that will be used to build the map within
      * the arena/world.
      *
@@ -243,6 +292,20 @@ public abstract class Map<M extends Map<M>> implements ConfigurationConvertable<
      */
     public @NotNull M setMaximumSessionAmount(int maximumSessionAmount) {
         this.maximumSessionAmount = maximumSessionAmount;
+        return (M) this;
+    }
+
+    /**
+     * Used to set the map permission.
+     * <p>
+     * The permission that is required by the member/player
+     * to start a game on this map.
+     *
+     * @param permission The permission to set.
+     * @return This instance.
+     */
+    public @NotNull M setPermission(@Nullable String permission) {
+        this.permission = permission;
         return (M) this;
     }
 
@@ -306,6 +369,7 @@ public abstract class Map<M extends Map<M>> implements ConfigurationConvertable<
 
         section.set("maximum_session_amount", this.maximumSessionAmount);
 
+        if (this.permission != null) section.set("permission", this.permission);
         if (this.schematic != null) section.set("schematic", this.schematic.asMap());
         if (this.capacity != null) section.set("capacity", this.capacity.asMap());
         if (this.itemMaterial != null) section.set("item_material", this.itemMaterial.name());
@@ -318,6 +382,7 @@ public abstract class Map<M extends Map<M>> implements ConfigurationConvertable<
     public @NotNull M convert(@NotNull ConfigurationSection section) {
 
         this.maximumSessionAmount = section.getInteger("maximum_session_amount");
+        this.permission = section.getString("permission", null);
 
         if (section.getKeys().contains("schematic")) {
             this.setSchematic(new Schematic().convert(section.getSection("schematic")));
@@ -338,13 +403,29 @@ public abstract class Map<M extends Map<M>> implements ConfigurationConvertable<
         return (M) this;
     }
 
+    /**
+     * Used to update this map in the database
+     * and local configuration.
+     * <p>
+     * If the map doesn't exist in the database it will
+     * only save it to the local configuration.
+     * <p>
+     * For the map to be saved in the database, you must register
+     * the map with the api using {@link MapManager#registerMap(Map)}.
+     *
+     * @return This instance.
+     */
     @Override
     public @NotNull M save() {
 
-        // Save the map to the database.
-        this.getApi().getDatabase()
-                .getTable(MapTable.class)
-                .insertMap(this);
+        // Check if the map exists in the database.
+        if (this.getApi().getMapManager().getMap(this.getIdentifier()).isPresent()) {
+
+            // Save the map to the database.
+            this.getApi().getDatabase()
+                    .getTable(MapTable.class)
+                    .insertMap(this);
+        }
 
         // Save to the local configuration.
         this.saveToLocalConfiguration();
@@ -355,9 +436,7 @@ public abstract class Map<M extends Map<M>> implements ConfigurationConvertable<
     public @NotNull M delete() {
 
         // Delete the map from the database.
-        this.getApi().getDatabase()
-                .getTable(MapTable.class)
-                .removeMap(this);
+        this.deleteFromDatabase();
 
         // Delete from the local configuration.
         this.deleteFromLocalConfiguration();

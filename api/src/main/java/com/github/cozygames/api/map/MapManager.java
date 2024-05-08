@@ -19,6 +19,7 @@
 package com.github.cozygames.api.map;
 
 import com.github.cozygames.api.CozyGames;
+import com.github.cozygames.api.console.Logger;
 import com.github.cozygames.api.database.record.MapRecord;
 import com.github.cozygames.api.database.table.MapTable;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
@@ -39,6 +40,7 @@ import java.util.Optional;
 public class MapManager {
 
     private final @NotNull CozyGames api;
+    private final @NotNull Logger logger;
     private final @NotNull List<String> localRegisteredMapList;
 
     /**
@@ -48,6 +50,7 @@ public class MapManager {
      */
     public MapManager(@NotNull CozyGames api) {
         this.api = api;
+        this.logger = api.getPlugin().getLogger().createExtension("&7[MapManager] &5");
         this.localRegisteredMapList = new ArrayList<>();
     }
 
@@ -83,30 +86,41 @@ public class MapManager {
      * Used to register a map.
      * <p>
      * This will let players play the map.
+     * <p>
+     * This is how the map should be added to the database.
      *
-     * @param mapIdentifier The map's identifier.
+     * @param map The map instance.
      * @return This instance.
      */
-    public @NotNull MapManager registerMap(@NotNull String mapIdentifier) {
-        this.localRegisteredMapList.add(mapIdentifier);
+    public @NotNull MapManager registerMap(@NotNull Map<?> map) {
+        this.localRegisteredMapList.add(map.getIdentifier());
+        map.saveToDatabase();
+        this.logger.log("Registered map &f" + map.getIdentifier());
         return this;
     }
 
     /**
      * Used to unregister a map if it exists.
      * <p>
-     * This will stop player's from playing the map.
+     * This will stop player's from playing the map
+     * by removing it from the database.
      *
      * @param mapIdentifier The map's identifier.
      * @return This instance.
      */
     public @NotNull MapManager unregisterMap(@NotNull String mapIdentifier) {
         this.localRegisteredMapList.remove(mapIdentifier);
+        final Map<?> map = this.getMap(mapIdentifier).orElse(null);
+        if (map == null) return this;
+        map.deleteFromDatabase();
+        this.logger.log("Unregistered map &f" + map.getIdentifier());
         return this;
     }
 
     /**
      * Used to unregister maps with a specific game identifier.
+     * <p>
+     * This will also remove the map from the database.
      *
      * @param gameIdentifier The game identifier to filter.
      * @return This instance.
@@ -119,7 +133,12 @@ public class MapManager {
             if (map == null) return true;
 
             // Check if the map equals the specific game identifier.
-            return map.getGameIdentifier().equals(gameIdentifier);
+            if (!map.getGameIdentifier().equals(gameIdentifier)) return false;
+
+            // Remove the map from the database.
+            map.deleteFromDatabase();
+            this.logger.log("Unregistered map &f" + map.getIdentifier());
+            return true;
         });
         return this;
     }

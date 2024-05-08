@@ -35,6 +35,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public enum ConsoleColor {
     RESET("\033[0m", "&r"),
+    WHITE("\033[0m", "&f"),
     GRAY("\033[0;37m", "&7"),
     RED("\033[0;31m", "&c"),
     YELLOW("\033[0;33m", "&e"),

@@ -116,7 +116,7 @@ public class CreateMapCommand implements CommandType {
         Map<?> map = this.plugin.getMapFactory().create(mapName);
 
         // Register and save the map instance.
-        this.plugin.getApi().getMapManager().registerMap(map.getIdentifier());
+        this.plugin.getApi().getMapManager().registerMap(map);
         map.save();
 
         // Send the success message to the player.
