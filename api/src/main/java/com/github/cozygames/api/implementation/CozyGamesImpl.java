@@ -21,6 +21,9 @@ package com.github.cozygames.api.implementation;
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
 import com.github.cozygames.api.arena.ArenaManager;
+import com.github.cozygames.api.database.table.ArenaTable;
+import com.github.cozygames.api.database.table.GroupTable;
+import com.github.cozygames.api.database.table.MapTable;
 import com.github.cozygames.api.database.table.MemberTable;
 import com.github.cozygames.api.group.GroupManager;
 import com.github.cozygames.api.map.MapManager;
@@ -99,6 +102,12 @@ public class CozyGamesImpl implements CozyGames {
                 this.plugin.getDataFolder().getAbsolutePath()
         ).build();
 
+        // Create the database tables.
+        this.database.createTable(new ArenaTable());
+        this.database.createTable(new GroupTable());
+        this.database.createTable(new MapTable());
+        this.database.createTable(new MemberTable());
+
         // Create kerb connection.
         this.kerb = new KerbClient(
                 this.connectionConfig.getString("server_name"),
@@ -141,7 +150,7 @@ public class CozyGamesImpl implements CozyGames {
 
     @Override
     public @NotNull String getServerName() {
-        final String serverName = this.connectionConfig.getString("server");
+        final String serverName = this.connectionConfig.getString("server_name");
 
         // Check if the server name is null.
         if (serverName == null) {
@@ -149,6 +158,18 @@ public class CozyGamesImpl implements CozyGames {
         }
 
         return serverName;
+    }
+
+    @Override
+    public @NotNull String getServerAddress() {
+        final String serverAddress = this.connectionConfig.getString("server_address");
+
+        // Check if the server name is null.
+        if (serverAddress == null) {
+            throw new RuntimeException("Server address is not defined in connection.yaml");
+        }
+
+        return serverAddress;
     }
 
     @Override

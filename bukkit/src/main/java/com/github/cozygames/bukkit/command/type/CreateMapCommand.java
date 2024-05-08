@@ -100,7 +100,7 @@ public class CreateMapCommand implements CommandType {
         }
 
         // Check if they have provided the map name.
-        if (arguments.getArguments().isEmpty() || !arguments.getArguments().get(0).isEmpty()) {
+        if (arguments.getArguments().isEmpty() || arguments.getArguments().get(0).isEmpty()) {
             user.sendMessage(section.getAdaptedString(
                     "map_name_undefined",
                     "\n",

@@ -82,6 +82,17 @@ public interface CozyGames {
     String getServerName();
 
     /**
+     * The server's address players use to connect to the server with.
+     * <p>
+     * This can be used in mini-game scoreboards to advertise
+     # what server they are currently playing on.
+
+     * @return The server address.
+     */
+    @NotNull
+    String getServerAddress();
+
+    /**
      * Used to get the instance of the cozy game api plugin.
      * <p>
      * Where this isn't always an extension of the plugin class.
