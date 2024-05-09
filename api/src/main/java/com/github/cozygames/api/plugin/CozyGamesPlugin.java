@@ -87,11 +87,12 @@ public abstract class CozyGamesPlugin<
      * Used to get the game identifier this plugin
      * will be providing.
      * <p>
-     * The string must be pascal case.
+     * The string must be snake case without underscores.
+     * This makes it easier for players type in certain commands.
      * <p>
      * Example
      * <pre>{@code
-     * GameIdentifier
+     * bedwars
      * }</pre>
      *
      * @return The game identifier.

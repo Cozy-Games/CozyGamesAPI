@@ -70,7 +70,7 @@ public final class BukkitExamplePlugin extends CozyGamesBukkitPlugin<
 
     @Override
     public @NotNull String getGameIdentifier() {
-        return "Example";
+        return "example";
     }
 
     @Override
