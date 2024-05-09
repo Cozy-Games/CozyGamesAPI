@@ -1,6 +1,38 @@
+map:
+  type: "map"
+  name: "map"
+  message:
+    - "&8&l&m------------------------------"
+    - "&7"
+    - "&e&lMap List"
+    - "&f{maps}"
+    - "&7"
+    - "&e&lMap Commands Types"
+    - "&f{commands}"
+    - "&7"
+    - "&8&l&m------------------------------"
+
+list:
+  type: "list"
+  name: "list"
+  message:
+    - "&8&l&m------------------------------"
+    - "&7"
+    - "&e&lMap List"
+    - "&f{maps}"
+    - "&7"
+    - "&8&l&m------------------------------"
+
 create:
   type: "create"
   name: "create"
   region_undefined: "&ePlease select the maps region using world edit first."
   map_name_undefined: "&ePlease enter the map name as the next command argument. {syntax}"
   map_created: "&aCreated a new map with identifier &f{identifier} &a."
+
+delete:
+  type: "delete"
+  name: "delete"
+  map_name_unidentified: "&ePlease enter the map name as the next command argument. {syntax}"
+  map_unidentified: "&eThe map &f{map} &edoes not exist."
+  map_deleted: "&aDeleted the map with identifier &f{identifier}&a."

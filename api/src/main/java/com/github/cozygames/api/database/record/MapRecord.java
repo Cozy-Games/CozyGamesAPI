@@ -61,6 +61,7 @@ public class MapRecord extends Record implements RecordConvertable<GlobalMap> {
      * These variables may be changed in the database.
      */
     public int maximumSessionAmount;
+    public String permission;
     public String schematicClass;
     public String capacityClass;
     public String itemMaterialEnum;
@@ -69,6 +70,9 @@ public class MapRecord extends Record implements RecordConvertable<GlobalMap> {
     @Override
     public @NotNull GlobalMap convert() {
         GlobalMap map = new GlobalMap(this.name, this.serverName, this.gameIdentifier);
+
+        map.setMaximumSessionAmount(maximumSessionAmount);
+        map.setPermission(permission);
 
         if (schematicClass != null) {
             map.setSchematic(new Schematic().convert(this.asConfigurationSection(schematicClass)));

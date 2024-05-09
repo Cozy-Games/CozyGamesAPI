@@ -14,6 +14,27 @@ example:
   # Contains all the map commands.
   map:
     name: "map"
+    message:
+      - "&8&l&m------------------------------"
+      - "&7"
+      - "&e&lMap List"
+      - "&f{maps}"
+      - "&7"
+      - "&e&lMap Command Types"
+      - "&f{commands}"
+      - "&7"
+      - "&8&l&m------------------------------"
+    # Used to list the registered maps.
+    list:
+      type: "list"
+      name: "list"
+      message:
+        - "&8&l&m------------------------------"
+        - "&7"
+        - "&e&lMap List"
+        - "&f{maps}"
+        - "&7"
+        - "&8&l&m------------------------------"
     # Used to create a new map.
     create:
       type: "create"
@@ -21,3 +42,10 @@ example:
       region_undefined: "&ePlease select the maps region using world edit first."
       map_name_undefined: "&ePlease enter the map name as the next command argument. {syntax}"
       map_created: "&aCreated a new map with identifier &f{identifier} &a."
+    # Used to delete a existing map.
+    delete:
+      type: "delete"
+      name: "delete"
+      map_name_unidentified: "&ePlease enter the map name as the next command argument. {syntax}"
+      map_unidentified: "&eThe map &f{map} &edoes not exist."
+      map_deleted: "&aDeleted the map with identifier &f{identifier}&a."

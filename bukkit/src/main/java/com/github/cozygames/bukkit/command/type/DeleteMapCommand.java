@@ -20,13 +20,11 @@ package com.github.cozygames.bukkit.command.type;
 
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
-import com.github.cozygames.bukkit.worldedit.WorldEditHelper;
 import com.github.cozyplugins.cozylibrary.command.command.CommandType;
 import com.github.cozyplugins.cozylibrary.command.datatype.CommandArguments;
 import com.github.cozyplugins.cozylibrary.command.datatype.CommandStatus;
 import com.github.cozyplugins.cozylibrary.command.datatype.CommandSuggestions;
 import com.github.cozyplugins.cozylibrary.command.datatype.CommandTypePool;
-import com.github.cozyplugins.cozylibrary.location.Region;
 import com.github.cozyplugins.cozylibrary.user.ConsoleUser;
 import com.github.cozyplugins.cozylibrary.user.FakeUser;
 import com.github.cozyplugins.cozylibrary.user.PlayerUser;
@@ -38,26 +36,21 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
- * Represents a simple create map command type.
+ * Represents a simple delete map command type.
  * <p>
- * This will let players create maps.
+ * This will let players delete a map.
  */
-public class CreateMapCommand implements CommandType {
+public class DeleteMapCommand implements CommandType {
 
     private final @NotNull CozyGamesPlugin<?, ?, ?, ?> plugin;
 
-    /**
-     * Used to create a new create map command type.
-     *
-     * @param plugin The instance of the plugin that will register this command.
-     */
-    public CreateMapCommand(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin) {
+    public DeleteMapCommand(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public @NotNull String getIdentifier() {
-        return "create";
+        return "delete";
     }
 
     @Override
@@ -67,7 +60,7 @@ public class CreateMapCommand implements CommandType {
 
     @Override
     public @NotNull String getDescription() {
-        return "Used to create a new map.";
+        return "Used to delete an existing map.";
     }
 
     @Override
@@ -77,7 +70,7 @@ public class CreateMapCommand implements CommandType {
 
     @Override
     public @Nullable CommandSuggestions getSuggestions(@NotNull User user, @NotNull ConfigurationSection section, @NotNull CommandArguments arguments) {
-        return new CommandSuggestions().append(List.of("[map_name]"));
+        return new CommandSuggestions().append(this.plugin.getMapConfiguration().getKeys());
     }
 
     @Override
@@ -88,21 +81,10 @@ public class CreateMapCommand implements CommandType {
     @Override
     public @Nullable CommandStatus onPlayer(@NotNull PlayerUser user, @NotNull ConfigurationSection section, @NotNull CommandArguments arguments) {
 
-        // Get the players selection region.
-        final Region region = WorldEditHelper.getSelectionRegion(user).orElse(null);
-        if (region == null) {
-            user.sendMessage(section.getAdaptedString(
-                    "region_undefined",
-                    "\n",
-                    "&ePlease select the maps region using world edit first."
-            ));
-            return new CommandStatus();
-        }
-
-        // Check if they have provided the map name.
+        // Ensure the player has provided a map name.
         if (arguments.getArguments().isEmpty() || arguments.getArguments().get(0).isEmpty()) {
             user.sendMessage(section.getAdaptedString(
-                    "map_name_undefined",
+                    "map_name_unidentified",
                     "\n",
                     "&ePlease enter the map name as the next command argument. {syntax}"
             ).replace("{syntax}", this.getSyntax()));
@@ -112,20 +94,30 @@ public class CreateMapCommand implements CommandType {
         // Get the map name.
         final String mapName = arguments.getArguments().get(0);
 
-        // Create the new map.
-        Map<?> map = this.plugin.getMapFactory().create(mapName);
+        // Check if the map currently exists.
+        final Map<?> map = this.plugin.getMapConfiguration().getType(mapName).orElse(null);
+        if (map == null) {
+            user.sendMessage(section.getAdaptedString(
+                    "map_unidentified",
+                    "\n",
+                    "&eThe map &f{map} &edoes not exist."
+            ).replace("{map}", mapName));
+            return new CommandStatus();
+        }
 
-        // Register and save the map instance.
-        this.plugin.getApi().getMapManager().registerMap(map);
-        map.save();
+        // Unregister the map.
+        this.plugin.getApi().getMapManager().unregisterMap(map.getIdentifier());
 
-        // Send the success message to the player.
+        // Delete the map.
+        map.delete();
+
+        // Message the user.
         user.sendMessage(section.getAdaptedString(
-                "map_created",
+                "map_deleted",
                 "\n",
-                "&aCreated a new map with identifier &f{identifier} &a."
+                "&aDeleted the map with identifier &f{identifier}&a."
         ).replace("{identifier}", map.getIdentifier()));
-        return null;
+        return new CommandStatus();
     }
 
     @Override

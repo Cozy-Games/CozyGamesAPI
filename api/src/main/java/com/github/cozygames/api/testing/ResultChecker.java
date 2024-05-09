@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class ResultChecker {
 
-    private final Logger logger = new Logger(false).setBothPrefixes("&a[TEST] &r");
+    private final Logger logger = new Logger(false, false).setBothPrefixes("&a[TEST] &r");
     private final List<Runnable> fallBackRunnableList = new ArrayList<>();
 
     /**

@@ -39,6 +39,8 @@ public class CozyGamesBuilder {
 
     private final @NotNull CozyGamesAPIPlugin plugin;
 
+    private boolean debugMode;
+
     /**
      * Used to create a new cozy games api builder.
      *
@@ -48,6 +50,7 @@ public class CozyGamesBuilder {
     @ApiStatus.Internal
     public CozyGamesBuilder(@NotNull CozyGamesAPIPlugin plugin) {
         this.plugin = plugin;
+        this.debugMode = false;
     }
 
     /**
@@ -61,12 +64,25 @@ public class CozyGamesBuilder {
     }
 
     /**
+     * Used to set weather the api should show
+     * more logs for debugging.
+     *
+     * @param enabled True if the api should show more
+     *                logging for debugging.
+     * @return This instance.
+     */
+    public @NotNull CozyGamesBuilder setDebugMode(boolean enabled) {
+        this.debugMode = enabled;
+        return this;
+    }
+
+    /**
      * Used to build the instance of the cozy
      * games api implementation.
      *
      * @return The new instance of the cozy games api.
      */
     public @NotNull CozyGames build() {
-        return new CozyGamesImpl(plugin);
+        return new CozyGamesImpl(plugin, debugMode);
     }
 }

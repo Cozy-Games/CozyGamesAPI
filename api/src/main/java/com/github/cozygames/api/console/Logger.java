@@ -1,5 +1,6 @@
 package com.github.cozygames.api.console;
 
+import com.github.cozygames.api.indicator.Replicable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -8,9 +9,10 @@ import org.jetbrains.annotations.Nullable;
  * Used to log messages and warnings in
  * the console with custom prefixes.
  */
-public class Logger {
+public class Logger implements Replicable<Logger> {
 
     private boolean hasGlobalPrefix;
+    private boolean debugMode;
     private @Nullable String logPrefix = "";
     private @Nullable String warnPrefix = "";
 
@@ -20,8 +22,9 @@ public class Logger {
      *
      * @param hasGlobalPrefix True if the global prefix should be used.
      */
-    public Logger(boolean hasGlobalPrefix) {
+    public Logger(boolean hasGlobalPrefix, boolean debugMode) {
         this.hasGlobalPrefix = hasGlobalPrefix;
+        this.debugMode = debugMode;
     }
 
     public @Nullable String getLogPrefix() {
@@ -30,6 +33,14 @@ public class Logger {
 
     public @Nullable String getWarnPrefix() {
         return this.warnPrefix;
+    }
+
+    public boolean getDebugMode() {
+        return this.debugMode;
+    }
+
+    public boolean hasGlobalPrefix() {
+        return this.hasGlobalPrefix;
     }
 
     public @NotNull Logger setLogPrefix(@Nullable String localLogPrefix) {
@@ -48,6 +59,16 @@ public class Logger {
         return this;
     }
 
+    public @NotNull Logger setGlobalPrefix(boolean globalPrefix) {
+        this.hasGlobalPrefix = globalPrefix;
+        return this;
+    }
+
+    public @NotNull Logger setDebugMode(boolean debugMode) {
+        this.debugMode = debugMode;
+        return this;
+    }
+
     /**
      * Used to log a message in console
      * using this instance of the local console
@@ -58,6 +79,20 @@ public class Logger {
      */
     public @NotNull Logger log(@NotNull String message) {
         System.out.println(ConsoleColor.parse(this.getMessageAsLog(message)));
+        return this;
+    }
+
+    /**
+     * Used to send a debug message.
+     * <p>
+     * This will check if debug mode is true first.
+     *
+     * @param message The message to send if in debug mode.
+     * @return This instance.
+     */
+    public @NotNull Logger debug(@NotNull String message) {
+        if (!this.getDebugMode()) return this;
+        System.out.println(ConsoleColor.parse(this.getMessageAsLog("&7[Debug] &7" + message)));
         return this;
     }
 
@@ -101,10 +136,6 @@ public class Logger {
         return prefix + message;
     }
 
-    public boolean hasGlobalPrefix() {
-        return this.hasGlobalPrefix;
-    }
-
     /**
      * Used to create a new instance of a local console
      * class with an extension to the prefixes.
@@ -113,15 +144,15 @@ public class Logger {
      * @return The new instance of the local console logger.
      */
     public @NotNull Logger createExtension(@Nullable String extensionPrefix) {
-        Logger clone = this.clone();
+        Logger clone = this.duplicate();
         clone.setLogPrefix(clone.logPrefix + extensionPrefix);
         clone.setWarnPrefix(clone.warnPrefix + extensionPrefix);
         return clone;
     }
 
     @Override
-    protected @NotNull Logger clone() {
-        return new Logger(this.hasGlobalPrefix)
+    public @NotNull Logger duplicate() {
+        return new Logger(this.hasGlobalPrefix, this.debugMode)
                 .setLogPrefix(this.logPrefix)
                 .setWarnPrefix(this.warnPrefix);
     }

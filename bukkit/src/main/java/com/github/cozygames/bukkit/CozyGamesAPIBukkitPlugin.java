@@ -60,7 +60,7 @@ public class CozyGamesAPIBukkitPlugin implements CozyGamesAPIPlugin {
 
     @Override
     public @NotNull Logger getLogger() {
-        return new LoggerAdapter(false, this.loader.getLogger()).setBothPrefixes("&7[API] ");
+        return new LoggerAdapter(false, false, this.loader.getLogger()).setBothPrefixes("&7[API] ");
     }
 
     @Override

@@ -62,7 +62,7 @@ public class CozyGamesAPIVelocityPlugin implements CozyGamesAPIPlugin {
 
     @Override
     public @NotNull com.github.cozygames.api.console.Logger getLogger() {
-        return new LoggerAdapter(false, this.logger).setBothPrefixes("&7[API] ");
+        return new LoggerAdapter(false, false, this.logger).setBothPrefixes("&7[API] ");
     }
 
     @Override

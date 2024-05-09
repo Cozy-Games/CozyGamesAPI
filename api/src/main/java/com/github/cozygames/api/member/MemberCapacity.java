@@ -133,6 +133,11 @@ public class MemberCapacity implements ConfigurationConvertable<MemberCapacity> 
     }
 
     @Override
+    public String toString() {
+        return "(" + String.join(", ", this.possibleCapacityList.stream().map(String::valueOf).toList()) + ")";
+    }
+
+    @Override
     public @NotNull ConfigurationSection convert() {
         return null;
     }

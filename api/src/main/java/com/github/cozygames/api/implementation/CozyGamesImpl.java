@@ -21,6 +21,7 @@ package com.github.cozygames.api.implementation;
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
 import com.github.cozygames.api.arena.ArenaManager;
+import com.github.cozygames.api.console.Logger;
 import com.github.cozygames.api.database.table.ArenaTable;
 import com.github.cozygames.api.database.table.GroupTable;
 import com.github.cozygames.api.database.table.MapTable;
@@ -39,10 +40,13 @@ import com.github.smuddgge.squishyconfiguration.implementation.YamlConfiguration
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.DatabaseBuilder;
 import com.github.smuddgge.squishydatabase.interfaces.Database;
+import org.apache.maven.model.Model;
+import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.io.InputStreamReader;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +72,7 @@ import java.util.UUID;
 public class CozyGamesImpl implements CozyGames {
 
     private final @NotNull CozyGamesAPIPlugin plugin;
+    private final @NotNull Logger logger;
 
     private final @NotNull Configuration connectionConfig;
     private final @NotNull Database database;
@@ -85,30 +90,37 @@ public class CozyGamesImpl implements CozyGames {
      * @param plugin The instance of the cozy games api plugin.
      */
     @ApiStatus.Internal
-    public CozyGamesImpl(@NotNull CozyGamesAPIPlugin plugin) {
+    public CozyGamesImpl(@NotNull CozyGamesAPIPlugin plugin, boolean debugMode) {
         this.plugin = plugin;
+        this.logger = this.plugin.getLogger().duplicate().setDebugMode(debugMode);
 
-        // Log start up message.
-        this.getPlugin().getLogger().log("Setting up the cozy games api.");
+        // Log start up.
+        this.logger.log("Starting api setup.");
 
         // Create connection configuration instance.
+        this.logger.debug("Setting up connection configuration.");
         this.connectionConfig = new YamlConfiguration(this.plugin.getDataFolder(), "connection.yaml");
         this.connectionConfig.setDefaultPath("connection.yaml");
         this.connectionConfig.load();
+        this.logger.log("Completed setting up connection configuration.");
 
         // Create database connection.
+        this.logger.debug("Setting up database.");
         this.database = new DatabaseBuilder(
                 this.connectionConfig.getSection("database"),
                 this.plugin.getDataFolder().getAbsolutePath()
         ).build();
 
         // Create the database tables.
+        this.logger.debug("Creating database tables.");
         this.database.createTable(new ArenaTable());
         this.database.createTable(new GroupTable());
         this.database.createTable(new MapTable());
         this.database.createTable(new MemberTable());
+        this.logger.log("Completed setting up database.");
 
         // Create kerb connection.
+        this.logger.debug("Setting up kerb client.");
         this.kerb = new KerbClient(
                 this.connectionConfig.getString("server_name"),
                 this.connectionConfig.getInteger("kerb.server_port"),
@@ -124,28 +136,74 @@ public class CozyGamesImpl implements CozyGames {
 
         // Attempt to connect to the kerb server.
         // If unable to check and attempt to reconnect.
+        this.logger.debug("Connecting to kerb server.");
         if (!this.kerb.connect()) this.kerb.checkAndAttemptToReconnect();
 
         // Register cozy games internal listener.
+        this.logger.debug("Registering internal kerb listeners.");
         this.kerb.registerListener(Priority.HIGH, new CozyGamesInternalListener(this));
+        this.logger.log("Completed setting up kerb.");
 
         // Create the map manager.
         this.mapManager = new MapManager(this);
+        this.logger.debug("Completed setting up map manager.");
 
         // Create the arena manager.
         this.arenaManager = new ArenaManager(this);
+        this.logger.debug("Completed setting up arena manager.");
 
         // Create the group manager.
         this.groupManager = new GroupManager(this);
+        this.logger.debug("Completed setting up group manager.");
 
         // Initialize the local plugin list.
         this.localPluginList = new ArrayList<>();
 
         // Register this instance in the singleton provider.
         CozyGamesProvider.register(this);
+        this.logger.debug("Registered static instance with api provider.");
 
         // Log finished message.
-        this.getPlugin().getLogger().log("Finished setting up the cozy games api.");
+        this.logger.log("Finished api setup.");
+
+        // Log header.
+        // Header is logged here because of potential other process spam.
+        this.logHeader();
+    }
+
+    private void logHeader() {
+        this.logger.log("&7");
+        this.logger.log("&a    ____                ____");
+        this.logger.log("&a   / ___|___ _____   _ / ___| __ _ _ __ ___   ___  ___");
+        this.logger.log("&a  | |   / _ \\_  / | | | |  _ / _` | '_ ` _ \\ / _ \\/ __|");
+        this.logger.log("&a  | |__| (_) / /| |_| | |_| | (_| | | | | | |  __/\\__ \\");
+        this.logger.log("&a   \\____\\___/___|\\__, |\\____|\\__,_|_| |_| |_|\\___||___/");
+        this.logger.log("&a                 |___/");
+        this.logger.log("&7           By Smudge      &7Api Version &e" + this.getVersion());
+        this.logger.log("&7");
+        this.logger.log("&7debug_mode: &a" + this.logger.getDebugMode());
+        this.logger.log("&7server_name: &a" + this.getServerName());
+        this.logger.log("&7server_address: &a" + this.getServerAddress());
+        this.logger.log("&7");
+    }
+
+    @Override
+    public @NotNull String getVersion() {
+        final String version = CozyGamesImpl.class.getPackage().getImplementationVersion();
+        if (version == null) {
+            this.logger.warn("&eUnable to find api version! Jar doesnt contain default implementation entries.");
+            this.logger.warn("&7");
+            this.logger.warn("&eDevelopers:");
+            this.logger.warn("&eIf using maven try adding the default implementation entries with the maven-jar-plugin.");
+            this.logger.warn("&eAn example of this is shown in the CozyGamesAPI-Bukkit version.");
+            return "null";
+        }
+        return version;
+    }
+
+    @Override
+    public @NotNull Logger getLogger() {
+        return this.logger;
     }
 
     @Override

@@ -22,6 +22,7 @@ import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.console.Logger;
 import com.github.cozygames.api.database.record.MapRecord;
 import com.github.cozygames.api.database.table.MapTable;
+import com.github.cozygames.api.member.MemberCapacity;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -165,6 +166,33 @@ public class MapManager {
      */
     public @NotNull List<GlobalMap> getMapList(@NotNull MapFilter mapFilter) {
         return mapFilter.filterMaps(this.getMapList());
+    }
+
+    /**
+     * Used to get the plugin's map list as a formatted
+     * list to send to a member.
+     *
+     * @param plugin The instance of the plugin.
+     * @return The formatted list of maps in the plugin.
+     */
+    public @NotNull List<String> getMapListFormatted(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin) {
+
+        // Create the list of maps to display.
+        List<String> mapList = new ArrayList<>();
+
+        // Loop though the list of maps.
+        for (Map<?> map : plugin.getApi().getMapManager().getMapList(new MapFilter()
+                .setServerNameFilter(plugin.getApi().getServerName())
+                .setGameIdentifierFilter(plugin.getGameIdentifier())
+        )) {
+            mapList.add("&7- &f" + map.getName()
+                    + " &7" + map.getCapacity().map(MemberCapacity::toString).orElse("(0)")
+                    + " &a" + map.getMaximumSessionAmount()
+                    + " &7" + map.getPermission().orElse("No Permission Required") + "\n"
+            );
+        }
+
+        return mapList;
     }
 
     /**

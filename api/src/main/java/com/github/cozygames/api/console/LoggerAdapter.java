@@ -36,8 +36,8 @@ public class LoggerAdapter extends Logger {
      *
      * @param hasGlobalPrefix True if the global prefix should be used.
      */
-    public LoggerAdapter(boolean hasGlobalPrefix, @NotNull java.util.logging.Logger logger) {
-        super(hasGlobalPrefix);
+    public LoggerAdapter(boolean hasGlobalPrefix, boolean debugMode, @NotNull java.util.logging.Logger logger) {
+        super(hasGlobalPrefix, debugMode);
 
         this.logger = logger;
     }
@@ -49,14 +49,21 @@ public class LoggerAdapter extends Logger {
     }
 
     @Override
+    public @NotNull Logger debug(@NotNull String message) {
+        if (!this.getDebugMode()) return this;
+        this.logger.log(Level.INFO, ConsoleColor.parse(this.getMessageAsLog("&7[Debug] &7" + message)));
+        return this;
+    }
+
+    @Override
     public @NotNull Logger warn(@NotNull String message) {
         this.logger.log(Level.WARNING, ConsoleColor.parse("&7" + this.getMessageAsWarn(message)));
         return this;
     }
 
     @Override
-    protected @NotNull Logger clone() {
-        return new LoggerAdapter(this.hasGlobalPrefix(), this.logger)
+    public @NotNull Logger duplicate() {
+        return new LoggerAdapter(this.hasGlobalPrefix(), this.getDebugMode(), this.logger)
                 .setLogPrefix(this.getLogPrefix())
                 .setWarnPrefix(this.getWarnPrefix());
     }

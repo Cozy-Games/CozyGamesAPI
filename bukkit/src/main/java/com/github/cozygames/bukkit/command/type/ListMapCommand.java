@@ -18,15 +18,12 @@
 
 package com.github.cozygames.bukkit.command.type;
 
-import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
-import com.github.cozygames.bukkit.worldedit.WorldEditHelper;
 import com.github.cozyplugins.cozylibrary.command.command.CommandType;
 import com.github.cozyplugins.cozylibrary.command.datatype.CommandArguments;
 import com.github.cozyplugins.cozylibrary.command.datatype.CommandStatus;
 import com.github.cozyplugins.cozylibrary.command.datatype.CommandSuggestions;
 import com.github.cozyplugins.cozylibrary.command.datatype.CommandTypePool;
-import com.github.cozyplugins.cozylibrary.location.Region;
 import com.github.cozyplugins.cozylibrary.user.ConsoleUser;
 import com.github.cozyplugins.cozylibrary.user.FakeUser;
 import com.github.cozyplugins.cozylibrary.user.PlayerUser;
@@ -37,37 +34,27 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-/**
- * Represents a simple create map command type.
- * <p>
- * This will let players create maps.
- */
-public class CreateMapCommand implements CommandType {
+public class ListMapCommand implements CommandType {
 
     private final @NotNull CozyGamesPlugin<?, ?, ?, ?> plugin;
 
-    /**
-     * Used to create a new create map command type.
-     *
-     * @param plugin The instance of the plugin that will register this command.
-     */
-    public CreateMapCommand(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin) {
+    public ListMapCommand(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public @NotNull String getIdentifier() {
-        return "create";
+        return "list";
     }
 
     @Override
-    public @NotNull String getSyntax() {
-        return "/[parent] [name] [map_name]";
+    public @Nullable String getSyntax() {
+        return "/[parent] [name]";
     }
 
     @Override
-    public @NotNull String getDescription() {
-        return "Used to create a new map.";
+    public @Nullable String getDescription() {
+        return "Used to list all the registered maps.";
     }
 
     @Override
@@ -77,7 +64,7 @@ public class CreateMapCommand implements CommandType {
 
     @Override
     public @Nullable CommandSuggestions getSuggestions(@NotNull User user, @NotNull ConfigurationSection section, @NotNull CommandArguments arguments) {
-        return new CommandSuggestions().append(List.of("[map_name]"));
+        return null;
     }
 
     @Override
@@ -88,44 +75,18 @@ public class CreateMapCommand implements CommandType {
     @Override
     public @Nullable CommandStatus onPlayer(@NotNull PlayerUser user, @NotNull ConfigurationSection section, @NotNull CommandArguments arguments) {
 
-        // Get the players selection region.
-        final Region region = WorldEditHelper.getSelectionRegion(user).orElse(null);
-        if (region == null) {
-            user.sendMessage(section.getAdaptedString(
-                    "region_undefined",
-                    "\n",
-                    "&ePlease select the maps region using world edit first."
-            ));
-            return new CommandStatus();
-        }
+        // Create the list of maps to display.
+        List<String> mapList = this.plugin.getApi().getMapManager().getMapListFormatted(this.plugin);
 
-        // Check if they have provided the map name.
-        if (arguments.getArguments().isEmpty() || arguments.getArguments().get(0).isEmpty()) {
-            user.sendMessage(section.getAdaptedString(
-                    "map_name_undefined",
-                    "\n",
-                    "&ePlease enter the map name as the next command argument. {syntax}"
-            ).replace("{syntax}", this.getSyntax()));
-            return new CommandStatus();
-        }
-
-        // Get the map name.
-        final String mapName = arguments.getArguments().get(0);
-
-        // Create the new map.
-        Map<?> map = this.plugin.getMapFactory().create(mapName);
-
-        // Register and save the map instance.
-        this.plugin.getApi().getMapManager().registerMap(map);
-        map.save();
-
-        // Send the success message to the player.
+        // Send the message.
         user.sendMessage(section.getAdaptedString(
-                "map_created",
-                "\n",
-                "&aCreated a new map with identifier &f{identifier} &a."
-        ).replace("{identifier}", map.getIdentifier()));
-        return null;
+                                "message",
+                                "\n",
+                                "{maps}"
+                        )
+                        .replace("{maps}", String.join("", mapList))
+        );
+        return new CommandStatus();
     }
 
     @Override

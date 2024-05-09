@@ -20,6 +20,7 @@ package com.github.cozygames.api;
 
 import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.arena.ArenaManager;
+import com.github.cozygames.api.console.Logger;
 import com.github.cozygames.api.group.GroupManager;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.map.MapManager;
@@ -64,6 +65,23 @@ import java.util.UUID;
  * }</pre>
  */
 public interface CozyGames {
+
+    /**
+     * Used to get the version of this api connection.
+     *
+     * @return The version of this api.
+     */
+    @NotNull
+    String getVersion();
+
+    /**
+     * Used to get the logger which is being
+     * used by the api.
+     *
+     * @return The apis logger.
+     */
+    @NotNull
+    Logger getLogger();
 
     /**
      * The name of the server the plugin is located on.
