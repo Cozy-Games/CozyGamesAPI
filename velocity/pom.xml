@@ -25,7 +25,7 @@
     <parent>
         <groupId>com.github.cozygames</groupId>
         <artifactId>CozyGamesAPI</artifactId>
-        <version>0.0.0</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>velocity</artifactId>
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>com.github.cozygames</groupId>
             <artifactId>api</artifactId>
-            <version>0.0.0</version>
+            <version>${parent.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>com.github.smuddgge</groupId>

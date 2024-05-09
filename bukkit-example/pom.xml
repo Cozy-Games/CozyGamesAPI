@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.github.cozygames</groupId>
         <artifactId>CozyGamesAPI</artifactId>
-        <version>0.0.0</version>
+        <version>${revision}</version>
     </parent>
 
     <artifactId>bukkit-example</artifactId>
@@ -47,7 +47,7 @@
         <dependency>
             <groupId>com.github.cozygames</groupId>
             <artifactId>bukkit</artifactId>
-            <version>0.0.0</version>
+            <version>${parent.version}</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.spigotmc</groupId>
