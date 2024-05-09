@@ -22,10 +22,7 @@ import com.github.cozygames.api.arena.ArenaFactory;
 import com.github.cozygames.api.map.MapFactory;
 import com.github.cozygames.api.session.SessionFactory;
 import com.github.cozygames.bukkit.arena.ExampleArena;
-import com.github.cozygames.bukkit.command.type.CreateMapCommand;
-import com.github.cozygames.bukkit.command.type.DeleteMapCommand;
-import com.github.cozygames.bukkit.command.type.ListMapCommand;
-import com.github.cozygames.bukkit.command.type.MapCommand;
+import com.github.cozygames.bukkit.command.type.minigame.map.*;
 import com.github.cozygames.bukkit.map.ExampleMap;
 import com.github.cozygames.bukkit.plugin.CozyGamesBukkitPlugin;
 import com.github.cozygames.bukkit.session.ExampleSession;
@@ -115,9 +112,10 @@ public final class BukkitExamplePlugin extends CozyGamesBukkitPlugin<
                         .setDescription("Contains all the main commands for this mini-game.")
                         .addSubCommandType(
                                 new MapCommand(this)
-                                        .addSubCommandType(new ListMapCommand(this))
-                                        .addSubCommandType(new CreateMapCommand(this))
-                                        .addSubCommandType(new DeleteMapCommand(this))
+                                        .addSubCommandType(new MapListCommand(this))
+                                        .addSubCommandType(new MapInfoCommand(this))
+                                        .addSubCommandType(new MapCreateCommand(this))
+                                        .addSubCommandType(new MapDeleteCommand(this))
                         )
         );
     }

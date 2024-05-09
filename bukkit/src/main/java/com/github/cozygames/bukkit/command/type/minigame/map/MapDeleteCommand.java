@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit.command.type;
+package com.github.cozygames.bukkit.command.type.minigame.map;
 
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
@@ -33,18 +33,16 @@ import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 /**
  * Represents a simple delete map command type.
  * <p>
  * This will let players delete a map.
  */
-public class DeleteMapCommand implements CommandType {
+public class MapDeleteCommand implements CommandType {
 
     private final @NotNull CozyGamesPlugin<?, ?, ?, ?> plugin;
 
-    public DeleteMapCommand(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin) {
+    public MapDeleteCommand(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin) {
         this.plugin = plugin;
     }
 
@@ -75,11 +73,6 @@ public class DeleteMapCommand implements CommandType {
 
     @Override
     public @Nullable CommandStatus onUser(@NotNull User user, @NotNull ConfigurationSection section, @NotNull CommandArguments arguments) {
-        return null;
-    }
-
-    @Override
-    public @Nullable CommandStatus onPlayer(@NotNull PlayerUser user, @NotNull ConfigurationSection section, @NotNull CommandArguments arguments) {
 
         // Ensure the player has provided a map name.
         if (arguments.getArguments().isEmpty() || arguments.getArguments().get(0).isEmpty()) {
@@ -118,6 +111,11 @@ public class DeleteMapCommand implements CommandType {
                 "&aDeleted the map with identifier &f{identifier}&a."
         ).replace("{identifier}", map.getIdentifier()));
         return new CommandStatus();
+    }
+
+    @Override
+    public @Nullable CommandStatus onPlayer(@NotNull PlayerUser user, @NotNull ConfigurationSection section, @NotNull CommandArguments arguments) {
+        return null;
     }
 
     @Override

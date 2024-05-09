@@ -363,6 +363,7 @@ public abstract class Map<M extends Map<M>> implements ConfigurationConvertable<
     public @NotNull ConfigurationSection convert() {
         ConfigurationSection section = new MemoryConfigurationSection(new LinkedHashMap<>());
 
+        section.set("identifier", this.getIdentifier());
         section.set("name", this.name);
         section.set("server_name", this.serverName);
         section.set("game_identifier", this.gameIdentifier);

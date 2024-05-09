@@ -16,8 +16,9 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit.command.type;
+package com.github.cozygames.bukkit.command.type.minigame.map;
 
+import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.cozyplugins.cozylibrary.command.command.CommandType;
 import com.github.cozyplugins.cozylibrary.command.datatype.CommandArguments;
@@ -32,29 +33,27 @@ import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
-public class ListMapCommand implements CommandType {
+public class MapInfoCommand implements CommandType {
 
     private final @NotNull CozyGamesPlugin<?, ?, ?, ?> plugin;
 
-    public ListMapCommand(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin) {
+    public MapInfoCommand(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin) {
         this.plugin = plugin;
     }
 
     @Override
     public @NotNull String getIdentifier() {
-        return "list";
+        return "info";
     }
 
     @Override
     public @Nullable String getSyntax() {
-        return "/[parent] [name]";
+        return "/[parent] [name] [map_name]";
     }
 
     @Override
     public @Nullable String getDescription() {
-        return "Used to list all the registered maps.";
+        return "Used to get a map's infomation.";
     }
 
     @Override
@@ -64,29 +63,56 @@ public class ListMapCommand implements CommandType {
 
     @Override
     public @Nullable CommandSuggestions getSuggestions(@NotNull User user, @NotNull ConfigurationSection section, @NotNull CommandArguments arguments) {
-        return null;
+        return new CommandSuggestions().append(this.plugin.getMapConfiguration().getKeys());
     }
 
     @Override
     public @Nullable CommandStatus onUser(@NotNull User user, @NotNull ConfigurationSection section, @NotNull CommandArguments arguments) {
-        return null;
+
+        // Ensure the player has provided a map name.
+        if (arguments.getArguments().isEmpty() || arguments.getArguments().get(0).isEmpty()) {
+            user.sendMessage(section.getAdaptedString(
+                    "map_name_unidentified",
+                    "\n",
+                    "&ePlease enter the map name as the next command argument. {syntax}"
+            ).replace("{syntax}", this.getSyntax()));
+            return new CommandStatus();
+        }
+
+        // Get the map name.
+        final String mapName = arguments.getArguments().get(0);
+
+        // Check if the map currently exists.
+        final Map<?> map = this.plugin.getMapConfiguration().getType(mapName).orElse(null);
+        if (map == null) {
+            user.sendMessage(section.getAdaptedString(
+                    "map_unidentified",
+                    "\n",
+                    "&eThe map &f{map} &edoes not exist."
+            ).replace("{map}", mapName));
+            return new CommandStatus();
+        }
+
+        // Initialise the message and map section.
+        String message = section.getAdaptedString("message", "\n", "{name}");
+        final ConfigurationSection mapSection = map.convert();
+
+        // Loop though map values and apply them to the message.
+        for (String key : mapSection.getKeys()) {
+            message = message.replace("{" + key + "}", mapSection.get(key).toString());
+        }
+
+        // Replace all un-parsed placeholders.
+        message = message.replaceAll("\\{([a-z]|_)*}", "null");
+
+        // Send the message.
+        user.sendMessage(message);
+        return new CommandStatus();
     }
 
     @Override
     public @Nullable CommandStatus onPlayer(@NotNull PlayerUser user, @NotNull ConfigurationSection section, @NotNull CommandArguments arguments) {
-
-        // Create the list of maps to display.
-        List<String> mapList = this.plugin.getApi().getMapManager().getMapListFormatted(this.plugin);
-
-        // Send the message.
-        user.sendMessage(section.getAdaptedString(
-                                "message",
-                                "\n",
-                                "{maps}"
-                        )
-                        .replace("{maps}", String.join("", mapList))
-        );
-        return new CommandStatus();
+        return null;
     }
 
     @Override

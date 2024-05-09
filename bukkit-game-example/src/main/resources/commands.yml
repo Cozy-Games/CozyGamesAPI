@@ -35,6 +35,28 @@ example:
         - "&f{maps}"
         - "&7"
         - "&8&l&m------------------------------"
+    # Used to get all the info of a map.
+    info:
+      type: "info"
+      name: "info"
+      map_name_unidentified: "&ePlease enter the map name as the next command argument. {syntax}"
+      map_unidentified: "&eThe map &f{map} &edoes not exist."
+      message:
+        - "&8&l&m------------------------------"
+        - "&7"
+        - "&e&l{name}"
+        - "&7identifier &f{identifier}"
+        - "&7server_name &f{server_name}"
+        - "&7game_identifier &f{game_identifier}"
+        - "&7"
+        - "&7maximum_session_amount &f{maximum_session_amount}"
+        - "&7permission &f{permission}"
+        - "&7schematic &f{schematic}"
+        - "&7capacity &f{capacity}"
+        - "&7item_material &f{item_material}"
+        - "&7spawn_point &f{spawn_point}"
+        - "&7"
+        - "&8&l&m------------------------------"
     # Used to create a new map.
     create:
       type: "create"

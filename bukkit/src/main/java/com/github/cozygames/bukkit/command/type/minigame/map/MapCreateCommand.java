@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit.command.type;
+package com.github.cozygames.bukkit.command.type.minigame.map;
 
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
@@ -42,7 +42,7 @@ import java.util.List;
  * <p>
  * This will let players create maps.
  */
-public class CreateMapCommand implements CommandType {
+public class MapCreateCommand implements CommandType {
 
     private final @NotNull CozyGamesPlugin<?, ?, ?, ?> plugin;
 
@@ -51,7 +51,7 @@ public class CreateMapCommand implements CommandType {
      *
      * @param plugin The instance of the plugin that will register this command.
      */
-    public CreateMapCommand(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin) {
+    public MapCreateCommand(@NotNull CozyGamesPlugin<?, ?, ?, ?> plugin) {
         this.plugin = plugin;
     }
 
@@ -62,7 +62,7 @@ public class CreateMapCommand implements CommandType {
 
     @Override
     public @NotNull String getSyntax() {
-        return "/[parent] [name] [map_name]";
+        return "/[parent] [name] [map_name] <max_amount_of_sessions>";
     }
 
     @Override
@@ -77,7 +77,9 @@ public class CreateMapCommand implements CommandType {
 
     @Override
     public @Nullable CommandSuggestions getSuggestions(@NotNull User user, @NotNull ConfigurationSection section, @NotNull CommandArguments arguments) {
-        return new CommandSuggestions().append(List.of("[map_name]"));
+        return new CommandSuggestions()
+                .append(List.of("[map_name]"))
+                .append(List.of("<max_amount_of_sessions>"));
     }
 
     @Override
@@ -112,8 +114,26 @@ public class CreateMapCommand implements CommandType {
         // Get the map name.
         final String mapName = arguments.getArguments().get(0);
 
+        // Initialize a map max session amount.
+        int maxAmountOfSessions = -1;
+
+        // Check if the map should have a different max session amount.
+        if (arguments.getArguments().size() > 1) {
+            try {
+                maxAmountOfSessions = Integer.parseInt(arguments.getArguments().get(1));
+            } catch (Exception ignored) {
+                user.sendMessage(section.getAdaptedString(
+                        "max_session_amount_not_integer",
+                        "\n",
+                        "&eThe maximum amount of sessions argument should be a number. {syntax}"
+                ).replace("{syntax}", this.getSyntax()));
+                return new CommandStatus();
+            }
+        }
+
         // Create the new map.
         Map<?> map = this.plugin.getMapFactory().create(mapName);
+        map.setMaximumSessionAmount(maxAmountOfSessions);
 
         // Register and save the map instance.
         this.plugin.getApi().getMapManager().registerMap(map);
@@ -121,10 +141,13 @@ public class CreateMapCommand implements CommandType {
 
         // Send the success message to the player.
         user.sendMessage(section.getAdaptedString(
-                "map_created",
-                "\n",
-                "&aCreated a new map with identifier &f{identifier} &a."
-        ).replace("{identifier}", map.getIdentifier()));
+                                "map_created",
+                                "\n",
+                                "&aCreated a new map with identifier &f{identifier} &aand max session amount of &f{max_session_amount}&a."
+                        )
+                        .replace("{identifier}", map.getIdentifier())
+                        .replace("{max_session_amount}", String.valueOf(maxAmountOfSessions))
+        );
         return null;
     }
 

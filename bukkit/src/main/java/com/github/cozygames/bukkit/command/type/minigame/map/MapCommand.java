@@ -16,17 +16,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.bukkit.command.type;
+package com.github.cozygames.bukkit.command.type.minigame.map;
 
-import com.github.cozygames.api.map.Map;
-import com.github.cozygames.api.map.MapFilter;
-import com.github.cozygames.api.member.MemberCapacity;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.cozyplugins.cozylibrary.command.command.CommandType;
 import com.github.cozyplugins.cozylibrary.command.command.commandtype.ProgrammableCommandType;
 import com.github.cozyplugins.cozylibrary.command.datatype.CommandArguments;
 import com.github.cozyplugins.cozylibrary.command.datatype.CommandStatus;
-import com.github.cozyplugins.cozylibrary.user.PlayerUser;
+import com.github.cozyplugins.cozylibrary.user.User;
 import com.github.smuddgge.squishyconfiguration.interfaces.ConfigurationSection;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,7 +42,7 @@ public class MapCommand extends ProgrammableCommandType {
     }
 
     @Override
-    public @Nullable CommandStatus onPlayer(@NotNull PlayerUser user, @NotNull ConfigurationSection section, @NotNull CommandArguments arguments) {
+    public @Nullable CommandStatus onUser(@NotNull User user, @NotNull ConfigurationSection section, @NotNull CommandArguments arguments) {
 
         // Create the list of maps to display.
         List<String> mapList = this.plugin.getApi().getMapManager().getMapListFormatted(this.plugin);
@@ -54,7 +51,7 @@ public class MapCommand extends ProgrammableCommandType {
         List<String> commandList = new ArrayList<>();
 
         // Loop though the list of command types.
-        for (CommandType commandType : this.getSubCommandTypes()) {
+        for (CommandType commandType : this.getSubCommandTypes() == null ? new ArrayList<CommandType>() : this.getSubCommandTypes()) {
             commandList.add("&7- &7id:&f" + commandType.getIdentifier()
                     + " &7" + commandType.getDescription() + "\n"
             );
