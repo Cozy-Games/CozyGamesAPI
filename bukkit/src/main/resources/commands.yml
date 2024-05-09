@@ -1,3 +1,20 @@
+#    ____                ____
+#   / ___|___ _____   _ / ___| __ _ _ __ ___   ___  ___
+#  | |   / _ \_  / | | | |  _ / _` | '_ ` _ \ / _ \/ __|
+#  | |__| (_) / /| |_| | |_| | (_| | | | | | |  __/\__ \
+#   \____\___/___|\__, |\____|\__,_|_| |_| |_|\___||___/
+#                 |___/
+#
+# Author: Smuddgge and Contributors
+# Type: Example / Developer Helper File
+# File: Contains the default optional command types that can be
+#       added to mini-game plugins.
+#       Ideally, all these commands will be implemented into the map
+#       parent command and added to your base command type shown in
+#       the example mini-game plugin.
+
+# The base map parent that acts as a list command.
+# Also includes the list of commands this parent will contain.
 map:
   type: "map"
   name: "map"
@@ -12,6 +29,8 @@ map:
     - "&7"
     - "&8&l&m------------------------------"
 
+# Used to list the maps registered with the
+# api that are in the mini-game plugin.
 list:
   type: "list"
   name: "list"
@@ -23,6 +42,8 @@ list:
     - "&7"
     - "&8&l&m------------------------------"
 
+# Used to get info on a map registered within
+# the mini-game plugin.
 info:
   type: "info"
   name: "info"
@@ -45,6 +66,7 @@ info:
     - "&7"
     - "&8&l&m------------------------------"
 
+# A simple command implementation of the create command.
 create:
   type: "create"
   name: "create"
@@ -52,6 +74,7 @@ create:
   map_name_undefined: "&ePlease enter the map name as the next command argument. {syntax}"
   map_created: "&aCreated a new map with identifier &f{identifier} &a."
 
+# A simple command implementation of the delete command.
 delete:
   type: "delete"
   name: "delete"
