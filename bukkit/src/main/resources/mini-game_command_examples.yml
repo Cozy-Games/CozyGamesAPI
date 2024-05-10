@@ -13,6 +13,19 @@
 #       parent command and added to your base command type shown in
 #       the example mini-game plugin.
 
+# Represents the base mini-game parent command.
+# When executed will return the available list of commands.
+main:
+  type: "main"
+  name: "main"
+  message:
+    - "&8&l&m------------------------------"
+    - "&7"
+    - "&e&lSub Commands"
+    - "&f{commands}"
+    - "&7"
+    - "&8&l&m------------------------------"
+
 # The base map parent that acts as a list command.
 # Also includes the list of commands this parent will contain.
 map:

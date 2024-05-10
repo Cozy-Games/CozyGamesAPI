@@ -9,8 +9,15 @@
 # File: The configurable command type file used to specify commands.
 
 example:
-  type: "example"
+  type: "main"
   name: "example"
+  message:
+    - "&8&l&m------------------------------"
+    - "&7"
+    - "&e&lSub Commands"
+    - "&f{commands}"
+    - "&7"
+    - "&8&l&m------------------------------"
   # Contains all the map commands.
   map:
     name: "map"

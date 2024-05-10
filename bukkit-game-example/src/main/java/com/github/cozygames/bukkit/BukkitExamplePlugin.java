@@ -22,11 +22,11 @@ import com.github.cozygames.api.arena.ArenaFactory;
 import com.github.cozygames.api.map.MapFactory;
 import com.github.cozygames.api.session.SessionFactory;
 import com.github.cozygames.bukkit.arena.ExampleArena;
+import com.github.cozygames.bukkit.command.type.minigame.MainCommand;
 import com.github.cozygames.bukkit.command.type.minigame.map.*;
 import com.github.cozygames.bukkit.map.ExampleMap;
 import com.github.cozygames.bukkit.plugin.CozyGamesBukkitPlugin;
 import com.github.cozygames.bukkit.session.ExampleSession;
-import com.github.cozyplugins.cozylibrary.command.command.commandtype.ProgrammableCommandType;
 import com.github.cozyplugins.cozylibrary.placeholder.PlaceholderManager;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
@@ -108,10 +108,11 @@ public final class BukkitExamplePlugin extends CozyGamesBukkitPlugin<
 
         // Register the main plugin command tree /example.
         commandManager.getTypeManager().registerCommandType(
-                new ProgrammableCommandType("example")
+                new MainCommand()
                         .setDescription("Contains all the main commands for this mini-game.")
                         .addSubCommandType(
                                 new MapCommand(this)
+                                        .setDescription("Contains commands to edit maps.")
                                         .addSubCommandType(new MapListCommand(this))
                                         .addSubCommandType(new MapInfoCommand(this))
                                         .addSubCommandType(new MapCreateCommand(this))

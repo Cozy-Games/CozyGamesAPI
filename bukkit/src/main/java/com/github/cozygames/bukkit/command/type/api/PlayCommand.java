@@ -50,8 +50,7 @@ public class PlayCommand implements CommandType {
 
     @Override
     public @Nullable CommandTypePool getSubCommandTypes() {
-        return new CommandTypePool()
-                .append();
+        return null;
     }
 
     @Override
