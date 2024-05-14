@@ -18,7 +18,7 @@
 
 package com.github.cozygames.velocity;
 
-import com.github.cozygames.api.console.LoggerAdapter;
+import com.github.cozygames.api.logger.LoggerAdapter;
 import com.github.cozygames.api.member.PlayerAdapter;
 import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
 import com.github.cozygames.velocity.adapter.VelocityPlayerAdapter;
@@ -61,7 +61,7 @@ public class CozyGamesAPIVelocityPlugin implements CozyGamesAPIPlugin {
     }
 
     @Override
-    public @NotNull com.github.cozygames.api.console.Logger getLogger() {
+    public @NotNull com.github.cozygames.api.logger.Logger getLogger() {
         return new LoggerAdapter(false, false, this.logger).setBothPrefixes("&7[API] ");
     }
 

@@ -16,14 +16,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.console;
+package com.github.cozygames.api.logger;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.logging.Level;
 
 /**
- * Used to create a logger using an
+ * Used to create a {@link Logger} using an
  * existing {@link java.util.logging.Logger}.
  */
 public class LoggerAdapter extends Logger {
@@ -38,7 +38,6 @@ public class LoggerAdapter extends Logger {
      */
     public LoggerAdapter(boolean hasGlobalPrefix, boolean debugMode, @NotNull java.util.logging.Logger logger) {
         super(hasGlobalPrefix, debugMode);
-
         this.logger = logger;
     }
 

@@ -18,14 +18,15 @@
 
 package com.github.cozygames.api.arena;
 
-import com.github.cozygames.api.configuration.ArenaConfiguration;
 import com.github.cozygames.api.map.Map;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * The empty arena factory.
  * <p>
- * Used by the {@link ArenaConfiguration} to create an empty
+ * <b>Usages include:</b>
+ * <p>
+ * The {@link ArenaConfiguration} to create an empty
  * arena instance. When the {@link ArenaConfiguration#getType(String)}
  * method is called, an empty instance is created and then converted
  * to obtain the type requested.

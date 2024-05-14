@@ -20,8 +20,8 @@ package com.github.cozygames.api;
 
 import com.github.cozygames.api.arena.Arena;
 import com.github.cozygames.api.arena.ArenaManager;
-import com.github.cozygames.api.console.Logger;
 import com.github.cozygames.api.group.GroupManager;
+import com.github.cozygames.api.logger.Logger;
 import com.github.cozygames.api.map.Map;
 import com.github.cozygames.api.map.MapManager;
 import com.github.cozygames.api.member.Member;
@@ -103,8 +103,8 @@ public interface CozyGames {
      * The server's address players use to connect to the server with.
      * <p>
      * This can be used in mini-game scoreboards to advertise
-     # what server they are currently playing on.
-
+     * # what server they are currently playing on.
+     *
      * @return The server address.
      */
     @NotNull

@@ -28,6 +28,9 @@ import java.util.List;
  * The map filter.
  * <p>
  * Used to filter {@link Map}'s and get a filtered list.
+ * <p>
+ * Setters in this class are used to set a specific filter
+ * that will be used to match with arenas and maps.
  */
 public class MapFilter {
 

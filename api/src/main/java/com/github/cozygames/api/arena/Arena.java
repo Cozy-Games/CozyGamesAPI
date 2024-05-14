@@ -19,7 +19,6 @@
 package com.github.cozygames.api.arena;
 
 import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.configuration.ArenaConfiguration;
 import com.github.cozygames.api.database.table.ArenaTable;
 import com.github.cozygames.api.group.Group;
 import com.github.cozygames.api.indicator.Deletable;

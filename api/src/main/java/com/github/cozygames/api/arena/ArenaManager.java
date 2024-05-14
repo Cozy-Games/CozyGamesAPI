@@ -21,10 +21,8 @@ package com.github.cozygames.api.arena;
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.database.record.ArenaRecord;
 import com.github.cozygames.api.database.table.ArenaTable;
-import com.github.cozygames.api.map.Map;
-import com.github.cozygames.api.map.MapManager;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
-import com.github.smuddgge.squishydatabase.Query;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -33,7 +31,17 @@ import java.util.Optional;
 /**
  * Represents the arena manager.
  * <p>
- * Used to get the instances of arenas.
+ * Used to get instances of arenas registered
+ * with this api connection.
+ * <p>
+ * This is recommended over using the {@link CozyGames#getDatabase()}.
+ * <p>
+ * Unlike the {@link com.github.cozygames.api.map.MapManager} the arena
+ * manager doesn't register arenas specifically. Instead, it relies
+ * on the {@link Arena#save()} and {@link Arena#delete()} method to update
+ * to the database when it should be available. This is because normally
+ * an arena is created for 1 game then deleted. Therefor, there is no need to
+ * check if an arena is available as they are created to match demand.
  */
 public class ArenaManager {
 
@@ -41,9 +49,13 @@ public class ArenaManager {
 
     /**
      * Used to create a new arena manager.
+     * <p>
+     * This should only be created by the
+     * internal api implementation.
      *
      * @param api The instance of the api.
      */
+    @ApiStatus.Internal
     public ArenaManager(@NotNull CozyGames api) {
         this.api = api;
     }

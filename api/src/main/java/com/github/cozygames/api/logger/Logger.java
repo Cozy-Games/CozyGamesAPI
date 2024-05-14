@@ -1,4 +1,4 @@
-package com.github.cozygames.api.console;
+package com.github.cozygames.api.logger;
 
 import com.github.cozygames.api.indicator.Replicable;
 import org.jetbrains.annotations.NotNull;
@@ -8,6 +8,12 @@ import org.jetbrains.annotations.Nullable;
  * Represents a console logger.
  * Used to log messages and warnings in
  * the console with custom prefixes.
+ * <p>
+ * This is preferred over the normal java logger {@link java.util.logging.Logger}
+ * as it makes it easier to create prefix extensions and parse colours.
+ * If the java logger is highly suggested by the platform, the
+ * {@link LoggerAdapter} can use the logger instead while still
+ * having the perks of this logger class.
  */
 public class Logger implements Replicable<Logger> {
 

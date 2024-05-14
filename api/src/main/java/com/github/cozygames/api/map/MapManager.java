@@ -19,9 +19,9 @@
 package com.github.cozygames.api.map;
 
 import com.github.cozygames.api.CozyGames;
-import com.github.cozygames.api.console.Logger;
 import com.github.cozygames.api.database.record.MapRecord;
 import com.github.cozygames.api.database.table.MapTable;
+import com.github.cozygames.api.logger.Logger;
 import com.github.cozygames.api.member.MemberCapacity;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import org.jetbrains.annotations.NotNull;

@@ -22,6 +22,8 @@
  * <p>
  * An arena is a loaded map that is contained on a world in a server.
  * <p>
+ * <h1>Types of Arenas</h1>
+ * <p>
  * The {@link com.github.cozygames.api.arena.Arena} Represents the
  * base of an arena. Containing values that will be present in every arena.
  * <p>
@@ -31,5 +33,28 @@
  * <p>
  * The {@link com.github.cozygames.api.arena.LocalArena} represents an arena
  * that is local to the plugin. It provides help when completing the arena methods.
+ * <p>
+ * <h1>Getting, Creating and Updating Arenas</h1>
+ * <p>
+ * Getting arenas can be done in two ways: {@link com.github.cozygames.api.CozyGames#getArenaManager()}
+ * and {@link com.github.cozygames.api.CozyGames#getDatabase()}. However, it is recommended to
+ * use the Arena manager.
+ * <p>
+ * Creating arenas is normally done internally though the platforms api.
+ * The platform's api provides uses with an interface where they can
+ * partake in steps to start a game in an arena. Otherwise, you can manually create arenas
+ * by initialising the arena and using the {@link com.github.cozygames.api.arena.Arena#save()}
+ * method to insert it into the database. There is no place arenas are registered because
+ * normally an arena is created for 1 game then deleted.
+ * <p>
+ * Updating arenas can be done by using the {@link com.github.cozygames.api.arena.Arena#save()} method.
+ * This will update the arena in the database and local configuration.
+ * <p>
+ * <h1>Local Storage</h1>
+ * <p>
+ * The local configuration {@link com.github.cozygames.api.arena.ArenaConfiguration} is primarily
+ * used for variables that are added by the mini-game plugin as these variables will not be in
+ * the database. Nevertheless, the database variables are also stored in the local
+ * configuration to keep everything updated.
  */
 package com.github.cozygames.api.arena;

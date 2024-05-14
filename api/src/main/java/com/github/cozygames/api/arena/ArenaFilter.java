@@ -23,13 +23,18 @@ import com.github.cozygames.api.map.MapFilter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 /**
  * The arena filter.
  * <p>
- * Used to filter {@link Arena}'s, {@link Map}'s and get a filtered list.
+ * Used to filter {@link Arena}'s, {@link Map}'s
+ * and get a filtered list.
+ * <p>
+ * Setters in this class are used to set a specific filter
+ * that will be used to match with arenas and maps.
  */
 public class ArenaFilter extends MapFilter {
 
@@ -52,8 +57,20 @@ public class ArenaFilter extends MapFilter {
         return this;
     }
 
+    /**
+     * Used to filter a list of arenas.
+     * <p>
+     * This method will go through each arena in the list and filter
+     * arenas that do no match teh filters set in this class.
+     *
+     * @param arenaList The arena list to filter.
+     * @param <A>       The arena class that is being filtered and returned.
+     * @return The new list of filtered arenas.
+     */
     public <A extends Arena<A, ?>> @NotNull List<A> filterArenas(@NotNull List<A> arenaList) {
-        return arenaList.stream().filter(arena -> {
+        return new ArrayList<>(arenaList).stream().filter(arena -> {
+
+            // Check each arena variable against initialized filters.
             if (this.mapIdentifierFilter != null && !arena.getMap().getIdentifier().equalsIgnoreCase(this.mapIdentifierFilter)) {
                 return false;
             }

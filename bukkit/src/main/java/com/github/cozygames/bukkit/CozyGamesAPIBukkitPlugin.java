@@ -18,8 +18,8 @@
 
 package com.github.cozygames.bukkit;
 
-import com.github.cozygames.api.console.Logger;
-import com.github.cozygames.api.console.LoggerAdapter;
+import com.github.cozygames.api.logger.Logger;
+import com.github.cozygames.api.logger.LoggerAdapter;
 import com.github.cozygames.api.member.PlayerAdapter;
 import com.github.cozygames.api.plugin.CozyGamesAPIPlugin;
 import com.github.cozygames.bukkit.adapter.BukkitPlayerAdapter;

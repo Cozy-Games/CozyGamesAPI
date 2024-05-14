@@ -16,10 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.configuration;
+package com.github.cozygames.api.map;
 
-import com.github.cozygames.api.map.Map;
-import com.github.cozygames.api.map.MapFactory;
 import com.github.cozygames.api.plugin.CozyGamesPlugin;
 import com.github.smuddgge.squishyconfiguration.directory.SingleTypeConfigurationDirectory;
 import org.jetbrains.annotations.NotNull;

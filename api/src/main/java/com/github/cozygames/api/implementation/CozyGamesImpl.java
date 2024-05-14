@@ -21,12 +21,12 @@ package com.github.cozygames.api.implementation;
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.CozyGamesProvider;
 import com.github.cozygames.api.arena.ArenaManager;
-import com.github.cozygames.api.console.Logger;
 import com.github.cozygames.api.database.table.ArenaTable;
 import com.github.cozygames.api.database.table.GroupTable;
 import com.github.cozygames.api.database.table.MapTable;
 import com.github.cozygames.api.database.table.MemberTable;
 import com.github.cozygames.api.group.GroupManager;
+import com.github.cozygames.api.logger.Logger;
 import com.github.cozygames.api.map.MapManager;
 import com.github.cozygames.api.member.Member;
 import com.github.cozygames.api.member.MemberNotFoundException;
@@ -40,13 +40,10 @@ import com.github.smuddgge.squishyconfiguration.implementation.YamlConfiguration
 import com.github.smuddgge.squishyconfiguration.interfaces.Configuration;
 import com.github.smuddgge.squishydatabase.DatabaseBuilder;
 import com.github.smuddgge.squishydatabase.interfaces.Database;
-import org.apache.maven.model.Model;
-import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.io.InputStreamReader;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;

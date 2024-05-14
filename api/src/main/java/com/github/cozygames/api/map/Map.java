@@ -20,7 +20,6 @@ package com.github.cozygames.api.map;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.arena.Arena;
-import com.github.cozygames.api.configuration.MapConfiguration;
 import com.github.cozygames.api.database.table.MapTable;
 import com.github.cozygames.api.indicator.Deletable;
 import com.github.cozygames.api.indicator.Savable;

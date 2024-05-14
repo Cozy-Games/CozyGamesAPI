@@ -18,7 +18,7 @@
 
 package com.github.cozygames.bukkit.worldedit;
 
-import com.github.cozygames.api.console.Logger;
+import com.github.cozygames.api.logger.Logger;
 import com.github.cozyplugins.cozylibrary.user.PlayerUser;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.LocalSession;

@@ -18,8 +18,7 @@
 
 package com.github.cozygames.api.plugin;
 
-import com.github.cozygames.api.console.Logger;
-import com.github.cozygames.api.member.Member;
+import com.github.cozygames.api.logger.Logger;
 import com.github.cozygames.api.member.PlayerAdapter;
 import org.jetbrains.annotations.NotNull;
 

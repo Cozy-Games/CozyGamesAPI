@@ -16,7 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.github.cozygames.api.console;
+package com.github.cozygames.api.logger;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,8 +24,13 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Represents a utility class to send messages
  * with color to the console.
+ * <p>
+ * Contains static methods that are used by processes
+ * that don't need a specialized logger.
+ * <p>
+ * Primarily used by the {@link com.github.cozygames.api.testing.ResultChecker}.
  */
-public class Console {
+public final class Console {
 
     private static @Nullable String logPrefix = "&7[&aLOG&7] ";
     private static @Nullable String warnPrefix = "&7[&eWARN&7] ";
@@ -37,7 +42,7 @@ public class Console {
      * @param message The instance of the message.
      */
     public static void log(@NotNull String message) {
-        System.out.println(com.github.minemaniauk.developertools.console.ConsoleColor.parse(
+        System.out.println(ConsoleColor.parse(
                 (logPrefix == null ? "" : logPrefix) + message
         ));
     }

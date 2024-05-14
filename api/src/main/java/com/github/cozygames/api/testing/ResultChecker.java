@@ -20,8 +20,8 @@
 
 package com.github.cozygames.api.testing;
 
-import com.github.cozygames.api.console.Console;
-import com.github.cozygames.api.console.Logger;
+import com.github.cozygames.api.logger.Console;
+import com.github.cozygames.api.logger.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Assertions;
 

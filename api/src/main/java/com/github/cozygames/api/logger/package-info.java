@@ -20,13 +20,11 @@
 
 /**
  * Classes used for sending messages to the console
- * with support for colors.
+ * with support for colors and creating prefix extensions.
  *
- * <ul>
- *     <li>
- *         To send a message to console you can use the static methods in
- *         {@link com.github.minemaniauk.developertools.console.Console}.
- *     </li>
- * </ul>
+ * <li>
+ * To send a message to console you can use the static methods in
+ * {@link com.github.minemaniauk.developertools.console.Console}.
+ * </li>
  */
-package com.github.cozygames.api.console;
+package com.github.cozygames.api.logger;

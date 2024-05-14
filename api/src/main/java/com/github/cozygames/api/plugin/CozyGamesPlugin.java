@@ -20,10 +20,10 @@ package com.github.cozygames.api.plugin;
 
 import com.github.cozygames.api.CozyGames;
 import com.github.cozygames.api.arena.Arena;
+import com.github.cozygames.api.arena.ArenaConfiguration;
 import com.github.cozygames.api.arena.ArenaFactory;
-import com.github.cozygames.api.configuration.ArenaConfiguration;
-import com.github.cozygames.api.configuration.MapConfiguration;
 import com.github.cozygames.api.map.Map;
+import com.github.cozygames.api.map.MapConfiguration;
 import com.github.cozygames.api.map.MapFactory;
 import com.github.cozygames.api.session.Session;
 import com.github.cozygames.api.session.SessionFactory;

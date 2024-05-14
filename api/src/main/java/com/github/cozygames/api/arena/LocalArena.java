@@ -32,6 +32,9 @@ import java.util.UUID;
  * <p>
  * This simplifies the {@link Arena} class for
  * creating new arena types in mini-game plugins.
+ * <p>
+ * Mini-game plugins do not have to use this,
+ * and may just inherit the arena instance.
  *
  * @param <S> The session class associated with this arena.
  * @param <A> The highest arena instance that should be used as a return value.
