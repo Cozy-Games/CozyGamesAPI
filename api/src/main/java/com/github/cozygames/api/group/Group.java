@@ -112,7 +112,7 @@ public class Group implements ConfigurationConvertable<Group>, Savable<Group>, D
      * convert the member into the platform's player class.
      *
      * @param clazz The class to convert the member into.
-     * @param <T> The player class.
+     * @param <T>   The player class.
      * @return The list of players.
      */
     public <T> @NotNull List<T> getMembersOnline(@NotNull Class<T> clazz) {
