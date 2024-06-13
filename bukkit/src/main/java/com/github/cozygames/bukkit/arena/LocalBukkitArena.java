@@ -30,6 +30,16 @@ import org.bukkit.WorldCreator;
 import org.bukkit.generator.ChunkGenerator;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Represents a bukkit implementation of a local arena.
+ * <p>
+ * This can be used by mini-game plugins to make arenas easier to create.
+ *
+ * @param <S> The session class associated with this arena.
+ * @param <A> The highest arena instance that should be used as a return value.
+ *            This makes it easier to chane method calls.
+ * @param <M> The map type this arena is created from.
+ */
 public abstract class LocalBukkitArena<S extends Session<A, M>, A extends Arena<A, M>, M extends Map<M>> extends LocalArena<S, A, M> {
 
     private final @NotNull Location spawnPoint;
@@ -83,6 +93,11 @@ public abstract class LocalBukkitArena<S extends Session<A, M>, A extends Arena<
         return (A) this;
     }
 
+    /**
+     * Used to get the spawn point as a bukkit location.
+     *
+     * @return The spawn point location.
+     */
     public @NotNull Location getSpawnPoint() {
         return this.spawnPoint;
     }

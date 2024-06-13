@@ -34,7 +34,7 @@ map:
   message:
     - "&8&l&m------------------------------"
     - "&7"
-    - "&e&lMap List"
+    - "&e&lMap List &8(name, per_map_capacity, max_sessions, permission)"
     - "&f{maps}"
     - "&7"
     - "&e&lMap Commands Types"

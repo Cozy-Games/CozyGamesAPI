@@ -102,6 +102,7 @@
                     <artifactId>core</artifactId>
                 </exclusion>
             </exclusions>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
@@ -143,14 +144,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <artifactSet>
-                        <excludes>
-                            <exclude>com.sk89q.worldedit:*</exclude>
-                            <exclude>org.enginehub.lin-bus:*</exclude>
-                        </excludes>
-                    </artifactSet>
-                </configuration>
             </plugin>
         </plugins>
         <resources>
