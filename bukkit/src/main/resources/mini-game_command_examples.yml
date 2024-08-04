@@ -19,12 +19,12 @@ main:
   type: "main"
   name: "main"
   message:
-    - "&8&l&m------------------------------"
+    - "&8&l&m------------------------------------------"
     - "&7"
     - "&e&lSub Commands"
     - "&f{commands}"
     - "&7"
-    - "&8&l&m------------------------------"
+    - "&8&l&m------------------------------------------"
 
 # The base map parent that acts as a list command.
 # Also includes the list of commands this parent will contain.
@@ -32,7 +32,7 @@ map:
   type: "map"
   name: "map"
   message:
-    - "&8&l&m------------------------------"
+    - "&8&l&m------------------------------------------"
     - "&7"
     - "&e&lMap List &8(name, per_map_capacity, max_sessions, permission)"
     - "&f{maps}"
@@ -40,7 +40,7 @@ map:
     - "&e&lMap Commands Types"
     - "&f{commands}"
     - "&7"
-    - "&8&l&m------------------------------"
+    - "&8&l&m------------------------------------------"
 
 # Used to list the maps registered with the
 # api that are in the mini-game plugin.
@@ -48,12 +48,12 @@ list:
   type: "list"
   name: "list"
   message:
-    - "&8&l&m------------------------------"
+    - "&8&l&m------------------------------------------"
     - "&7"
-    - "&e&lMap List"
+    - "&e&lMap List &8(name, per_map_capacity, max_sessions, permission)"
     - "&f{maps}"
     - "&7"
-    - "&8&l&m------------------------------"
+    - "&8&l&m------------------------------------------"
 
 # Used to get info on a map registered within
 # the mini-game plugin.
@@ -63,7 +63,7 @@ info:
   map_name_unidentified: "&ePlease enter the map name as the next command argument. {syntax}"
   map_unidentified: "&eThe map &f{map} &edoes not exist."
   message:
-    - "&8&l&m------------------------------"
+    - "&8&l&m------------------------------------------"
     - "&7"
     - "&e&l{name}"
     - "&7identifier &f{identifier}"
@@ -77,7 +77,7 @@ info:
     - "&7item_material &f{item_material}"
     - "&7spawn_point &f{spawn_point}"
     - "&7"
-    - "&8&l&m------------------------------"
+    - "&8&l&m------------------------------------------"
 
 # A simple command implementation of the create command.
 create:
@@ -94,3 +94,11 @@ delete:
   map_name_unidentified: "&ePlease enter the map name as the next command argument. {syntax}"
   map_unidentified: "&eThe map &f{map} &edoes not exist."
   map_deleted: "&aDeleted the map with identifier &f{identifier}&a."
+
+# Used to set fields in a map.
+set:
+  type: "set"
+  name: "set"
+  key_not_specified: "&ePlease specify a map field to change. {syntax}"
+  maximum_session_amount:
+    map_name_undefined: "&ePlease enter the map name as the next command argument. {syntax}"

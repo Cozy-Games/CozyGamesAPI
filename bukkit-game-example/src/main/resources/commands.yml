@@ -12,17 +12,17 @@ example:
   type: "main"
   name: "example"
   message:
-    - "&8&l&m------------------------------"
+    - "&8&l&m------------------------------------------"
     - "&7"
     - "&e&lSub Commands"
     - "&f{commands}"
     - "&7"
-    - "&8&l&m------------------------------"
+    - "&8&l&m------------------------------------------"
   # Contains all the map commands.
   map:
     name: "map"
     message:
-      - "&8&l&m------------------------------"
+      - "&8&l&m------------------------------------------"
       - "&7"
       - "&e&lMap List &8(name, per_map_capacity, max_sessions, permission)"
       - "&f{maps}"
@@ -30,18 +30,18 @@ example:
       - "&e&lMap Command Types"
       - "&f{commands}"
       - "&7"
-      - "&8&l&m------------------------------"
+      - "&8&l&m------------------------------------------"
     # Used to list the registered maps.
     list:
       type: "list"
       name: "list"
       message:
-        - "&8&l&m------------------------------"
+        - "&8&l&m------------------------------------------"
         - "&7"
         - "&e&lMap List &8(name, per_map_capacity, max_sessions, permission)"
         - "&f{maps}"
         - "&7"
-        - "&8&l&m------------------------------"
+        - "&8&l&m------------------------------------------"
     # Used to get all the info of a map.
     info:
       type: "info"
@@ -49,7 +49,7 @@ example:
       map_name_unidentified: "&ePlease enter the map name as the next command argument. {syntax}"
       map_unidentified: "&eThe map &f{map} &edoes not exist."
       message:
-        - "&8&l&m------------------------------"
+        - "&8&l&m------------------------------------------"
         - "&7"
         - "&e&l{name}"
         - "&7identifier &f{identifier}"
@@ -63,7 +63,7 @@ example:
         - "&7item_material &f{item_material}"
         - "&7spawn_point &f{spawn_point}"
         - "&7"
-        - "&8&l&m------------------------------"
+        - "&8&l&m------------------------------------------"
     # Used to create a new map.
     create:
       type: "create"

@@ -148,7 +148,7 @@ public class MapCreateCommand implements CommandType {
                         .replace("{identifier}", map.getIdentifier())
                         .replace("{max_session_amount}", String.valueOf(maxAmountOfSessions))
         );
-        return null;
+        return new CommandStatus();
     }
 
     @Override
